@@ -16,6 +16,7 @@ public class LevelsPanel extends JPanel {
     private int levelButtonsY = 200;
     private int space = 30;
 
+
     public LevelsPanel(int width, int height) {
         this.setBackground(Color.orange);
         this.setSize(width, height);
