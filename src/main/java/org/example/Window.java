@@ -41,6 +41,7 @@ public class Window extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "One or more of your fields is empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         });
         this.levelsPanel.getReturnButton().addActionListener(e -> {
             this.levelsPanel.setVisible(false);
