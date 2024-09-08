@@ -118,4 +118,7 @@ public class SignInPanel extends JPanel {
         this.teamPassword.setEchoChar('@');
 
     }
+    public String getTeamName() {
+        return teamName.getText();
+    }
 }

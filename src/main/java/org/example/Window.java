@@ -1,5 +1,7 @@
 package org.example;
 
+import db.JDBC;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -34,12 +36,17 @@ public class Window extends JFrame {
         UIManager.put("Button.font", new Font("Arial", Font.BOLD, 18));
 
         this.signInPanel.getEnterButton().addActionListener(e -> {
-            if (!this.signInPanel.hasEmptyField()) {
-                this.signInPanel.setVisible(false);
-                this.signInPanel.restartPanel();
-                this.levelsPanel.setVisible(true);
-            } else {
+            String teamName = signInPanel.getTeamName();
+            if (this.signInPanel.hasEmptyField()) {
                 JOptionPane.showMessageDialog(null, "One or more of your fields is empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (JDBC.isExist(teamName)) {
+                    this.signInPanel.setVisible(false);
+                    this.signInPanel.restartPanel();
+                    this.levelsPanel.setVisible(true);
+                }else {
+                    JOptionPane.showMessageDialog(null, "Your team name is not exist, \nplease correct it or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
 
 
@@ -53,11 +60,19 @@ public class Window extends JFrame {
             this.signInPanel.restartPanel();
             this.signUpPanel.setVisible(true);
         });
-        this.signUpPanel.getSignUpButton().addActionListener(e -> {
+        this.signUpPanel.getRegisterButton().addActionListener(e -> {
+            String teamName = signUpPanel.getTeamName();
+            String teamPassword = signUpPanel.getTeamPassword();
+
             if (this.signUpPanel.isVerifiedPassword()) {
-                this.signUpPanel.setVisible(false);
+                if (!this.signUpPanel.hasEmptyField()) {
+                    this.signUpPanel.setVisible(false);
 //                this.signUpPanel.restartPanel();
-                this.signInPanel.setVisible(true);
+                    this.signInPanel.setVisible(true);
+                    JDBC.register(teamName, teamPassword);
+                }else {
+                    JOptionPane.showMessageDialog(null, "One or more of your fields is empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Your passwords are not similar or empty, \nplease correct it", "Error", JOptionPane.ERROR_MESSAGE);
             }

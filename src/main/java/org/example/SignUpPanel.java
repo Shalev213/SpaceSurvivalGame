@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.Arrays;
 
 public class SignUpPanel extends JPanel {
     private JTextField nicknamePlayer1;
@@ -13,7 +14,7 @@ public class SignUpPanel extends JPanel {
     private JPasswordField teamPasswordVerification;
     private JCheckBox showPasswordCheckBox;
     private JLabel welcomeLabel;
-    private JButton signUpButton;
+    private JButton registerButton;
     private int width;
     private int height;
     private int heightTextFields = 65;
@@ -93,7 +94,7 @@ public class SignUpPanel extends JPanel {
                 BorderFactory.createEmptyBorder(5, 5, 5,5)
         ));
         this.teamPasswordVerification.addActionListener(e -> {
-            signUpButton.doClick();
+            registerButton.doClick();
         });
 
         this.add(teamPasswordVerification);
@@ -111,21 +112,24 @@ public class SignUpPanel extends JPanel {
 //        });
 //        this.add(showPasswordCheckBox);
 
-        this.signUpButton = new JButton("Register");
-        this.signUpButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.signUpButton.setBounds((width - 140) / 2,600,140,70);
-        this.signUpButton.setFocusPainted(false);
-        this.signUpButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.registerButton = new JButton("Register");
+        this.registerButton.setFont(new Font("Arial", Font.BOLD, 25));
+        this.registerButton.setBounds((width - 140) / 2,600,140,70);
+        this.registerButton.setFocusPainted(false);
+        this.registerButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
-        this.add(signUpButton);
+        this.add(registerButton);
     }
 
-    public JButton getSignUpButton() {
-        return signUpButton;
+    public JButton getRegisterButton() {
+        return registerButton;
     }
 
     public boolean isVerifiedPassword() {
-        return !this.teamPassword.getText().isEmpty() && this.teamPassword.getText().equals(this.teamPasswordVerification.getText());
+        return this.teamPassword.getText().equals(this.teamPasswordVerification.getText());
+    }
+    public boolean hasEmptyField() {
+        return nicknamePlayer1.getText().isEmpty() || nicknamePlayer2.getText().isEmpty() || teamName.getText().isEmpty() || teamPassword.getText().isEmpty() || teamPasswordVerification.getText().isEmpty();
     }
     public void restartPanel() {
         this.nicknamePlayer1.setText(null);
@@ -134,5 +138,12 @@ public class SignUpPanel extends JPanel {
         this.showPasswordCheckBox.setSelected(false);
         this.teamPassword.setEchoChar('\u2022');
 
+    }
+
+    public String getTeamName() {
+        return teamName.getText();
+    }
+    public String getTeamPassword() {
+        return teamPassword.getText();
     }
 }
