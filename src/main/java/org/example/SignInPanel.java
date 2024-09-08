@@ -5,17 +5,18 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class OpeningPanel extends JPanel {
-    private JTextField nickname;
+public class SignInPanel extends JPanel {
+    private final JButton signUpButton;
+    private final JTextField nickname;
     private JTextField teamName;
     private JPasswordField teamPassword;
-    private JCheckBox showPasswordCheckBox;
-    private JLabel welcomeLabel;
+    private final JCheckBox showPasswordCheckBox;
+    private final JLabel welcomeLabel;
     private JButton enterButton;
     private int width;
     private int height;
 
-    public OpeningPanel(int width, int height) {
+    public SignInPanel(int width, int height) {
         this.width = width;
         this.height = height;
         this.setBackground(Color.cyan);
@@ -23,9 +24,9 @@ public class OpeningPanel extends JPanel {
         this.setLayout(null);
         this.setVisible(true);
 
-        this.welcomeLabel = new JLabel("Fill in the following details: ");
+        this.welcomeLabel = new JLabel("Sign in: ");
         this.welcomeLabel.setFont(new Font("Arial", Font.ITALIC , 40));
-        this.welcomeLabel.setBounds((width - 500) / 2, 150, 500, 70);
+        this.welcomeLabel.setBounds((width - 150) / 2, 150, 150, 70);
 
         this.add(welcomeLabel);
 
@@ -88,10 +89,22 @@ public class OpeningPanel extends JPanel {
         this.enterButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         this.add(enterButton);
+
+        this.signUpButton = new JButton("sign up");
+        this.signUpButton.setFont(new Font("Arial", Font.BOLD, 25));
+        this.signUpButton.setBounds(teamPassword.getX() + teamPassword.getWidth() - 115, showPasswordCheckBox.getY(),115,30);
+        this.signUpButton.setFocusPainted(false);
+        this.signUpButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
+        this.add(signUpButton);
     }
 
     public JButton getEnterButton() {
         return enterButton;
+    }
+
+    public JButton getSignUpButton() {
+        return signUpButton;
     }
 
     public boolean hasEmptyField() {
@@ -102,7 +115,7 @@ public class OpeningPanel extends JPanel {
         this.teamName.setText(null);
         this.teamPassword.setText(null);
         this.showPasswordCheckBox.setSelected(false);
-        this.teamPassword.setEchoChar('\u2022');
+        this.teamPassword.setEchoChar('@');
 
     }
 }
