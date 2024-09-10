@@ -53,4 +53,24 @@ public class LevelsPanel extends JPanel {
     public JButton getReturnButton() {
         return returnButton;
     }
+
+    public LevelButton getLevelButton1() {
+        return levelButton1;
+    }
+
+    public LevelButton getLevelButton2() {
+        return levelButton2;
+    }
+
+    public LevelButton getLevelButton3() {
+        return levelButton3;
+    }
+
+    public LevelButton getLevelButton4() {
+        return levelButton4;
+    }
+
+    public LevelButton getLevelButton5() {
+        return levelButton5;
+    }
 }

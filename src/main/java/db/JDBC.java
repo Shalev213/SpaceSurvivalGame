@@ -9,17 +9,17 @@ public class JDBC {
     public static final String DB_USERS_TABLE_NAME = "USERS";
 
 
-    public static boolean register(String username, String password){
+    public static boolean register(String teamName, String password){
         try {
-             if (!isExist(username)) {
+             if (!isExist(teamName)) {
                  Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
                  PreparedStatement insertUser = connection.prepareStatement(
-                         "INSERT INTO " + DB_USERS_TABLE_NAME + "(username, password)" +
+                         "INSERT INTO " + DB_USERS_TABLE_NAME + "(TEAMNAME, password)" +
                                  "VALUES(?, ?)"
                  );
 
-                 insertUser.setString(1, username);
+                 insertUser.setString(1, teamName);
                  insertUser.setString(2, password);
 
                  insertUser.executeUpdate();
@@ -31,14 +31,14 @@ public class JDBC {
         return false;
     }
 
-    public static boolean isExist(String username){
+    public static boolean isExist(String teamName){
         try {
             Connection connection = DriverManager.getConnection(DB_URL,DB_USERNAME,DB_PASSWORD);
             PreparedStatement checkUserExists = connection.prepareStatement(
                     "SELECT * FROM " + DB_USERS_TABLE_NAME +
-                            " WHERE USERNAME = ?"
+                            " WHERE TEAMNAME = ?"
             );
-            checkUserExists.setString(1, username);
+            checkUserExists.setString(1, teamName);
 
             ResultSet resultSet = checkUserExists.executeQuery();
 
@@ -51,15 +51,15 @@ public class JDBC {
         return true;
     }
 
-    public static boolean validateLogin(String username, String password){
+    public static boolean validateLogin(String teamName, String password){
         try{
             Connection connection = DriverManager.getConnection(DB_URL,DB_USERNAME,DB_PASSWORD);
 
             PreparedStatement validateUser = connection.prepareStatement(
                     "SELECT * FROM " + DB_USERS_TABLE_NAME +
-                            " WHERE USERNAME = ? AND PASSWORD = ?"
+                            " WHERE TEAMNAME = ? AND PASSWORD = ?"
             );
-            validateUser.setString(1, username);
+            validateUser.setString(1, teamName);
             validateUser.setString(2, password);
 
             ResultSet resultSet = validateUser.executeQuery();

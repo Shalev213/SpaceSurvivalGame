@@ -121,4 +121,7 @@ public class SignInPanel extends JPanel {
     public String getTeamName() {
         return teamName.getText();
     }
+    public String getPassword(){
+        return teamPassword.getText();
+    }
 }
