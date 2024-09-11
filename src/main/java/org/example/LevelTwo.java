@@ -3,7 +3,7 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 
-public class LevelOne extends JPanel {
+public class LevelTwo extends JPanel {
 
     private int width;
     private int height;
@@ -15,7 +15,7 @@ public class LevelOne extends JPanel {
 
 
 
-    public LevelOne(int width, int height) {
+    public LevelTwo(int width, int height) {
         this.width = width;
         this.height = height;
 //        this.setBackground(Color.cyan);
@@ -23,8 +23,8 @@ public class LevelOne extends JPanel {
         this.setLayout(null);
         this.setVisible(true);
 
-        this.spaceBackgroundOne = new ImageIcon("src/main/java/sources/LevelOne.png");
-        this.spaceBackgroundTwo = new ImageIcon("src/main/java/sources/LevelOneMirror.png");
+        this.spaceBackgroundOne = new ImageIcon("src/main/java/sources/LevelTwo.png");
+        this.spaceBackgroundTwo = new ImageIcon("src/main/java/sources/LevelTwoMirror.png");
         this.xOfBackgroundTwo = spaceBackgroundOne.getIconWidth();
 
         mainGameLoop();

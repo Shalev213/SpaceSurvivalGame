@@ -1,5 +1,6 @@
 package db;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class JDBC {
@@ -11,7 +12,7 @@ public class JDBC {
 
     public static boolean register(String teamName, String password){
         try {
-             if (!isExist(teamName)) {
+             if (!isNameExist(teamName)) {
                  Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
                  PreparedStatement insertUser = connection.prepareStatement(
@@ -24,6 +25,8 @@ public class JDBC {
 
                  insertUser.executeUpdate();
                  return  true;
+             }else {
+                 JOptionPane.showMessageDialog(null, "Your team name is taken, \nplease change it", "Error", JOptionPane.ERROR_MESSAGE);
              }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -31,7 +34,7 @@ public class JDBC {
         return false;
     }
 
-    public static boolean isExist(String teamName){
+    public static boolean isNameExist(String teamName){
         try {
             Connection connection = DriverManager.getConnection(DB_URL,DB_USERNAME,DB_PASSWORD);
             PreparedStatement checkUserExists = connection.prepareStatement(

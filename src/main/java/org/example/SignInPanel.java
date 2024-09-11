@@ -115,7 +115,7 @@ public class SignInPanel extends JPanel {
         this.teamName.setText(null);
         this.teamPassword.setText(null);
         this.showPasswordCheckBox.setSelected(false);
-        this.teamPassword.setEchoChar('@');
+        this.teamPassword.setEchoChar('\u2022');
 
     }
     public String getTeamName() {

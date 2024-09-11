@@ -31,7 +31,7 @@ public class LevelsPanel extends JPanel {
 
         this.returnButton = new JButton("return");
         this.returnButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.returnButton.setBounds((width - 140) / 2,600,140,70);
+        this.returnButton.setBounds((width - 140) / 20,620,90,50);
         this.returnButton.setFocusPainted(false);
         this.returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
@@ -41,8 +41,10 @@ public class LevelsPanel extends JPanel {
         this.levelButton1.setEnabled(true);
         this.add(levelButton1);
         this.levelButton2 = new LevelButton(levelButtonsX + space + levelButton1.getWidth(), levelButtonsY, "2");
+        this.levelButton2.setEnabled(true);//***
         this.add(levelButton2);
         this.levelButton3 = new LevelButton(levelButtonsX + 2 * (space + levelButton1.getWidth()), levelButtonsY, "3");
+        this.levelButton3.setEnabled(true);//***
         this.add(levelButton3);
         this.levelButton4 = new LevelButton(levelButtonsX + 3 * (space + levelButton1.getWidth()), levelButtonsY, "4");
         this.add(levelButton4);

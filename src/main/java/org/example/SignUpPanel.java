@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class SignUpPanel extends JPanel {
+    private final JButton returnButton;
     private JTextField nicknamePlayer1;
     private JTextField nicknamePlayer2;
     private JTextField teamName;
@@ -119,6 +120,14 @@ public class SignUpPanel extends JPanel {
         this.registerButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         this.add(registerButton);
+
+        this.returnButton = new JButton("return");
+        this.returnButton.setFont(new Font("Arial", Font.BOLD, 25));
+        this.returnButton.setBounds((width - 140) / 20,620,90,50);
+        this.returnButton.setFocusPainted(false);
+        this.returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
+        this.add(returnButton);
     }
 
     public JButton getRegisterButton() {
@@ -145,5 +154,9 @@ public class SignUpPanel extends JPanel {
     }
     public String getTeamPassword() {
         return teamPassword.getText();
+    }
+
+    public AbstractButton getReturnButton() {
+        return returnButton;
     }
 }
