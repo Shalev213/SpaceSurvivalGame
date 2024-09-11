@@ -81,7 +81,7 @@ public class Window extends JFrame {
 
             if (this.signUpPanel.isVerifiedPassword()) {
                 if (!this.signUpPanel.hasEmptyField()) {
-                    JDBC.register(teamName, teamPassword);
+                    JDBC.register(teamName, teamPassword); // add a condition to check if the name exist - don't return to the SignIn Panel.
                     this.signUpPanel.setVisible(false);
 //                this.signUpPanel.restartPanel();
                     this.signInPanel.setVisible(true);
