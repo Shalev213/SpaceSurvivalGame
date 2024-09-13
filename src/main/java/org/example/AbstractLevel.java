@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class AbstractLevel extends JPanel {
+
     protected int width;
     protected int height;
     protected ImageIcon spaceBackgroundOne;
