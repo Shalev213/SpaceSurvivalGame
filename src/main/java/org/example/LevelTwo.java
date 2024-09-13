@@ -12,6 +12,7 @@ public class LevelTwo extends AbstractLevel {
 
 
 
+
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
         super.width = width;
         super.height = height;

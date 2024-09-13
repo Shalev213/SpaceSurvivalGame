@@ -13,6 +13,7 @@ public class LevelThree extends AbstractLevel {
         super.height = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
+
         mainGameLoop();
     }
 
