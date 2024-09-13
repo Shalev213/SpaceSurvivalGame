@@ -1,6 +1,5 @@
 package db;
 
-import javax.swing.*;
 import java.sql.*;
 
 public class JDBC {
@@ -10,9 +9,9 @@ public class JDBC {
     public static final String DB_USERS_TABLE_NAME = "USERS";
 
 
-    public static boolean register(String teamName, String password){
+    public static void register(String teamName, String password){
         try {
-             if (!isNameExist(teamName)) {
+             if (isNameExist(teamName)) {
                  Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
                  PreparedStatement insertUser = connection.prepareStatement(
@@ -24,14 +23,10 @@ public class JDBC {
                  insertUser.setString(2, password);
 
                  insertUser.executeUpdate();
-                 return  true;
-             }else {
-                 JOptionPane.showMessageDialog(null, "Your team name is taken, \nplease change it", "Error", JOptionPane.ERROR_MESSAGE);
              }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return false;
     }
 
     public static boolean isNameExist(String teamName){
@@ -46,12 +41,11 @@ public class JDBC {
             ResultSet resultSet = checkUserExists.executeQuery();
 
             if (!resultSet.isBeforeFirst()){
-                return false;
+                return true;
             }
         }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return true;
+            throw new RuntimeException(e);        }
+        return false;
     }
 
     public static boolean validateLogin(String teamName, String password){
@@ -71,8 +65,7 @@ public class JDBC {
                 return false;
             }
         }catch (SQLException e){
-            e.printStackTrace();
-        }
+            throw new RuntimeException(e);        }
         return true;
     }
 }

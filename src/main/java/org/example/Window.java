@@ -44,7 +44,7 @@ public class Window extends JFrame {
         UIManager.put("Button.foreground", Color.white);
         UIManager.put("Button.font", new Font("Arial", Font.BOLD, 18));
 
-        this.signInPanel.getEnterButton().addActionListener(e -> {
+        this.signInPanel.getLoginButton().addActionListener(e -> {
             String teamName = signInPanel.getTeamName();
             String teamPassword = signInPanel.getPassword();  // הוספתי לבנתיים במידה ויצטרך לפונקציית-validate         **** תוקן *****
             if (this.signInPanel.hasEmptyField()) {
@@ -59,8 +59,6 @@ public class Window extends JFrame {
                     JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-
-
         });
         this.levelsPanel.getReturnButton().addActionListener(e -> {
             this.levelsPanel.setVisible(false);
@@ -81,10 +79,14 @@ public class Window extends JFrame {
 
             if (this.signUpPanel.isVerifiedPassword()) {
                 if (!this.signUpPanel.hasEmptyField()) {
-                    JDBC.register(teamName, teamPassword); // add a condition to check if the name exist - don't return to the SignIn Panel.
-                    this.signUpPanel.setVisible(false);
+                    if (JDBC.isNameExist(teamName)) {
+                        JDBC.register(teamName, teamPassword);// add a condition to check if the name exist - don't return to the SignIn Panel.
+                        this.signUpPanel.setVisible(false);
 //                this.signUpPanel.restartPanel();
-                    this.signInPanel.setVisible(true);
+                        this.signInPanel.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Your team name is taken, \nplease change it", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }else {
                     JOptionPane.showMessageDialog(null, "One or more of your fields is empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
                 }

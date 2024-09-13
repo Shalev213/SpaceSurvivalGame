@@ -22,7 +22,8 @@ public abstract class AbstractLevel extends JPanel {
         new Thread(() -> {
             while (true) {
                 repaint();
-                loopBackground();
+                backgroundLoop();
+                gameScene();
 
                 try {
                     Thread.sleep(5);
@@ -32,13 +33,11 @@ public abstract class AbstractLevel extends JPanel {
             }
         }).start();
     }
-
     public void moveBackgrounds() {
         this.xOfBackgroundOne -= 1;
         this.xOfBackgroundTwo -= 1;
     }
-
-    public void loopBackground() {
+    public void backgroundLoop() {
         moveBackgrounds();
         if (xOfBackgroundOne <= -(getBackgroundWidth())) {
             xOfBackgroundOne = getBackgroundWidth();
@@ -59,4 +58,6 @@ public abstract class AbstractLevel extends JPanel {
     }
 
     public abstract int getBackgroundWidth();
+
+    public abstract void gameScene();
 }

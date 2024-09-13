@@ -22,7 +22,10 @@ public class LevelThree extends AbstractLevel {
         return spaceBackgroundOne.getIconWidth();
     }
 
+    @Override
+    public void gameScene() {
 
+    }
 }
 
 

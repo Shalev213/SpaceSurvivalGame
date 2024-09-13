@@ -23,7 +23,10 @@ public class LevelOne extends AbstractLevel {
         return spaceBackgroundOne.getIconWidth();
     }
 
+    @Override
+    public void gameScene() {
 
+    }
 }
 
 

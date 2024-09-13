@@ -12,7 +12,7 @@ public class SignInPanel extends JPanel {
     private JPasswordField teamPassword;
     private final JCheckBox showPasswordCheckBox;
     private final JLabel welcomeLabel;
-    private JButton enterButton;
+    private JButton loginButton;
     private int width;
     private int height;
 
@@ -64,7 +64,7 @@ public class SignInPanel extends JPanel {
                 BorderFactory.createEmptyBorder(5, 5, 5,5)
         ));
         this.teamPassword.addActionListener(e -> {
-            enterButton.doClick();
+            loginButton.doClick();
         });
 
         this.add(teamPassword);
@@ -82,15 +82,15 @@ public class SignInPanel extends JPanel {
         });
         this.add(showPasswordCheckBox);
 
-        this.enterButton = new JButton("ENTER");
-        this.enterButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.enterButton.setBounds((width - 140) / 2,600,140,70);
-        this.enterButton.setFocusPainted(false);
-        this.enterButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.loginButton = new JButton("Login");
+        this.loginButton.setFont(new Font("Arial", Font.BOLD, 35));
+        this.loginButton.setBounds((width - 140) / 2,600,140,70);
+        this.loginButton.setFocusPainted(false);
+        this.loginButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
-        this.add(enterButton);
+        this.add(loginButton);
 
-        this.signUpButton = new JButton("sign up");
+        this.signUpButton = new JButton("Sign up");
         this.signUpButton.setFont(new Font("Arial", Font.BOLD, 25));
         this.signUpButton.setBounds(teamPassword.getX() + teamPassword.getWidth() - 115, showPasswordCheckBox.getY(),115,30);
         this.signUpButton.setFocusPainted(false);
@@ -99,8 +99,8 @@ public class SignInPanel extends JPanel {
         this.add(signUpButton);
     }
 
-    public JButton getEnterButton() {
-        return enterButton;
+    public JButton getLoginButton() {
+        return loginButton;
     }
 
     public JButton getSignUpButton() {
