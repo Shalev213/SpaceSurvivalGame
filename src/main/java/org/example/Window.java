@@ -91,7 +91,7 @@ public class Window extends JFrame {
                     JOptionPane.showMessageDialog(null, "One or more of your fields is empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Your passwords are not similar or empty, \nplease correct it", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Your passwords are not similar, \nplease correct it", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 

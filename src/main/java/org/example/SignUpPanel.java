@@ -13,7 +13,8 @@ public class SignUpPanel extends JPanel {
     private JTextField teamName;
     private JPasswordField teamPassword;
     private JPasswordField teamPasswordVerification;
-    private JCheckBox showPasswordCheckBox;
+    private JCheckBox showPassword1CheckBox;
+    private JCheckBox showPassword2CheckBox;
     private JLabel welcomeLabel;
     private JButton registerButton;
     private int width;
@@ -36,6 +37,7 @@ public class SignUpPanel extends JPanel {
         this.add(welcomeLabel);
 
         this.nicknamePlayer1 = new JTextField();
+//        this.nicknamePlayer1.requestFocus();
         this.nicknamePlayer1.setFont(new Font("Arial", Font.ITALIC, 25));
         this.nicknamePlayer1.setBounds((width - 600) / 2, welcomeLabel.getY() + heightTextFields + space, 600,heightTextFields);
         this.nicknamePlayer1.setBorder(BorderFactory.createCompoundBorder(
@@ -86,6 +88,18 @@ public class SignUpPanel extends JPanel {
         });
 
         this.add(teamPassword);
+        this.showPassword1CheckBox = new JCheckBox("Show");
+        this.showPassword1CheckBox.setBounds(teamPassword.getX() - 70, teamPassword.getY() + 10, 60, 30);
+        this.showPassword1CheckBox.setBackground(null);
+        this.showPassword1CheckBox.setFocusPainted(false);
+        this.showPassword1CheckBox.addActionListener(e -> {
+            if (showPassword1CheckBox.isSelected()) {
+                teamPassword.setEchoChar((char) 0);
+            } else {
+                teamPassword.setEchoChar('\u2022');
+            }
+        });
+        this.add(showPassword1CheckBox);
 
         this.teamPasswordVerification = new JPasswordField();
         this.teamPasswordVerification.setFont(new Font("Arial", Font.ITALIC, 25));
@@ -99,6 +113,19 @@ public class SignUpPanel extends JPanel {
         });
 
         this.add(teamPasswordVerification);
+
+        this.showPassword2CheckBox = new JCheckBox("Show");
+        this.showPassword2CheckBox.setBounds(teamPasswordVerification.getX() - 70, teamPasswordVerification.getY() + 10, 60, 30);
+        this.showPassword2CheckBox.setBackground(null);
+        this.showPassword2CheckBox.setFocusPainted(false);
+        this.showPassword2CheckBox.addActionListener(e -> {
+            if (showPassword2CheckBox.isSelected()) {
+                teamPasswordVerification.setEchoChar((char) 0);
+            } else {
+                teamPasswordVerification.setEchoChar('\u2022');
+            }
+        });
+        this.add(showPassword2CheckBox);
 
 //        this.showPasswordCheckBox = new JCheckBox("Show Password");
 //        this.showPasswordCheckBox.setBounds((width - 600) / 2, teamPassword.getY() + 80, 150, heightTextFields);
@@ -135,7 +162,7 @@ public class SignUpPanel extends JPanel {
     }
 
     public boolean isVerifiedPassword() {
-        return this.teamPassword.getText().equals(this.teamPasswordVerification.getText());
+        return Arrays.equals(this.teamPassword.getPassword(), this.teamPasswordVerification.getPassword());
     }
     public boolean hasEmptyField() {
         return nicknamePlayer1.getText().isEmpty() || nicknamePlayer2.getText().isEmpty() || teamName.getText().isEmpty() || teamPassword.getText().isEmpty() || teamPasswordVerification.getText().isEmpty();
@@ -144,7 +171,7 @@ public class SignUpPanel extends JPanel {
         this.nicknamePlayer1.setText(null);
         this.teamName.setText(null);
         this.teamPassword.setText(null);
-        this.showPasswordCheckBox.setSelected(false);
+        this.showPassword1CheckBox.setSelected(false);
         this.teamPassword.setEchoChar('\u2022');
 
     }
