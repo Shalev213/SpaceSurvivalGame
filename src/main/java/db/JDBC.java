@@ -3,7 +3,8 @@ package db;
 import java.sql.*;
 
 public class JDBC {
-    public static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/login_schema";
+//    public static final String DB_URL = "jdbc:mysql://192.168.189.251:3306/login_schema";
+    public static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/login_schema"; //localhost
     public static final String DB_USERNAME = "root";
     public static final String DB_PASSWORD = "s1h2a3le5v6.";
     public static final String DB_USERS_TABLE_NAME = "USERS";
