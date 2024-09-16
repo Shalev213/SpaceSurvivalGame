@@ -11,7 +11,7 @@ public class JDBC {
 
     public static void register(String teamName, String password){
         try {
-             if (isNameExist(teamName)) {
+             if (!isNameExist(teamName)) {
                  Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
                  PreparedStatement insertUser = connection.prepareStatement(

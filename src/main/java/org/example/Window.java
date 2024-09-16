@@ -30,14 +30,8 @@ public class Window extends JFrame {
         this.add(levelsPanel);
         levelsPanel.setVisible(false);
 
-        levelOne = new LevelOne(width, height);
-//        this.add(levelOne);
-//        levelOne.setVisible(false);
         levelTwo = new LevelTwo(width, height);
         levelThree = new LevelThree(width, height);
-
-
-
 
         UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 20));
         UIManager.put("Button.background", Color.darkGray);
@@ -46,16 +40,17 @@ public class Window extends JFrame {
 
         this.signInPanel.getLoginButton().addActionListener(e -> {
             String teamName = signInPanel.getTeamName();
-            String teamPassword = signInPanel.getPassword();  // הוספתי לבנתיים במידה ויצטרך לפונקציית-validate         **** תוקן *****
+            String teamPassword = signInPanel.getPassword();
             if (this.signInPanel.hasEmptyField()) {
                 JOptionPane.showMessageDialog(null, "One or more of your fields are empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                if (JDBC.validateLogin(teamName, teamPassword)) {    //שינינו ל-validate?    **** תוקן *****
+                if (JDBC.validateLogin(teamName, teamPassword)) {
                     System.out.println("login success");
                     this.signInPanel.setVisible(false);
                     this.signInPanel.restartPanel();
                     this.levelsPanel.setVisible(true);
-                }else {
+                    signInPanel.showWaitingMessage();
+                } else {
                     JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -80,14 +75,13 @@ public class Window extends JFrame {
             if (this.signUpPanel.isVerifiedPassword()) {
                 if (!this.signUpPanel.hasEmptyField()) {
                     if (JDBC.isNameExist(teamName)) {
-                        JDBC.register(teamName, teamPassword);// add a condition to check if the name exist - don't return to the SignIn Panel.
+                        JDBC.register(teamName, teamPassword);
                         this.signUpPanel.setVisible(false);
-//                this.signUpPanel.restartPanel();
                         this.signInPanel.setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(null, "Your team name is taken, \nplease change it", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                }else {
+                } else {
                     JOptionPane.showMessageDialog(null, "One or more of your fields is empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
@@ -97,6 +91,8 @@ public class Window extends JFrame {
 
         this.levelsPanel.getLevelButton1().addActionListener(e -> {
             this.levelsPanel.setVisible(false);
+            String teamName = signInPanel.getTeamName();
+            levelOne = new LevelOne(width, height, teamName);
             this.add(levelOne);
             levelOne.setVisible(true);
         });
@@ -105,14 +101,14 @@ public class Window extends JFrame {
             this.levelsPanel.setVisible(false);
             this.add(levelTwo);
             levelTwo.setVisible(true);
-
-        }); this.levelsPanel.getLevelButton3().addActionListener(e -> {
+        });
+        this.levelsPanel.getLevelButton3().addActionListener(e -> {
             this.levelsPanel.setVisible(false);
             this.add(levelThree);
             levelThree.setVisible(true);
         });
-
     }
+
     public void showWindow () {
         this.setVisible(true);
     }

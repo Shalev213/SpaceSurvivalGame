@@ -2,36 +2,53 @@ package org.example;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class GameClient {
+    private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
+    private boolean gameStarted = false;
 
-    public GameClient() {
-        try (Socket socket = new Socket("localhost", 12345);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
-
-            // תזוזת השחקן שלך
-            new Thread(() -> {
-                Scanner scanner = new Scanner(System.in);
-                while (true) {
-                    String movement = scanner.nextLine(); // למשל: "UP", "DOWN", "LEFT", "RIGHT"
-                    out.println(movement); // שדר את התזוזה לשרת
-                }
-            }).start();
-
-            // קבלת עדכון מהשרת על השחקן השני
-            String serverMessage;
-            while ((serverMessage = in.readLine()) != null) {
-                System.out.println("Server says: " + serverMessage); // עיבוד התזוזה של השחקן השני
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public GameClient(String serverAddress, int serverPort) throws IOException {
+        socket = new Socket(serverAddress, serverPort);
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        out = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    public static void main(String[] args) {
-        new GameClient();
+    public void sendMessage(String message) {
+        out.println(message);
+    }
+
+    public void startListening() {
+        new Thread(() -> {
+            try {
+                String message;
+                while ((message = in.readLine()) != null) {
+                    System.out.println("Received: " + message);
+                    if (message.equals("START_GAME")) {
+                        gameStarted = true;
+                        startGame();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    public void close() throws IOException {
+        in.close();
+        out.close();
+        socket.close();
+    }
+
+    private void startGame() {
+        // Logic to start the game
+        System.out.println("Game started!");
+        // You can add more logic here to start the game
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
     }
 }

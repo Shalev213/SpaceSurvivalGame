@@ -1,38 +1,52 @@
 package org.example;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ClientHandler extends Thread {
+import static org.example.GameServer.broadcastMessage;
+import static org.example.GameServer.incrementTeamCount;
 
-    private Socket clientSocket;
-    private GameServer server;
+public class ClientHandler implements Runnable {
+    private Socket socket;
+    private BufferedReader in;
     private PrintWriter out;
+    private String teamName;
 
-    public ClientHandler(Socket socket, GameServer server) {
-        this.clientSocket = socket;
-        this.server = server;
+    public ClientHandler(Socket socket) {
+        this.socket = socket;
     }
 
     @Override
     public void run() {
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
+        try {
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
 
-            String input;
-            while ((input = in.readLine()) != null) {
-                System.out.println("Received: " + input);
-                server.broadcast(input, this); // לשדר את ההודעה לשחקן השני
+            String message;
+            while ((message = in.readLine()) != null) {
+                System.out.println("Received: " + message);
+                if (message.startsWith("TEAM:")) {
+                    teamName = message.substring(5);
+                    incrementTeamCount(teamName, this);
+                } else {
+                    broadcastMessage(message);
+                }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void sendMessage(String message) {
-        if (out != null) {
-            out.println(message); // שליחת הודעה ללקוח
-        }
+        out.println(message);
     }
 }

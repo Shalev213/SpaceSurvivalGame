@@ -1,51 +1,54 @@
 package org.example;
 
-import java.io.IOException;
+import org.example.ClientHandler;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameServer {
+    private static final int PORT = 9806;
+    private static List<ClientHandler> clients = new ArrayList<>();
+    private static Map<String, Integer> teamCounts = new HashMap<>();
+    private static Map<String, List<ClientHandler>> teamClients = new HashMap<>();
 
-    private List<ClientHandler> players = new ArrayList<>();
+    public static void startServer() {
+        new Thread(() -> {
+            try {
+                System.out.println("Waiting for clients...");
+                ServerSocket ss = new ServerSocket(PORT);
 
-    public GameServer() {
-        try (ServerSocket serverSocket = new ServerSocket(12345)) {
-            System.out.println("Server is running...");
+                while (true) {
+                    Socket soc = ss.accept();
+                    System.out.println("Connection established");
 
-            while (players.size() < 2) { // חיבור של שני שחקנים בלבד
-                Socket clientSocket = serverSocket.accept();
-                ClientHandler player = new ClientHandler(clientSocket, this);
-                players.add(player);
-                player.start();
-                System.out.println("Player " + players.size() + " connected.");
+                    ClientHandler clientHandler = new ClientHandler(soc);
+                    clients.add(clientHandler);
+                    new Thread(clientHandler).start();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }).start();
+    }
 
-            // כאשר שני השחקנים מחוברים, להתחיל את המשחק
-            if (players.size() == 2) {
-                System.out.println("Both players connected. Starting the game.");
-                startGame();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void broadcastMessage(String message) {
+        for (ClientHandler client : clients) {
+            client.sendMessage(message);
         }
     }
 
-    public void broadcast(String message, ClientHandler sender) {
-        for (ClientHandler player : players) {
-            if (player != sender) {
-                player.sendMessage(message); // שלח את ההודעה לשחקן השני
+    public static void incrementTeamCount(String teamName, ClientHandler clientHandler) {
+        teamCounts.put(teamName, teamCounts.getOrDefault(teamName, 0) + 1);
+        teamClients.computeIfAbsent(teamName, k -> new ArrayList<>()).add(clientHandler);
+
+        if (teamCounts.get(teamName) == 2) {
+            for (ClientHandler client : teamClients.get(teamName)) {
+                client.sendMessage("START_GAME");
             }
         }
     }
-
-    private void startGame() {
-        // התחלת המשחק בין שני השחקנים
-        for (ClientHandler player : players) {
-            player.sendMessage("Game has started!");
-        }
-    }
-
 }
