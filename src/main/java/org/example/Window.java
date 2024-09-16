@@ -120,4 +120,5 @@ public class Window extends JFrame {
     public int getHeight() {
         return height;
     }
+
 }
