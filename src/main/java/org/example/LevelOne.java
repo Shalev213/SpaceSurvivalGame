@@ -19,7 +19,6 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         super.height = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
-
         this.spaceship1 = new Spaceship("src/main/java/sources/Spaceship1.png");
         this.spaceship1.setY(100);
         this.spaceship2 = new Spaceship("src/main/java/sources/Spaceship2.png");
