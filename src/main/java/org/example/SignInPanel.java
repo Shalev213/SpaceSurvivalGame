@@ -124,8 +124,4 @@ public class SignInPanel extends JPanel {
     public String getPassword(){
         return teamPassword.getText();
     }
-
-    public void showWaitingMessage() {
-        JOptionPane.showMessageDialog(this, "Waiting for the second player to join...", "Waiting", JOptionPane.INFORMATION_MESSAGE);
-    }
 }

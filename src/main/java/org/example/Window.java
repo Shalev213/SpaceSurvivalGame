@@ -49,7 +49,6 @@
                         this.signInPanel.setVisible(false);
                         this.signInPanel.restartPanel();
                         this.levelsPanel.setVisible(true);
-                        signInPanel.showWaitingMessage();
                     } else {
                         JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -95,6 +94,9 @@
                 levelOne = new LevelOne(width, height, teamName);
                 this.add(levelOne);
                 levelOne.setVisible(true);
+                levelOne.setFocusable(true);
+                levelOne.requestFocus();
+                levelOne.requestFocusInWindow();
             });
 
             this.levelsPanel.getLevelButton2().addActionListener(e -> {
