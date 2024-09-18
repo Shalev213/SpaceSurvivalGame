@@ -51,10 +51,10 @@ public abstract class AbstractLevel extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-//        if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
-//            this.spaceBackgroundOne.paintIcon(null, graphics, xOfBackgroundOne, 0);
-//            this.spaceBackgroundTwo.paintIcon(null, graphics, xOfBackgroundTwo, 0);
-//        }
+        if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
+            this.spaceBackgroundOne.paintIcon(null, graphics, xOfBackgroundOne, 0);
+            this.spaceBackgroundTwo.paintIcon(null, graphics, xOfBackgroundTwo, 0);
+        }
     }
 
     public abstract int getBackgroundWidth();

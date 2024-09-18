@@ -12,6 +12,17 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private Stone stone1;
     private Stone stone2;
     private Stone stone3;
+    // משתנים בוליאניים לעקוב אחרי מצב הלחיצה של כל מקש
+    private boolean downPressed = false;
+    private boolean upPressed = false;
+    private boolean rightPressed = false;
+    private boolean leftPressed = false;
+
+    private boolean wPressed = false;
+    private boolean sPressed = false;
+    private boolean aPressed = false;
+    private boolean dPressed = false;
+
 
 
     public LevelOne(int width, int height, String teamName) {
@@ -64,7 +75,33 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
 //    @Override
     public void gameScene() {
+        // חללית 1 - תנועה אנכית ואופקית
+        if (downPressed && this.spaceship1.getY() <= (height - 1.5 * spaceship1.getHeight())) {
+            spaceship1.upDownMove(1);
+        }
+        if (upPressed && this.spaceship1.getY() >= 0) {
+            spaceship1.upDownMove(-1);
+        }
+        if (rightPressed && this.spaceship1.getX() <= (this.width - 1.2 * spaceship1.getWidth())) {
+            spaceship1.leftRightMove(1);
+        }
+        if (leftPressed && this.spaceship1.getX() >= 0) {
+            spaceship1.leftRightMove(-2);
+        }
 
+        // חללית 2 - תנועה אנכית ואופקית
+        if (sPressed && this.spaceship2.getY() <= (height - 1.75 * spaceship2.getHeight())) {
+            spaceship2.upDownMove(1);
+        }
+        if (wPressed && this.spaceship2.getY() >= 0) {
+            spaceship2.upDownMove(-1);
+        }
+        if (dPressed && this.spaceship2.getX() <= (this.width - 1.2 * spaceship2.getWidth())) {
+            spaceship2.leftRightMove(1);
+        }
+        if (aPressed && this.spaceship2.getX() >= 0) {
+            spaceship2.leftRightMove(-2);
+        }
         // Handle game logic here
         // You can send messages to the server using gameClient.sendMessage(message);
     }
@@ -72,10 +109,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
-            this.spaceBackgroundOne.paintIcon(null, graphics, xOfBackgroundOne, 0);
-            this.spaceBackgroundTwo.paintIcon(null, graphics, xOfBackgroundTwo, 0);
-        }
+
         spaceship1.paintSpaceship(graphics);
         spaceship2.paintSpaceship(graphics);
         fuel.paintFuel(graphics);
@@ -86,58 +120,38 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
     public void keyPressed(KeyEvent e) {
-
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            if (this.spaceship1.getY() <= (height - 1.5 * spaceship1.getHeight() )) {
-                spaceship1.upDownMove(4);
-            }
-        }
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            if (this.spaceship1.getY() >= 0) {
-                spaceship1.upDownMove(-4);
-            }
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (this.spaceship1.getX() <= (this.width - 1.2 * spaceship1.getWidth() )) {
-                spaceship1.leftRightMove(4);
-            }
-        }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if (this.spaceship1.getX() >= 0) {
-                spaceship1.leftRightMove(-4);
-            }
-        }
-        if (e.getKeyCode() == KeyEvent.VK_S) {
-            if (this.spaceship2.getY() <= (height - 1.75 * spaceship2.getHeight())) {
-                spaceship2.upDownMove(4);
-            }
-        }
-        if (e.getKeyCode() == KeyEvent.VK_W) {
-            if (this.spaceship2.getY() >= 0) {
-                spaceship2.upDownMove(-4);
-            }
-        }
-        if (e.getKeyCode() == KeyEvent.VK_D) {
-            if (this.spaceship2.getX() <= (this.width - 1.2 * spaceship2.getWidth() )) {
-                spaceship2.leftRightMove(4);
-            }
-        }
-        if (e.getKeyCode() == KeyEvent.VK_A) {
-            if (this.spaceship2.getX() >= 0) {
-                spaceship2.leftRightMove(-4);
-            }
+        // עדכון המשתנים הבוליאניים בהתאם למקש שנלחץ
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_DOWN -> downPressed = true;
+            case KeyEvent.VK_UP -> upPressed = true;
+            case KeyEvent.VK_RIGHT -> rightPressed = true;
+            case KeyEvent.VK_LEFT -> leftPressed = true;
+            case KeyEvent.VK_W -> wPressed = true;
+            case KeyEvent.VK_S -> sPressed = true;
+            case KeyEvent.VK_A -> aPressed = true;
+            case KeyEvent.VK_D -> dPressed = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        // עדכון המשתנים הבוליאניים בהתאם למקש ששוחרר
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_DOWN -> downPressed = false;
+            case KeyEvent.VK_UP -> upPressed = false;
+            case KeyEvent.VK_RIGHT -> rightPressed = false;
+            case KeyEvent.VK_LEFT -> leftPressed = false;
+            case KeyEvent.VK_W -> wPressed = false;
+            case KeyEvent.VK_S -> sPressed = false;
+            case KeyEvent.VK_A -> aPressed = false;
+            case KeyEvent.VK_D -> dPressed = false;
+        }
+    }
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // לא בשימוש
     }
 
 }
