@@ -10,7 +10,7 @@ public class Fuel extends Thread{
     private Image fuelImage;
 
     private final short width = 50;
-    private final short height = 70;
+    private final short height = 65;
     private String imagePath = "src/main/java/sources/Fuel.png";
     private int x = 200;
     private int y = 300;

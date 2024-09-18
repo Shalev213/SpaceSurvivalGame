@@ -8,8 +8,8 @@ public class Stone extends Thread{
     private final Random random;
     private Image stone;
 //    private String imagePath;
-    private final short width = 60;
-    private final short height = 40;
+    private final short width = 76;
+    private final short height = 50;
     private int x = 20;
     private int y = 50;
     private int dx = 1;

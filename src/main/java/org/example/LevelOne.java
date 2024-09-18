@@ -95,22 +95,42 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             if (this.spaceship1.getY() <= (height - 1.5 * spaceship1.getHeight() )) {
-                spaceship1.move(3);
+                spaceship1.upDownMove(4);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             if (this.spaceship1.getY() >= 0) {
-                spaceship1.move(-3);
+                spaceship1.upDownMove(-4);
+            }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (this.spaceship1.getX() <= (this.width - 1.2 * spaceship1.getWidth() )) {
+                spaceship1.leftRightMove(4);
+            }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (this.spaceship1.getX() >= 0) {
+                spaceship1.leftRightMove(-4);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_S) {
             if (this.spaceship2.getY() <= (height - 1.75 * spaceship2.getHeight())) {
-                spaceship2.move(3);
+                spaceship2.upDownMove(4);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_W) {
             if (this.spaceship2.getY() >= 0) {
-                spaceship2.move(-3);
+                spaceship2.upDownMove(-4);
+            }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_D) {
+            if (this.spaceship2.getX() <= (this.width - 1.2 * spaceship2.getWidth() )) {
+                spaceship2.leftRightMove(4);
+            }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+            if (this.spaceship2.getX() >= 0) {
+                spaceship2.leftRightMove(-4);
             }
         }
     }

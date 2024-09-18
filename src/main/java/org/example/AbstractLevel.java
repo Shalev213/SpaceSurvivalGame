@@ -23,7 +23,7 @@ public abstract class AbstractLevel extends JPanel {
             while (true) {
                 repaint();
                 backgroundLoop();
-//                gameScene();
+                gameScene();
 
                 try {
                     Thread.sleep(7);
