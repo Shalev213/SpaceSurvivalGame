@@ -6,8 +6,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class LevelOne extends AbstractLevel implements KeyListener {
-    private final Spaceship spaceship1;
-    private final Spaceship spaceship2;
+    private Spaceship spaceship1;
+    private Spaceship spaceship2;
+    private Fuel fuel;
+    private Stone stone1;
+    private Stone stone2;
+    private Stone stone3;
+
 
     public LevelOne(int width, int height, String teamName) {
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
@@ -20,9 +25,31 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
         this.spaceship1 = new Spaceship("src/main/java/sources/Spaceship1.png");
-        this.spaceship1.setY(100);
+        this.spaceship1.setY(200);
         this.spaceship2 = new Spaceship("src/main/java/sources/Spaceship2.png");
-        this.spaceship2.setY(300);
+        this.spaceship2.setY(500);
+
+        this.fuel = new Fuel();
+        this.fuel.setRandomX(this.width, this.width * 2);
+        this.fuel.setRandomY(0, this.height - this.fuel.getHeight());
+        this.fuel.start();
+
+        this.stone1 = new Stone("src/main/java/sources/stone1.png");
+        this.stone1.setRandomX(this.width, this.width * 2);
+        this.stone1.setRandomY( 0, this.height - this.stone1.getHeight());
+        this.stone1.start();
+
+        this.stone2 = new Stone("src/main/java/sources/stone2.png");
+        this.stone2.setRandomX(this.width, this.width * 2);
+        this.stone2.setRandomY( 0, this.height - this.stone2.getHeight());
+        this.stone2.start();
+
+        this.stone3 = new Stone("src/main/java/sources/stone3.png");
+        this.stone3.setRandomX(this.width, this.width * 2);
+        this.stone3.setRandomY( 0, this.height - this.stone3.getHeight());
+        this.stone3.start();
+
+
         this.setFocusable(true);
         this.requestFocus();
         this.addKeyListener(this);
@@ -35,7 +62,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         return spaceBackgroundOne.getIconWidth();
     }
 
-    @Override
+//    @Override
     public void gameScene() {
 
         // Handle game logic here
@@ -45,8 +72,16 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
+        if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
+            this.spaceBackgroundOne.paintIcon(null, graphics, xOfBackgroundOne, 0);
+            this.spaceBackgroundTwo.paintIcon(null, graphics, xOfBackgroundTwo, 0);
+        }
         spaceship1.paintSpaceship(graphics);
         spaceship2.paintSpaceship(graphics);
+        fuel.paintFuel(graphics);
+        stone1.paintStone(graphics);
+        stone2.paintStone(graphics);
+        stone3.paintStone(graphics);
 
     }
 

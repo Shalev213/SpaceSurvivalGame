@@ -18,12 +18,10 @@ public class Spaceship {
         this.spaceship = new ImageIcon(imagePath).getImage();
 
 
-
-
     }
 
     public void paintSpaceship(Graphics graphics){
-        graphics.drawImage(this.spaceship,25, this.y, this.width, this.height, null);
+        graphics.drawImage(this.spaceship,40, this.y, this.width, this.height, null);
 
     }
 

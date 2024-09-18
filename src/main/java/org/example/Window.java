@@ -6,32 +6,34 @@
     import java.awt.*;
 
     public class Window extends JFrame {
+        private final int windowWidth = 1100;
+        private final int windowHeight = 750;
         private SignInPanel signInPanel;
         private SignUpPanel signUpPanel;
         private LevelsPanel levelsPanel;
         private LevelOne levelOne;
         private LevelTwo levelTwo;
         private LevelThree levelThree;
-        private final int width = 1100;
-        private final int height = 750;
+
+
 
         public Window () {
-            this.setSize(width, height);
+            this.setSize(windowWidth, windowHeight);
             this.setDefaultCloseOperation(EXIT_ON_CLOSE);
             this.setResizable(false);
             this.setLocationRelativeTo(null);
 
-            signInPanel = new SignInPanel(width, height);
+            signInPanel = new SignInPanel(windowWidth, windowHeight);
             this.add(signInPanel);
-            signUpPanel = new SignUpPanel(width, height);
+            signUpPanel = new SignUpPanel(windowWidth, windowHeight);
             this.add(signUpPanel);
             signUpPanel.setVisible(false);
-            levelsPanel = new LevelsPanel(width, height);
+            levelsPanel = new LevelsPanel(windowWidth, windowHeight);
             this.add(levelsPanel);
             levelsPanel.setVisible(false);
 
-            levelTwo = new LevelTwo(width, height);
-            levelThree = new LevelThree(width, height);
+            levelTwo = new LevelTwo(windowWidth, windowHeight);
+            levelThree = new LevelThree(windowWidth, windowHeight);
 
             UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 20));
             UIManager.put("Button.background", Color.darkGray);
@@ -91,8 +93,9 @@
             this.levelsPanel.getLevelButton1().addActionListener(e -> {
                 this.levelsPanel.setVisible(false);
                 String teamName = signInPanel.getTeamName();
-                levelOne = new LevelOne(width, height, teamName);
+                levelOne = new LevelOne(windowWidth, windowHeight, teamName);
                 this.add(levelOne);
+
                 levelOne.setVisible(true);
                 levelOne.setFocusable(true);
                 levelOne.requestFocus();
@@ -116,11 +119,12 @@
         }
 
         public int getWidth() {
-            return width;
+            return windowWidth;
         }
 
         public int getHeight() {
-            return height;
+            return windowHeight;
         }
+
 
     }

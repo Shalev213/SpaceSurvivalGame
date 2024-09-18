@@ -1,6 +1,7 @@
 package org.example;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LevelThree extends AbstractLevel {
 
@@ -15,6 +16,11 @@ public class LevelThree extends AbstractLevel {
 
 
         mainGameLoop();
+    }
+
+    @Override
+    public void paintComponent(Graphics graphics) {
+
     }
 
     @Override

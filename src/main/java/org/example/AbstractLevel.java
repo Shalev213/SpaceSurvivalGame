@@ -5,8 +5,8 @@ import java.awt.*;
 
 public abstract class AbstractLevel extends JPanel {
 
-    protected int width;
-    protected int height;
+    protected int width = 1100;
+    protected int height = 750;
     protected ImageIcon spaceBackgroundOne;
     protected ImageIcon spaceBackgroundTwo;
     protected int xOfBackgroundOne = 0;
@@ -26,7 +26,7 @@ public abstract class AbstractLevel extends JPanel {
 //                gameScene();
 
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(7);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -51,10 +51,10 @@ public abstract class AbstractLevel extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-        if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
-            this.spaceBackgroundOne.paintIcon(null, graphics, xOfBackgroundOne, 0);
-            this.spaceBackgroundTwo.paintIcon(null, graphics, xOfBackgroundTwo, 0);
-        }
+//        if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
+//            this.spaceBackgroundOne.paintIcon(null, graphics, xOfBackgroundOne, 0);
+//            this.spaceBackgroundTwo.paintIcon(null, graphics, xOfBackgroundTwo, 0);
+//        }
     }
 
     public abstract int getBackgroundWidth();
