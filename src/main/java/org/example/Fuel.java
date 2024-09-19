@@ -56,9 +56,18 @@ public class Fuel extends Thread{
         return y;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public short getWidth() {
+        return width;
+    }
+
     public short getHeight() {
         return height;
     }
+
 
     public void move() {
         this.x -= dx;
@@ -69,5 +78,9 @@ public class Fuel extends Thread{
     public void setRandomY(int origin, int bound) {
         this.y = random.nextInt(origin, bound);
     }
+    public Rectangle rectangle() {
+        return new Rectangle (this.x, this.y , this.width, this.height);
+    }
+
 
 }

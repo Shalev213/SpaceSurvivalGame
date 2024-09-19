@@ -32,7 +32,9 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private List<Stone> stones;
     private boolean stoneHasCollision = false;
     private byte stoneIndex;
-    private int counterOfHits;
+    private int counterOfStoneHits;
+    private boolean fuelHasCollision = false;
+    private int counterOfFuelHits;
 
 
 
@@ -154,6 +156,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
         stonesLoop();   //חזרה של האבנים
         checkCollision();  // בדיקת פגיעה בין האבנים לחלליות
+        fuelLoop(); //בדיקת פגיעה בין הדלק לחלליות
 
         // Handle game logic here
         // You can send messages to the server using gameClient.sendMessage(message);
@@ -216,17 +219,30 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         for (int i = 0; i < stones.size(); i++) {
             if (stones.get(i).getX() < -stones.get(i).getWidth()) {
                 stones.get(i).setRandomX(this.width, this.width + 600);
-                stones.get(i).setRandomY(0, this.height - this.stone2.getHeight());
+                stones.get(i).setRandomY(0, this.height - this.stones.get(i).getHeight());
             }
         }
 
     }
 
+    public void fuelLoop() {
+        if (fuel.getX() < -fuel.getWidth()){
+            this.fuel.setRandomX(this.width, this.width * 2);
+            this.fuel.setRandomY(0, this.height - this.fuel.getHeight());
+        }
+    }
+
+
+
 
     public void checkCollision() {
 
+        if (this.fuel.rectangle().intersects(this.spaceship1.rectangle()) || this.fuel.rectangle().intersects(this.spaceship2.rectangle())){
+            fuelHasCollision = true;
+        }
+
         for (int i = 0; i < stones.size(); i++) {
-            if (stones.get(i).rectangle().intersects(this.spaceship1.rectangle()) || stones.get(i).rectangle().intersects(this.spaceship2.rectangle())) {
+            if (this.stones.get(i).rectangle().intersects(this.spaceship1.rectangle()) || this.stones.get(i).rectangle().intersects(this.spaceship2.rectangle())) {
                 stoneHasCollision = true;
                 stoneIndex = (byte) i;
             }
@@ -234,15 +250,24 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         if (stoneHasCollision){
             stones.get(stoneIndex).setRandomX(this.width, this.width + 600);
             stones.get(stoneIndex).setRandomY(0, this.height - this.stone2.getHeight());
-            this.counterOfHits++;
-            System.out.println(counterOfHits);
+            this.counterOfStoneHits++;
+            System.out.println("Stones hits: " + counterOfStoneHits);
             stoneHasCollision = false;
 
+            if (counterOfStoneHits == 3){
+                System.out.println("game over");
+            }
+
         }
 
-        if (counterOfHits == 3){
-            System.out.println("game over");
+        if (fuelHasCollision){
+            this.fuel.setRandomX(this.width, this.width * 2);
+            this.fuel.setRandomY(0, this.height - this.fuel.getHeight());
+            counterOfFuelHits++;
+            System.out.println("Fuel hits: " + counterOfFuelHits);
+            fuelHasCollision = false;
         }
+
     }
 
 }
