@@ -52,4 +52,8 @@ public class Spaceship {
     public double getWidth() {
         return this.width;
     }
+
+    public Rectangle rectangle() {
+        return new Rectangle(this.x, this.y, this.width , this.height);
+    }
 }

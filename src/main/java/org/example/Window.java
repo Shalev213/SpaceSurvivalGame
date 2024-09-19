@@ -46,14 +46,14 @@
                 if (this.signInPanel.hasEmptyField()) {
                     JOptionPane.showMessageDialog(null, "One or more of your fields are empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    if (JDBC.validateLogin(teamName, teamPassword)) {
+//                    if (JDBC.validateLogin(teamName, teamPassword)) {
                         System.out.println("login success");
                         this.signInPanel.setVisible(false);
                         this.signInPanel.restartPanel();
                         this.levelsPanel.setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
+//                    }
                 }
             });
             this.levelsPanel.getReturnButton().addActionListener(e -> {

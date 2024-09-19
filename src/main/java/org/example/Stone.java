@@ -27,7 +27,7 @@ public class Stone extends Thread{
 
 
     public void paintStone(Graphics graphics){
-        System.out.println("Stone-> " + "x: " + x + ",y: " + y);
+//        System.out.println("Stone-> " + "x: " + x + ",y: " + y);
         graphics.drawImage(this.stone, this.x, this.y, this.width, this.height, null);
 
 
@@ -54,10 +54,22 @@ public class Stone extends Thread{
         return height;
     }
 
+    public short getWidth() {
+        return width;
+    }
+
+    public int getX() {
+        return x;
+    }
+
     public void setRandomX(int origin, int bound) {
         this.x = random.nextInt(origin, bound);
     }
     public void setRandomY(int origin, int bound) {
         this.y = random.nextInt(origin,bound);
+    }
+
+    public Rectangle rectangle() {
+        return new Rectangle (this.x, this.y , this.width, this.height);
     }
 }

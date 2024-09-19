@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LevelOne extends AbstractLevel implements KeyListener {
     private Spaceship spaceship1;
@@ -12,6 +14,11 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private Stone stone1;
     private Stone stone2;
     private Stone stone3;
+    private Stone stone4;
+    private Stone stone5;
+    private Stone stone6;
+    private Stone stone7;
+    private Stone stone8;
     // משתנים בוליאניים לעקוב אחרי מצב הלחיצה של כל מקש
     private boolean downPressed = false;
     private boolean upPressed = false;
@@ -22,6 +29,10 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private boolean sPressed = false;
     private boolean aPressed = false;
     private boolean dPressed = false;
+    private List<Stone> stones;
+    private boolean stoneHasCollision = false;
+    private byte stoneIndex;
+    private int counterOfHits;
 
 
 
@@ -47,18 +58,55 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
         this.stone1 = new Stone("src/main/java/sources/stone1.png");
         this.stone1.setRandomX(this.width, this.width * 2);
-        this.stone1.setRandomY( 0, this.height - this.stone1.getHeight());
+        this.stone1.setRandomY(0, this.height - this.stone1.getHeight());
         this.stone1.start();
 
         this.stone2 = new Stone("src/main/java/sources/stone2.png");
         this.stone2.setRandomX(this.width, this.width * 2);
-        this.stone2.setRandomY( 0, this.height - this.stone2.getHeight());
+        this.stone2.setRandomY(0, this.height - this.stone2.getHeight());
         this.stone2.start();
 
         this.stone3 = new Stone("src/main/java/sources/stone3.png");
         this.stone3.setRandomX(this.width, this.width * 2);
-        this.stone3.setRandomY( 0, this.height - this.stone3.getHeight());
+        this.stone3.setRandomY(0, this.height - this.stone3.getHeight());
         this.stone3.start();
+
+
+        this.stone4 = new Stone("src/main/java/sources/stone1.png");
+        this.stone4.setRandomX(this.width, this.width * 2);
+        this.stone4.setRandomY(0, this.height - this.stone4.getHeight());
+        this.stone4.start();
+
+        this.stone5 = new Stone("src/main/java/sources/stone2.png");
+        this.stone5.setRandomX(this.width, this.width * 2);
+        this.stone5.setRandomY(0, this.height - this.stone5.getHeight());
+        this.stone5.start();
+
+        this.stone6 = new Stone("src/main/java/sources/stone3.png");
+        this.stone6.setRandomX(this.width, this.width * 2);
+        this.stone6.setRandomY(0, this.height - this.stone6.getHeight());
+        this.stone6.start();
+
+        this.stone7 = new Stone("src/main/java/sources/stone1.png");
+        this.stone7.setRandomX(this.width, this.width * 2);
+        this.stone7.setRandomY(0, this.height - this.stone7.getHeight());
+        this.stone7.start();
+
+        this.stone8 = new Stone("src/main/java/sources/stone2.png");
+        this.stone8.setRandomX(this.width, this.width * 2);
+        this.stone8.setRandomY(0, this.height - this.stone8.getHeight());
+        this.stone8.start();
+
+
+        stones = new ArrayList<>();
+        stones.add(stone1);
+        stones.add(stone2);
+        stones.add(stone3);
+        stones.add(stone4);
+        stones.add(stone5);
+        stones.add(stone6);
+        stones.add(stone7);
+        stones.add(stone8);
 
 
         this.setFocusable(true);
@@ -73,7 +121,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         return spaceBackgroundOne.getIconWidth();
     }
 
-//    @Override
+    //    @Override
     public void gameScene() {
         // חללית 1 - תנועה אנכית ואופקית
         if (downPressed && this.spaceship1.getY() <= (height - 1.5 * spaceship1.getHeight())) {
@@ -102,6 +150,11 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         if (aPressed && this.spaceship2.getX() >= 0) {
             spaceship2.leftRightMove(-2);
         }
+
+
+        stonesLoop();   //חזרה של האבנים
+        checkCollision();  // בדיקת פגיעה בין האבנים לחלליות
+
         // Handle game logic here
         // You can send messages to the server using gameClient.sendMessage(message);
     }
@@ -116,7 +169,11 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         stone1.paintStone(graphics);
         stone2.paintStone(graphics);
         stone3.paintStone(graphics);
-
+        stone4.paintStone(graphics);
+        stone5.paintStone(graphics);
+        stone6.paintStone(graphics);
+        stone7.paintStone(graphics);
+        stone8.paintStone(graphics);
     }
 
     @Override
@@ -152,6 +209,40 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         // לא בשימוש
+    }
+
+
+    public void stonesLoop() {
+        for (int i = 0; i < stones.size(); i++) {
+            if (stones.get(i).getX() < -stones.get(i).getWidth()) {
+                stones.get(i).setRandomX(this.width, this.width + 600);
+                stones.get(i).setRandomY(0, this.height - this.stone2.getHeight());
+            }
+        }
+
+    }
+
+
+    public void checkCollision() {
+
+        for (int i = 0; i < stones.size(); i++) {
+            if (stones.get(i).rectangle().intersects(this.spaceship1.rectangle()) || stones.get(i).rectangle().intersects(this.spaceship2.rectangle())) {
+                stoneHasCollision = true;
+                stoneIndex = (byte) i;
+            }
+        }
+        if (stoneHasCollision){
+            stones.get(stoneIndex).setRandomX(this.width, this.width + 600);
+            stones.get(stoneIndex).setRandomY(0, this.height - this.stone2.getHeight());
+            this.counterOfHits++;
+            System.out.println(counterOfHits);
+            stoneHasCollision = false;
+
+        }
+
+        if (counterOfHits == 3){
+            System.out.println("game over");
+        }
     }
 
 }
