@@ -6,8 +6,8 @@ public class LevelTwo extends AbstractLevel {
 
     public LevelTwo(int width, int height) {
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
-        this.spaceBackgroundTwo = new ImageIcon("src/main/java/sources/LevelTwoMirror.png");
-        this.spaceBackgroundOne = new ImageIcon("src/main/java/sources/LevelTwo.png");
+        this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelTwoMirror.png");
+        this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelTwo.png");
 
 
 
@@ -28,6 +28,11 @@ public class LevelTwo extends AbstractLevel {
 
     @Override
     public void gameScene() {
+
+    }
+
+    @Override
+    public void gameOver() {
 
     }
 }

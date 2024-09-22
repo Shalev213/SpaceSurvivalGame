@@ -14,6 +14,7 @@
         private LevelOne levelOne;
         private LevelTwo levelTwo;
         private LevelThree levelThree;
+//        private Sounds sceneSound;
 
 
 
@@ -22,6 +23,9 @@
             this.setDefaultCloseOperation(EXIT_ON_CLOSE);
             this.setResizable(false);
             this.setLocationRelativeTo(null);
+
+//            this.sceneSound = new Sounds();
+
 
             signInPanel = new SignInPanel(windowWidth, windowHeight);
             this.add(signInPanel);
@@ -95,6 +99,8 @@
                 String teamName = signInPanel.getTeamName();
                 levelOne = new LevelOne(windowWidth, windowHeight, teamName);
                 this.add(levelOne);
+
+//                sceneSound.playSounds("src/main/java/resources/space_background.wav");
 
                 levelOne.setVisible(true);
                 levelOne.setFocusable(true);

@@ -54,6 +54,6 @@ public class Spaceship {
     }
 
     public Rectangle rectangle() {
-        return new Rectangle(this.x, this.y, this.width , this.height);
+        return new Rectangle(this.x, this.y + 8 , this.width - 5 , this.height - 16);
     }
 }

@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class LevelOne extends AbstractLevel implements KeyListener {
     private Spaceship spaceship1;
     private Spaceship spaceship2;
@@ -19,12 +20,10 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private Stone stone6;
     private Stone stone7;
     private Stone stone8;
-    // משתנים בוליאניים לעקוב אחרי מצב הלחיצה של כל מקש
     private boolean downPressed = false;
     private boolean upPressed = false;
     private boolean rightPressed = false;
     private boolean leftPressed = false;
-
     private boolean wPressed = false;
     private boolean sPressed = false;
     private boolean aPressed = false;
@@ -32,25 +31,34 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private List<Stone> stones;
     private boolean stoneHasCollision = false;
     private byte stoneIndex;
-    private int counterOfStoneHits;
+    private int counterOfStoneHits = 0;
     private boolean fuelHasCollision = false;
-    private int counterOfFuelHits;
+    private int counterOfFuelHits = 0;
+    private Sound sceneSound;
+    private Sound fuelSound;
+    private Sound crashing;
+    private Sound explosion;
+    private Sound passedLevel;
+    private Sound missionComplete;
+
 
 
 
     public LevelOne(int width, int height, String teamName) {
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
-        this.spaceBackgroundOne = new ImageIcon("src/main/java/sources/LevelOne.png");
-        this.spaceBackgroundTwo = new ImageIcon("src/main/java/sources/LevelOneMirror.png");
+        this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelOne.png");
+        this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelOneMirror.png");
 
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
         super.width = width;
         super.height = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
-        this.spaceship1 = new Spaceship("src/main/java/sources/Spaceship1.png");
+        this.gameCondition = counterOfStoneHits < 3 && counterOfFuelHits < 5;
+
+        this.spaceship1 = new Spaceship("src/main/java/resources/Spaceship1.png");
         this.spaceship1.setY(200);
-        this.spaceship2 = new Spaceship("src/main/java/sources/Spaceship2.png");
+        this.spaceship2 = new Spaceship("src/main/java/resources/Spaceship2.png");
         this.spaceship2.setY(500);
 
         this.fuel = new Fuel();
@@ -58,43 +66,43 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         this.fuel.setRandomY(0, this.height - this.fuel.getHeight());
         this.fuel.start();
 
-        this.stone1 = new Stone("src/main/java/sources/stone1.png");
+        this.stone1 = new Stone("src/main/java/resources/stone1.png");
         this.stone1.setRandomX(this.width, this.width * 2);
         this.stone1.setRandomY(0, this.height - this.stone1.getHeight());
         this.stone1.start();
 
-        this.stone2 = new Stone("src/main/java/sources/stone2.png");
+        this.stone2 = new Stone("src/main/java/resources/stone2.png");
         this.stone2.setRandomX(this.width, this.width * 2);
         this.stone2.setRandomY(0, this.height - this.stone2.getHeight());
         this.stone2.start();
 
-        this.stone3 = new Stone("src/main/java/sources/stone3.png");
+        this.stone3 = new Stone("src/main/java/resources/stone3.png");
         this.stone3.setRandomX(this.width, this.width * 2);
         this.stone3.setRandomY(0, this.height - this.stone3.getHeight());
         this.stone3.start();
 
 
-        this.stone4 = new Stone("src/main/java/sources/stone1.png");
+        this.stone4 = new Stone("src/main/java/resources/stone1.png");
         this.stone4.setRandomX(this.width, this.width * 2);
         this.stone4.setRandomY(0, this.height - this.stone4.getHeight());
         this.stone4.start();
 
-        this.stone5 = new Stone("src/main/java/sources/stone2.png");
+        this.stone5 = new Stone("src/main/java/resources/stone2.png");
         this.stone5.setRandomX(this.width, this.width * 2);
         this.stone5.setRandomY(0, this.height - this.stone5.getHeight());
         this.stone5.start();
 
-        this.stone6 = new Stone("src/main/java/sources/stone3.png");
+        this.stone6 = new Stone("src/main/java/resources/stone3.png");
         this.stone6.setRandomX(this.width, this.width * 2);
         this.stone6.setRandomY(0, this.height - this.stone6.getHeight());
         this.stone6.start();
 
-        this.stone7 = new Stone("src/main/java/sources/stone1.png");
+        this.stone7 = new Stone("src/main/java/resources/stone1.png");
         this.stone7.setRandomX(this.width, this.width * 2);
         this.stone7.setRandomY(0, this.height - this.stone7.getHeight());
         this.stone7.start();
 
-        this.stone8 = new Stone("src/main/java/sources/stone2.png");
+        this.stone8 = new Stone("src/main/java/resources/stone2.png");
         this.stone8.setRandomX(this.width, this.width * 2);
         this.stone8.setRandomY(0, this.height - this.stone8.getHeight());
         this.stone8.start();
@@ -111,6 +119,35 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         stones.add(stone8);
 
 
+        this.sceneSound = new Sound();
+        this.sceneSound.playSound("src/main/java/resources/space_background.wav");
+        this.sceneSound.startPlay();
+        this.sceneSound.loopPlay();
+
+//        sceneSound.playSounds("");
+
+//        this.sceneSound = new Sounds("space_background.wav");
+
+
+
+        this.fuelSound = new Sound();
+        this.fuelSound.playSound("src/main/java/sourcescatching_fuel.mp3");
+
+        this.crashing = new Sound();
+        this.crashing.playSound("src/main/java/resources/crashing.wav");
+
+        this.explosion = new Sound();
+        this.explosion.playSound("src/main/java/resources/explosion.wav");
+
+        this.passedLevel = new Sound();
+        this.passedLevel.playSound("src/main/java/sourcesexplosion.mp3");
+
+        this.missionComplete = new Sound();
+        this.missionComplete.playSound("src/main/java/sourcesmission_completed.mp3");
+
+
+
+
         this.setFocusable(true);
         this.requestFocus();
         this.addKeyListener(this);
@@ -123,7 +160,8 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         return spaceBackgroundOne.getIconWidth();
     }
 
-    //    @Override
+
+        @Override
     public void gameScene() {
         // חללית 1 - תנועה אנכית ואופקית
         if (downPressed && this.spaceship1.getY() <= (height - 1.5 * spaceship1.getHeight())) {
@@ -158,8 +196,13 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         checkCollision();  // בדיקת פגיעה בין האבנים לחלליות
         fuelLoop(); //בדיקת פגיעה בין הדלק לחלליות
 
-        // Handle game logic here
-        // You can send messages to the server using gameClient.sendMessage(message);
+
+    }
+
+    @Override
+    public void gameOver() {
+
+
     }
 
 
@@ -181,7 +224,6 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // עדכון המשתנים הבוליאניים בהתאם למקש שנלחץ
         switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN -> downPressed = true;
             case KeyEvent.VK_UP -> upPressed = true;
@@ -196,7 +238,6 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // עדכון המשתנים הבוליאניים בהתאם למקש ששוחרר
         switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN -> downPressed = false;
             case KeyEvent.VK_UP -> upPressed = false;
@@ -211,7 +252,6 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // לא בשימוש
     }
 
 
@@ -233,16 +273,16 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     }
 
 
-
-
     public void checkCollision() {
-
         if (this.fuel.rectangle().intersects(this.spaceship1.rectangle()) || this.fuel.rectangle().intersects(this.spaceship2.rectangle())){
+            fuelSound.startPlay();
             fuelHasCollision = true;
+            counterOfFuelHits++;
         }
-
         for (int i = 0; i < stones.size(); i++) {
             if (this.stones.get(i).rectangle().intersects(this.spaceship1.rectangle()) || this.stones.get(i).rectangle().intersects(this.spaceship2.rectangle())) {
+                crashing.startPlay();
+                counterOfStoneHits++;
                 stoneHasCollision = true;
                 stoneIndex = (byte) i;
             }
@@ -253,13 +293,10 @@ public class LevelOne extends AbstractLevel implements KeyListener {
             this.counterOfStoneHits++;
             System.out.println("Stones hits: " + counterOfStoneHits);
             stoneHasCollision = false;
-
             if (counterOfStoneHits == 3){
                 System.out.println("game over");
             }
-
         }
-
         if (fuelHasCollision){
             this.fuel.setRandomX(this.width, this.width * 2);
             this.fuel.setRandomY(0, this.height - this.fuel.getHeight());
@@ -267,7 +304,5 @@ public class LevelOne extends AbstractLevel implements KeyListener {
             System.out.println("Fuel hits: " + counterOfFuelHits);
             fuelHasCollision = false;
         }
-
     }
-
 }

@@ -7,8 +7,8 @@ public class LevelThree extends AbstractLevel {
 
     public LevelThree(int width, int height) {
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
-        this.spaceBackgroundOne = new ImageIcon("src/main/java/sources/LevelThree.png");
-        this.spaceBackgroundTwo = new ImageIcon("src/main/java/sources/LevelThreeMirror.png");
+        this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelThree.png");
+        this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelThreeMirror.png");
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
         super.width = width;
         super.height = height;
@@ -30,6 +30,11 @@ public class LevelThree extends AbstractLevel {
 
     @Override
     public void gameScene() {
+
+    }
+
+    @Override
+    public void gameOver() {
 
     }
 }

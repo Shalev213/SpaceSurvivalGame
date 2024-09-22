@@ -11,6 +11,7 @@ public abstract class AbstractLevel extends JPanel {
     protected ImageIcon spaceBackgroundTwo;
     protected int xOfBackgroundOne = 0;
     protected int xOfBackgroundTwo;
+    protected boolean gameCondition = true;
 
     public AbstractLevel() {
         this.setSize(this.width, this.height);
@@ -20,7 +21,7 @@ public abstract class AbstractLevel extends JPanel {
 
     public void mainGameLoop() {
         new Thread(() -> {
-            while (true) {
+            while (gameCondition) {
                 repaint();
                 backgroundLoop();
                 gameScene();
@@ -31,6 +32,7 @@ public abstract class AbstractLevel extends JPanel {
                     throw new RuntimeException(e);
                 }
             }
+            gameOver();
         }).start();
     }
     public void moveBackgrounds() {
@@ -60,5 +62,6 @@ public abstract class AbstractLevel extends JPanel {
     public abstract int getBackgroundWidth();
 
     public abstract void gameScene();
+    public abstract void gameOver();
 //    public abstract  void paintComponent();
 }
