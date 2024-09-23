@@ -42,6 +42,11 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private Sound missionComplete;
     private ImageIcon finalBackground;
     private int finalBackgroundX = windowWidth;
+    private String[] options;
+    private int selectedOption;
+    private boolean isSuccess = counterOfFuelHits >= 5;
+    private boolean isFailed = counterOfStoneHits >= 3;
+
 
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
 
@@ -60,6 +65,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
+        this.options[0] = "Lobby";
 
         this.spaceship1 = new Spaceship("src/main/java/resources/Spaceship1.png");
         this.spaceship1.setY(200);
@@ -162,7 +168,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     public void gameScene() {
         this.sceneSound.startBackgroundPlay();
         this.sceneSound.loopPlay();
-        this.gameCondition = counterOfStoneHits < 3 && counterOfFuelHits < 5;
+        this.gameCondition = !isFailed && !isSuccess;
 
             // חללית 1 - תנועה אנכית ואופקית
         if (downPressed && this.spaceship1.getY() <= (windowHeight - 1.5 * spaceship1.getHeight())) {
@@ -202,7 +208,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     @Override
     public void gameOver() {
-        if (counterOfFuelHits >= 5){
+        if (isSuccess){
             while (finalBackgroundX > 0){
                 repaint();
                 finalBackgroundX -= 1;
@@ -218,36 +224,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
 
 
-            showDialog();
-
-//            Object[] options = {"Lobby", "Next level"};
-//
-//            // יצירת חלונית עם לחצנים מותאמים אישית
-//            int option = JOptionPane.showOptionDialog(null,
-//                    "Mission Complete",                    // ההודעה שתוצג
-//                    null,                                         // הכותרת של החלונית
-//                    JOptionPane.DEFAULT_OPTION,            // לא מצריך אפשרות ברירת מחדל קבועה
-//                    JOptionPane.INFORMATION_MESSAGE,       // סוג האייקון
-//                    null,                                  // אייקון מותאם אישית (null כדי להשתמש בברירת מחדל)
-//                    options,                               // המערך של הכפתורים המותאמים אישית
-//                    options[0]);                           // הכפתור המועדף כברירת מחדל (פה זה "Accept")
-//
-//            // הדפסת התוצאה שנבחרה
-//            if (option == 0) {
-//                System.out.println("Lobby selected");
-//            } else if (option == 1) {
-//                System.out.println("Next level selected");
-//            }else {
-//                System.out.println("No option selected");
-//            }
-
-
-
-
-
-
-
-
+            showSuccessDialog();
 
 
         }
@@ -257,10 +234,29 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
 
 
-    public void showDialog() {
-        Object[] options = {"Lobby", "Next level"};
+    public void showSuccessDialog() {
+//        this.options[0] = "Lobby";
+        this.options[1] = "Next level";
+//        this.options = {"Lobby", "Next level"};
 
-        int selectedOption = JOptionPane.showOptionDialog(null,
+        this.selectedOption = JOptionPane.showOptionDialog(null,
+                "Mission Failed",
+                null,
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        // מפעיל את כל המאזינים עם התוצאה שנבחרה
+        notifyListeners(selectedOption);
+    }
+
+    public void showFailedDialog() {
+        this.options[1] = "Play again";
+//        this.options[3] = "Lobby";
+
+        this.selectedOption = JOptionPane.showOptionDialog(null,
                 "Mission Complete",
                 null,
                 JOptionPane.DEFAULT_OPTION,
@@ -391,5 +387,9 @@ public class LevelOne extends AbstractLevel implements KeyListener {
             System.out.println("Fuel hits: " + counterOfFuelHits);
             fuelHasCollision = false;
         }
+    }
+
+    public Sound getSceneSound() {
+        return sceneSound;
     }
 }

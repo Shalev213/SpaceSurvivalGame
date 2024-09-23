@@ -102,7 +102,9 @@
 
                 levelOne.addOptionSelectionListener(selectedOption -> {
                     if (selectedOption == 0) {
-                        levelOne.setVisible(false);
+
+                        levelOne.getSceneSound().stopPlay();
+                        this.remove(levelOne);
                         levelsPanel.setVisible(true);
                         // פעולה ל-"Lobby"
                     } else if (selectedOption == 1) {
@@ -111,7 +113,6 @@
                         System.out.println("No option selected or window closed");
                     }
                 });
-//                sceneSound.playSounds("src/main/java/resources/space_background.wav");
 
                 levelOne.setVisible(true);
                 levelOne.setFocusable(true);
@@ -129,26 +130,6 @@
                 this.add(levelThree);
                 levelThree.setVisible(true);
             });
-
-
-//            if (this.levelOne != null) {
-//                levelOne.addOptionSelectionListener(selectedOption -> {
-//                    if (selectedOption == 0) {
-//                        levelOne.setVisible(false);
-//                        levelsPanel.setVisible(true);
-//                        // פעולה ל-"Lobby"
-//                    } else if (selectedOption == 1) {
-//                        levelOne.setVisible(false);
-//                    } else {
-//                        System.out.println("No option selected or window closed");
-//                    }
-//                });
-//            }
-
-
-
-
-
 
 
         }
