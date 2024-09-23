@@ -42,7 +42,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private Sound missionComplete;
     private ImageIcon finalBackground;
     private int finalBackgroundX = windowWidth;
-    private String[] options;
+    private Object[] options;
     private int selectedOption;
     private boolean isSuccess = counterOfFuelHits >= 5;
     private boolean isFailed = counterOfStoneHits >= 3;
@@ -65,7 +65,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
-        this.options[0] = "Lobby";
+        this.options = new Object[]{"Lobby", ""};
 
         this.spaceship1 = new Spaceship("src/main/java/resources/Spaceship1.png");
         this.spaceship1.setY(200);
@@ -168,7 +168,12 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     public void gameScene() {
         this.sceneSound.startBackgroundPlay();
         this.sceneSound.loopPlay();
+
+        System.out.println(isSuccess);
+        this.isSuccess = counterOfFuelHits >= 5;
+        this.isFailed = counterOfStoneHits >= 3;
         this.gameCondition = !isFailed && !isSuccess;
+        
 
             // חללית 1 - תנועה אנכית ואופקית
         if (downPressed && this.spaceship1.getY() <= (windowHeight - 1.5 * spaceship1.getHeight())) {
@@ -221,12 +226,9 @@ public class LevelOne extends AbstractLevel implements KeyListener {
             }
             passedLevel.startPlay();
             missionComplete.startPlay();
-
-
-
             showSuccessDialog();
-
-
+        } else if (isFailed) {
+            showFailedDialog();
         }
 
     }
@@ -236,11 +238,11 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     public void showSuccessDialog() {
 //        this.options[0] = "Lobby";
+//        this.options = new Object[]{"Lobby", ""};
         this.options[1] = "Next level";
-//        this.options = {"Lobby", "Next level"};
 
         this.selectedOption = JOptionPane.showOptionDialog(null,
-                "Mission Failed",
+                "Mission Complete",
                 null,
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
@@ -257,7 +259,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 //        this.options[3] = "Lobby";
 
         this.selectedOption = JOptionPane.showOptionDialog(null,
-                "Mission Complete",
+                "Mission Failed",
                 null,
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
@@ -391,5 +393,13 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     public Sound getSceneSound() {
         return sceneSound;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public boolean isFailed() {
+        return isFailed;
     }
 }

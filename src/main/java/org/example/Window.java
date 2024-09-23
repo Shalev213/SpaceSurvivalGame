@@ -26,7 +26,6 @@
 
 //            this.sceneSound = new Sounds();
 
-
             signInPanel = new SignInPanel(windowWidth, windowHeight);
             this.add(signInPanel);
             signUpPanel = new SignUpPanel(windowWidth, windowHeight);
@@ -37,7 +36,7 @@
             levelsPanel.setVisible(false);
 
             levelTwo = new LevelTwo(windowWidth, windowHeight);
-            levelThree = new LevelThree(windowWidth, windowHeight);
+//            levelThree = new LevelThree(windowWidth, windowHeight);
 
             UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 20));
             UIManager.put("Button.background", Color.darkGray);
@@ -102,13 +101,24 @@
 
                 levelOne.addOptionSelectionListener(selectedOption -> {
                     if (selectedOption == 0) {
-
                         levelOne.getSceneSound().stopPlay();
                         this.remove(levelOne);
                         levelsPanel.setVisible(true);
+                        if (levelOne.isSuccess()){
+                            this.levelsPanel.getLevelButton2().setEnabled(true);
+                        }
                         // פעולה ל-"Lobby"
                     } else if (selectedOption == 1) {
-                        levelOne.setVisible(false);
+                        if (levelOne.isSuccess()) {
+                            levelOne.getSceneSound().stopPlay();
+                            this.remove(levelOne);
+                            this.levelsPanel.getLevelButton2().setEnabled(true);
+                            this.levelsPanel.getLevelButton2().doClick();
+                        } else if (levelOne.isFailed()) {
+                            this.levelOne.getSceneSound().stopPlay();
+                            this.remove(levelOne);
+                            this.levelsPanel.getLevelButton1().doClick();
+                        }
                     } else {
                         System.out.println("No option selected or window closed");
                     }
