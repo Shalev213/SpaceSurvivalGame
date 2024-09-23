@@ -5,8 +5,8 @@ import java.awt.*;
 
 public abstract class AbstractLevel extends JPanel {
 
-    protected int width = 1100;
-    protected int height = 750;
+    protected int windowWidth = 1100;
+    protected int windowHeight = 750;
     protected ImageIcon spaceBackgroundOne;
     protected ImageIcon spaceBackgroundTwo;
     protected int xOfBackgroundOne = 0;
@@ -14,7 +14,7 @@ public abstract class AbstractLevel extends JPanel {
     protected boolean gameCondition = true;
 
     public AbstractLevel() {
-        this.setSize(this.width, this.height);
+        this.setSize(this.windowWidth, this.windowHeight);
         this.setLayout(null);
         this.setVisible(true);
     }

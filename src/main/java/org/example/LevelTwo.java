@@ -14,8 +14,8 @@ public class LevelTwo extends AbstractLevel {
 
 
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
-        super.width = width;
-        super.height = height;
+        super.windowWidth = width;
+        super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
         mainGameLoop();

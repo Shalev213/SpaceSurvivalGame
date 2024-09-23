@@ -34,6 +34,11 @@ public class Sound {
 
     public void startPlay(){
         this.clip.start();
+        this.clip.setFramePosition(0);
+    }
+
+    public void startBackgroundPlay(){
+        this.clip.start();
     }
 
     public void loopPlay(){

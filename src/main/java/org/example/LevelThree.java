@@ -10,8 +10,8 @@ public class LevelThree extends AbstractLevel {
         this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelThree.png");
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelThreeMirror.png");
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
-        super.width = width;
-        super.height = height;
+        super.windowWidth = width;
+        super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
 

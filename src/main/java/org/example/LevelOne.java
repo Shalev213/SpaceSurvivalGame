@@ -40,6 +40,11 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private Sound explosion;
     private Sound passedLevel;
     private Sound missionComplete;
+    private ImageIcon finalBackground;
+    private int finalBackgroundX = windowWidth;
+
+    private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
+
 
 
 
@@ -48,13 +53,13 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
         this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelOne.png");
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelOneMirror.png");
+        this.finalBackground = new ImageIcon("src/main/java/resources/final_moon.png");
 
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
-        super.width = width;
-        super.height = height;
+        super.windowWidth = width;
+        super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
-        this.gameCondition = counterOfStoneHits < 3 && counterOfFuelHits < 5;
 
         this.spaceship1 = new Spaceship("src/main/java/resources/Spaceship1.png");
         this.spaceship1.setY(200);
@@ -62,49 +67,49 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         this.spaceship2.setY(500);
 
         this.fuel = new Fuel();
-        this.fuel.setRandomX(this.width, this.width * 2);
-        this.fuel.setRandomY(0, this.height - this.fuel.getHeight());
+        this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
         this.fuel.start();
 
         this.stone1 = new Stone("src/main/java/resources/stone1.png");
-        this.stone1.setRandomX(this.width, this.width * 2);
-        this.stone1.setRandomY(0, this.height - this.stone1.getHeight());
+        this.stone1.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.stone1.setRandomY(0, this.windowHeight - this.stone1.getHeight());
         this.stone1.start();
 
         this.stone2 = new Stone("src/main/java/resources/stone2.png");
-        this.stone2.setRandomX(this.width, this.width * 2);
-        this.stone2.setRandomY(0, this.height - this.stone2.getHeight());
+        this.stone2.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.stone2.setRandomY(0, this.windowHeight - this.stone2.getHeight());
         this.stone2.start();
 
         this.stone3 = new Stone("src/main/java/resources/stone3.png");
-        this.stone3.setRandomX(this.width, this.width * 2);
-        this.stone3.setRandomY(0, this.height - this.stone3.getHeight());
+        this.stone3.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.stone3.setRandomY(0, this.windowHeight - this.stone3.getHeight());
         this.stone3.start();
 
 
         this.stone4 = new Stone("src/main/java/resources/stone1.png");
-        this.stone4.setRandomX(this.width, this.width * 2);
-        this.stone4.setRandomY(0, this.height - this.stone4.getHeight());
+        this.stone4.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.stone4.setRandomY(0, this.windowHeight - this.stone4.getHeight());
         this.stone4.start();
 
         this.stone5 = new Stone("src/main/java/resources/stone2.png");
-        this.stone5.setRandomX(this.width, this.width * 2);
-        this.stone5.setRandomY(0, this.height - this.stone5.getHeight());
+        this.stone5.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.stone5.setRandomY(0, this.windowHeight - this.stone5.getHeight());
         this.stone5.start();
 
         this.stone6 = new Stone("src/main/java/resources/stone3.png");
-        this.stone6.setRandomX(this.width, this.width * 2);
-        this.stone6.setRandomY(0, this.height - this.stone6.getHeight());
+        this.stone6.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.stone6.setRandomY(0, this.windowHeight - this.stone6.getHeight());
         this.stone6.start();
 
         this.stone7 = new Stone("src/main/java/resources/stone1.png");
-        this.stone7.setRandomX(this.width, this.width * 2);
-        this.stone7.setRandomY(0, this.height - this.stone7.getHeight());
+        this.stone7.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.stone7.setRandomY(0, this.windowHeight - this.stone7.getHeight());
         this.stone7.start();
 
         this.stone8 = new Stone("src/main/java/resources/stone2.png");
-        this.stone8.setRandomX(this.width, this.width * 2);
-        this.stone8.setRandomY(0, this.height - this.stone8.getHeight());
+        this.stone8.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.stone8.setRandomY(0, this.windowHeight - this.stone8.getHeight());
         this.stone8.start();
 
 
@@ -121,17 +126,9 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
         this.sceneSound = new Sound();
         this.sceneSound.playSound("src/main/java/resources/space_background.wav");
-        this.sceneSound.startPlay();
-        this.sceneSound.loopPlay();
-
-//        sceneSound.playSounds("");
-
-//        this.sceneSound = new Sounds("space_background.wav");
-
-
 
         this.fuelSound = new Sound();
-        this.fuelSound.playSound("src/main/java/sourcescatching_fuel.mp3");
+        this.fuelSound.playSound("src/main/java/resources/catching_fuel.wav");
 
         this.crashing = new Sound();
         this.crashing.playSound("src/main/java/resources/crashing.wav");
@@ -140,10 +137,10 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         this.explosion.playSound("src/main/java/resources/explosion.wav");
 
         this.passedLevel = new Sound();
-        this.passedLevel.playSound("src/main/java/sourcesexplosion.mp3");
+        this.passedLevel.playSound("src/main/java/resources/passed_level.wav");
 
         this.missionComplete = new Sound();
-        this.missionComplete.playSound("src/main/java/sourcesmission_completed.mp3");
+        this.missionComplete.playSound("src/main/java/resources/mission_completed.wav");
 
 
 
@@ -163,14 +160,18 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
         @Override
     public void gameScene() {
-        // חללית 1 - תנועה אנכית ואופקית
-        if (downPressed && this.spaceship1.getY() <= (height - 1.5 * spaceship1.getHeight())) {
+        this.sceneSound.startBackgroundPlay();
+        this.sceneSound.loopPlay();
+        this.gameCondition = counterOfStoneHits < 3 && counterOfFuelHits < 5;
+
+            // חללית 1 - תנועה אנכית ואופקית
+        if (downPressed && this.spaceship1.getY() <= (windowHeight - 1.5 * spaceship1.getHeight())) {
             spaceship1.upDownMove(1);
         }
         if (upPressed && this.spaceship1.getY() >= 0) {
             spaceship1.upDownMove(-1);
         }
-        if (rightPressed && this.spaceship1.getX() <= (this.width - 1.2 * spaceship1.getWidth())) {
+        if (rightPressed && this.spaceship1.getX() <= (this.windowWidth - 1.2 * spaceship1.getWidth())) {
             spaceship1.leftRightMove(1);
         }
         if (leftPressed && this.spaceship1.getX() >= 0) {
@@ -178,13 +179,13 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         }
 
         // חללית 2 - תנועה אנכית ואופקית
-        if (sPressed && this.spaceship2.getY() <= (height - 1.75 * spaceship2.getHeight())) {
+        if (sPressed && this.spaceship2.getY() <= (windowHeight - 1.75 * spaceship2.getHeight())) {
             spaceship2.upDownMove(1);
         }
         if (wPressed && this.spaceship2.getY() >= 0) {
             spaceship2.upDownMove(-1);
         }
-        if (dPressed && this.spaceship2.getX() <= (this.width - 1.2 * spaceship2.getWidth())) {
+        if (dPressed && this.spaceship2.getX() <= (this.windowWidth - 1.2 * spaceship2.getWidth())) {
             spaceship2.leftRightMove(1);
         }
         if (aPressed && this.spaceship2.getX() >= 0) {
@@ -201,14 +202,100 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     @Override
     public void gameOver() {
+        if (counterOfFuelHits >= 5){
+            while (finalBackgroundX > 0){
+                repaint();
+                finalBackgroundX -= 1;
+                try {
+                    Thread.sleep(7);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+            passedLevel.startPlay();
+            missionComplete.startPlay();
 
 
+
+            showDialog();
+
+//            Object[] options = {"Lobby", "Next level"};
+//
+//            // יצירת חלונית עם לחצנים מותאמים אישית
+//            int option = JOptionPane.showOptionDialog(null,
+//                    "Mission Complete",                    // ההודעה שתוצג
+//                    null,                                         // הכותרת של החלונית
+//                    JOptionPane.DEFAULT_OPTION,            // לא מצריך אפשרות ברירת מחדל קבועה
+//                    JOptionPane.INFORMATION_MESSAGE,       // סוג האייקון
+//                    null,                                  // אייקון מותאם אישית (null כדי להשתמש בברירת מחדל)
+//                    options,                               // המערך של הכפתורים המותאמים אישית
+//                    options[0]);                           // הכפתור המועדף כברירת מחדל (פה זה "Accept")
+//
+//            // הדפסת התוצאה שנבחרה
+//            if (option == 0) {
+//                System.out.println("Lobby selected");
+//            } else if (option == 1) {
+//                System.out.println("Next level selected");
+//            }else {
+//                System.out.println("No option selected");
+//            }
+
+
+
+
+
+
+
+
+
+
+        }
+
+    }
+
+
+
+
+    public void showDialog() {
+        Object[] options = {"Lobby", "Next level"};
+
+        int selectedOption = JOptionPane.showOptionDialog(null,
+                "Mission Complete",
+                null,
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        // מפעיל את כל המאזינים עם התוצאה שנבחרה
+        notifyListeners(selectedOption);
+    }
+
+
+
+
+    public interface OptionSelectionListener {
+        void onOptionSelected(int selectedOption);
+    } // פעולה להוספת מאזין לרשימה
+
+    public void addOptionSelectionListener(OptionSelectionListener listener) {
+        listeners.add(listener);
+    }
+
+    // פעולה להפעיל את כל המאזינים כאשר אופציה נבחרת
+    private void notifyListeners(int selectedOption) {
+        for (OptionSelectionListener listener : listeners) {
+            listener.onOptionSelected(selectedOption); // מפעיל את המאזין
+        }
     }
 
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
+        finalBackground.paintIcon(null, graphics, finalBackgroundX, windowHeight - finalBackground.getIconHeight());
         spaceship1.paintSpaceship(graphics);
         spaceship2.paintSpaceship(graphics);
         fuel.paintFuel(graphics);
@@ -258,17 +345,17 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     public void stonesLoop() {
         for (int i = 0; i < stones.size(); i++) {
             if (stones.get(i).getX() < -stones.get(i).getWidth()) {
-                stones.get(i).setRandomX(this.width, this.width + 600);
-                stones.get(i).setRandomY(0, this.height - this.stones.get(i).getHeight());
+                stones.get(i).setRandomX(this.windowWidth, this.windowWidth + 600);
+                stones.get(i).setRandomY(0, this.windowHeight - this.stones.get(i).getHeight());
             }
         }
-
     }
 
     public void fuelLoop() {
         if (fuel.getX() < -fuel.getWidth()){
-            this.fuel.setRandomX(this.width, this.width * 2);
-            this.fuel.setRandomY(0, this.height - this.fuel.getHeight());
+            this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
+            this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
+
         }
     }
 
@@ -276,6 +363,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     public void checkCollision() {
         if (this.fuel.rectangle().intersects(this.spaceship1.rectangle()) || this.fuel.rectangle().intersects(this.spaceship2.rectangle())){
             fuelSound.startPlay();
+            System.out.println(" fuel crash");
             fuelHasCollision = true;
             counterOfFuelHits++;
         }
@@ -285,22 +373,21 @@ public class LevelOne extends AbstractLevel implements KeyListener {
                 counterOfStoneHits++;
                 stoneHasCollision = true;
                 stoneIndex = (byte) i;
+                if (counterOfStoneHits == 3){
+                    explosion.startPlay();
+                    System.out.println("game over - lose");
+                }
             }
         }
         if (stoneHasCollision){
-            stones.get(stoneIndex).setRandomX(this.width, this.width + 600);
-            stones.get(stoneIndex).setRandomY(0, this.height - this.stone2.getHeight());
-            this.counterOfStoneHits++;
-            System.out.println("Stones hits: " + counterOfStoneHits);
+            stones.get(stoneIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
+            stones.get(stoneIndex).setRandomY(0, this.windowHeight - this.stone2.getHeight());
             stoneHasCollision = false;
-            if (counterOfStoneHits == 3){
-                System.out.println("game over");
-            }
+
         }
         if (fuelHasCollision){
-            this.fuel.setRandomX(this.width, this.width * 2);
-            this.fuel.setRandomY(0, this.height - this.fuel.getHeight());
-            counterOfFuelHits++;
+            this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
+            this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
             System.out.println("Fuel hits: " + counterOfFuelHits);
             fuelHasCollision = false;
         }
