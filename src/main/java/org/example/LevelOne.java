@@ -166,10 +166,11 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
         @Override
     public void gameScene() {
+        backgroundLoop();
         this.sceneSound.startBackgroundPlay();
         this.sceneSound.loopPlay();
 
-        System.out.println(isSuccess);
+//        System.out.println(isSuccess);
         this.isSuccess = counterOfFuelHits >= 5;
         this.isFailed = counterOfStoneHits >= 3;
         this.gameCondition = !isFailed && !isSuccess;

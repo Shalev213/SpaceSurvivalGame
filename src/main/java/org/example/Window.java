@@ -134,6 +134,9 @@
                 this.levelsPanel.setVisible(false);
                 this.add(levelTwo);
                 levelTwo.setVisible(true);
+                levelTwo.setFocusable(true);
+                levelTwo.requestFocus();
+                levelTwo.requestFocusInWindow();
             });
             this.levelsPanel.getLevelButton3().addActionListener(e -> {
                 this.levelsPanel.setVisible(false);

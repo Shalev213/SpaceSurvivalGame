@@ -9,16 +9,12 @@ public class Spaceship {
 
     private final short width = 150;
     private final short height = 70;
-    private String imagePath;
     private int y = 0;
     private int x = 40;
 
 
     public Spaceship(String imagePath){
-        this.imagePath = imagePath;
         this.spaceship = new ImageIcon(imagePath).getImage();
-
-
     }
 
     public void paintSpaceship(Graphics graphics){
