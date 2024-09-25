@@ -46,6 +46,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private int selectedOption;
     private boolean isSuccess = counterOfFuelHits >= 5;
     private boolean isFailed = counterOfStoneHits >= 3;
+    private ToolsOfLife toolsOfLife;
 
 
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
@@ -148,6 +149,8 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         this.missionComplete = new Sound();
         this.missionComplete.playSound("src/main/java/resources/mission_completed.wav");
 
+        this.toolsOfLife = new ToolsOfLife();
+
 
 
 
@@ -205,11 +208,11 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         }
 
 
+
+        hideTools();
         stonesLoop();   //חזרה של האבנים
         checkCollision();  // בדיקת פגיעה בין האבנים לחלליות
         fuelLoop(); //בדיקת פגיעה בין הדלק לחלליות
-
-
     }
 
     @Override
@@ -306,6 +309,8 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         stone6.paintStone(graphics);
         stone7.paintStone(graphics);
         stone8.paintStone(graphics);
+        toolsOfLife.paintTools(graphics);
+
     }
 
     @Override
@@ -402,5 +407,18 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     public boolean isFailed() {
         return isFailed;
+    }
+
+    public void hideTools(){
+
+        if (counterOfStoneHits >= 1){
+            toolsOfLife.hideHeart3();
+        }
+        if (counterOfStoneHits >= 2) {
+            toolsOfLife.hideHeart2();
+        }
+        if (counterOfStoneHits >= 3) {
+            toolsOfLife.hideHeart1();
+        }
     }
 }

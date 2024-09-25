@@ -11,15 +11,15 @@ import java.util.List;
 public class LevelThree extends AbstractLevel implements KeyListener {
     private Spaceship spaceship1;
     private Spaceship spaceship2;
-    private Fuel fuel;
-    private Stone stone1;
-    private Stone stone2;
-    private Stone stone3;
-    private Stone stone4;
-    private Stone stone5;
-    private Stone stone6;
-    private Stone stone7;
-    private Stone stone8;
+//    private Fuel fuel;
+//    private Stone stone1;
+//    private Stone stone2;
+//    private Stone stone3;
+//    private Stone stone4;
+//    private Stone stone5;
+//    private Stone stone6;
+//    private Stone stone7;
+//    private Stone stone8;
     private boolean downPressed = false;
     private boolean upPressed = false;
     private boolean rightPressed = false;
@@ -28,10 +28,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private boolean sPressed = false;
     private boolean aPressed = false;
     private boolean dPressed = false;
-    private List<Stone> stones;
-    private boolean stoneHasCollision = false;
-    private byte stoneIndex;
-    private int counterOfStoneHits = 0;
+    private List<AlienSpaceship> alienSpaceships;
+    private boolean alienHasCollision = false;
+    private byte alienIndex;
+    private int counterOfAlienHits = 0;
     private boolean fuelHasCollision = false;
     private int counterOfFuelHits = 0;
     private Sound sceneSound;
@@ -42,10 +42,16 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private Sound missionComplete;
     private ImageIcon finalBackground;
     private int finalBackgroundX = windowWidth;
-    private String[] options;
+    private Object[] options;
     private int selectedOption;
     private boolean isSuccess = counterOfFuelHits >= 5;
-    private boolean isFailed = counterOfStoneHits >= 3;
+    private boolean isFailed = counterOfAlienHits >= 3;
+    private AlienSpaceship alienSpaceship1;
+    private AlienSpaceship alienSpaceship2;
+    private AlienSpaceship alienSpaceship3;
+    private AlienSpaceship alienSpaceship4;
+    private AlienSpaceship alienSpaceship5;
+
 
 
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
@@ -54,9 +60,9 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
 
-    public LevelThree(int width, int height) {
+    public LevelThree(int width, int height, String teamName) {
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
-        this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelThree.png");
+        this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelThreeBackground.png");
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelThreeMirror.png");
         this.finalBackground = new ImageIcon("src/main/java/resources/final_moon.png");
 
@@ -65,69 +71,70 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
-        this.options[0] = "Lobby";
+        this.options = new Object[]{"Lobby", ""};
+
 
         this.spaceship1 = new Spaceship("src/main/java/resources/Spaceship1.png");
         this.spaceship1.setY(200);
         this.spaceship2 = new Spaceship("src/main/java/resources/Spaceship2.png");
         this.spaceship2.setY(500);
 
-        this.fuel = new Fuel();
-        this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
-        this.fuel.start();
+//        this.fuel = new Fuel();
+//        this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
+//        this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
+//        this.fuel.start();
 
-        this.stone1 = new Stone("src/main/java/resources/stone1.png");
-        this.stone1.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.stone1.setRandomY(0, this.windowHeight - this.stone1.getHeight());
-        this.stone1.start();
+        this.alienSpaceship1 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
+        this.alienSpaceship1.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.alienSpaceship1.setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight());
+        this.alienSpaceship1.start();
 
-        this.stone2 = new Stone("src/main/java/resources/stone2.png");
-        this.stone2.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.stone2.setRandomY(0, this.windowHeight - this.stone2.getHeight());
-        this.stone2.start();
+        this.alienSpaceship2 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
+        this.alienSpaceship2.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.alienSpaceship2.setRandomY(0, this.windowHeight - this.alienSpaceship2.getHeight());
+        this.alienSpaceship2.start();
 
-        this.stone3 = new Stone("src/main/java/resources/stone3.png");
-        this.stone3.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.stone3.setRandomY(0, this.windowHeight - this.stone3.getHeight());
-        this.stone3.start();
-
-
-        this.stone4 = new Stone("src/main/java/resources/stone1.png");
-        this.stone4.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.stone4.setRandomY(0, this.windowHeight - this.stone4.getHeight());
-        this.stone4.start();
-
-        this.stone5 = new Stone("src/main/java/resources/stone2.png");
-        this.stone5.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.stone5.setRandomY(0, this.windowHeight - this.stone5.getHeight());
-        this.stone5.start();
-
-        this.stone6 = new Stone("src/main/java/resources/stone3.png");
-        this.stone6.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.stone6.setRandomY(0, this.windowHeight - this.stone6.getHeight());
-        this.stone6.start();
-
-        this.stone7 = new Stone("src/main/java/resources/stone1.png");
-        this.stone7.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.stone7.setRandomY(0, this.windowHeight - this.stone7.getHeight());
-        this.stone7.start();
-
-        this.stone8 = new Stone("src/main/java/resources/stone2.png");
-        this.stone8.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.stone8.setRandomY(0, this.windowHeight - this.stone8.getHeight());
-        this.stone8.start();
+        this.alienSpaceship3 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
+        this.alienSpaceship3.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.alienSpaceship3.setRandomY(0, this.windowHeight - this.alienSpaceship3.getHeight());
+        this.alienSpaceship3.start();
 
 
-        stones = new ArrayList<>();
-        stones.add(stone1);
-        stones.add(stone2);
-        stones.add(stone3);
-        stones.add(stone4);
-        stones.add(stone5);
-        stones.add(stone6);
-        stones.add(stone7);
-        stones.add(stone8);
+        this.alienSpaceship4 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
+        this.alienSpaceship4.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.alienSpaceship4.setRandomY(0, this.windowHeight - this.alienSpaceship4.getHeight());
+        this.alienSpaceship4.start();
+
+        this.alienSpaceship5 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
+        this.alienSpaceship5.setRandomX(this.windowWidth, this.windowWidth * 2);
+        this.alienSpaceship5.setRandomY(0, this.windowHeight - this.alienSpaceship5.getHeight());
+        this.alienSpaceship5.start();
+
+//        this.stone6 = new Stone("src/main/java/resources/stone3.png");
+//        this.stone6.setRandomX(this.windowWidth, this.windowWidth * 2);
+//        this.stone6.setRandomY(0, this.windowHeight - this.stone6.getHeight());
+//        this.stone6.start();
+//
+//        this.stone7 = new Stone("src/main/java/resources/stone1.png");
+//        this.stone7.setRandomX(this.windowWidth, this.windowWidth * 2);
+//        this.stone7.setRandomY(0, this.windowHeight - this.stone7.getHeight());
+//        this.stone7.start();
+//
+//        this.stone8 = new Stone("src/main/java/resources/stone2.png");
+//        this.stone8.setRandomX(this.windowWidth, this.windowWidth * 2);
+//        this.stone8.setRandomY(0, this.windowHeight - this.stone8.getHeight());
+//        this.stone8.start();
+
+
+        alienSpaceships = new ArrayList<>();
+        alienSpaceships.add(alienSpaceship1);
+        alienSpaceships.add(alienSpaceship2);
+        alienSpaceships.add(alienSpaceship3);
+        alienSpaceships.add(alienSpaceship4);
+        alienSpaceships.add(alienSpaceship5);
+//        stones.add(stone6);
+//        stones.add(stone7);
+//        stones.add(stone8);
 
 
         this.sceneSound = new Sound();
@@ -166,9 +173,15 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
     @Override
     public void gameScene() {
+        backgroundLoop();
         this.sceneSound.startBackgroundPlay();
         this.sceneSound.loopPlay();
+
+//        System.out.println(isSuccess);
+        this.isSuccess = counterOfFuelHits >= 5;
+        this.isFailed = counterOfAlienHits >= 3;
         this.gameCondition = !isFailed && !isSuccess;
+
 
         // חללית 1 - תנועה אנכית ואופקית
         if (downPressed && this.spaceship1.getY() <= (windowHeight - 1.5 * spaceship1.getHeight())) {
@@ -199,11 +212,11 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         }
 
 
-        stonesLoop();   //חזרה של האבנים
+
+//        hideTools();
+        alienSpaceshipsLoop();   //חזרה של האבנים
         checkCollision();  // בדיקת פגיעה בין האבנים לחלליות
-        fuelLoop(); //בדיקת פגיעה בין הדלק לחלליות
-
-
+//        fuelLoop(); //בדיקת פגיעה בין הדלק לחלליות
     }
 
     @Override
@@ -221,12 +234,9 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             }
             passedLevel.startPlay();
             missionComplete.startPlay();
-
-
-
             showSuccessDialog();
-
-
+        } else if (isFailed) {
+            showFailedDialog();
         }
 
     }
@@ -236,11 +246,11 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
     public void showSuccessDialog() {
 //        this.options[0] = "Lobby";
+//        this.options = new Object[]{"Lobby", ""};
         this.options[1] = "Next level";
-//        this.options = {"Lobby", "Next level"};
 
         this.selectedOption = JOptionPane.showOptionDialog(null,
-                "Mission Failed",
+                "Mission Complete",
                 null,
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
@@ -257,7 +267,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 //        this.options[3] = "Lobby";
 
         this.selectedOption = JOptionPane.showOptionDialog(null,
-                "Mission Complete",
+                "Mission Failed",
                 null,
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
@@ -294,15 +304,15 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         finalBackground.paintIcon(null, graphics, finalBackgroundX, windowHeight - finalBackground.getIconHeight());
         spaceship1.paintSpaceship(graphics);
         spaceship2.paintSpaceship(graphics);
-        fuel.paintFuel(graphics);
-        stone1.paintStone(graphics);
-        stone2.paintStone(graphics);
-        stone3.paintStone(graphics);
-        stone4.paintStone(graphics);
-        stone5.paintStone(graphics);
-        stone6.paintStone(graphics);
-        stone7.paintStone(graphics);
-        stone8.paintStone(graphics);
+//        fuel.paintFuel(graphics);
+        alienSpaceship1.paintAlienSpaceship(graphics);
+        alienSpaceship2.paintAlienSpaceship(graphics);
+        alienSpaceship3.paintAlienSpaceship(graphics);
+        alienSpaceship4.paintAlienSpaceship(graphics);
+        alienSpaceship5.paintAlienSpaceship(graphics);
+//        stone6.paintStone(graphics);
+//        stone7.paintStone(graphics);
+//        stone8.paintStone(graphics);
     }
 
     @Override
@@ -338,55 +348,62 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     }
 
 
-    public void stonesLoop() {
-        for (int i = 0; i < stones.size(); i++) {
-            if (stones.get(i).getX() < -stones.get(i).getWidth()) {
-                stones.get(i).setRandomX(this.windowWidth, this.windowWidth + 600);
-                stones.get(i).setRandomY(0, this.windowHeight - this.stones.get(i).getHeight());
+    public void alienSpaceshipsLoop() {
+        for (int i = 0; i < alienSpaceships.size(); i++) {
+            if (alienSpaceships.get(i).getX() < -alienSpaceships.get(i).getWidth()) {
+                alienSpaceships.get(i).setRandomX(this.windowWidth, this.windowWidth + 600);
+                alienSpaceships.get(i).setRandomY(0, this.windowHeight - this.alienSpaceships.get(i).getHeight());
             }
         }
     }
 
-    public void fuelLoop() {
-        if (fuel.getX() < -fuel.getWidth()){
-            this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
-            this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
-
-        }
-    }
+//    public void fuelLoop() {
+//        if (fuel.getX() < -fuel.getWidth()){
+//            this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
+//            this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
+//
+//        }
+//    }
 
 
     public void checkCollision() {
-        if (this.fuel.rectangle().intersects(this.spaceship1.rectangle()) || this.fuel.rectangle().intersects(this.spaceship2.rectangle())){
-            fuelSound.startPlay();
-            System.out.println(" fuel crash");
-            fuelHasCollision = true;
-            counterOfFuelHits++;
-        }
-        for (int i = 0; i < stones.size(); i++) {
-            if (this.stones.get(i).rectangle().intersects(this.spaceship1.rectangle()) || this.stones.get(i).rectangle().intersects(this.spaceship2.rectangle())) {
+//        if (this.fuel.rectangle().intersects(this.spaceship1.rectangle()) || this.fuel.rectangle().intersects(this.spaceship2.rectangle())){
+//            fuelSound.startPlay();
+//            System.out.println(" fuel crash");
+//            fuelHasCollision = true;
+//            counterOfFuelHits++;
+//        }
+        for (int i = 0; i < alienSpaceships.size(); i++) {
+            if (this.alienSpaceships.get(i).rectangle().intersects(this.spaceship1.rectangle()) || this.alienSpaceships.get(i).rectangle().intersects(this.spaceship2.rectangle())) {
                 crashing.startPlay();
-                counterOfStoneHits++;
-                stoneHasCollision = true;
-                stoneIndex = (byte) i;
-                if (counterOfStoneHits == 3){
+                counterOfAlienHits++;
+                alienHasCollision = true;
+                alienIndex = (byte) i;
+                if (counterOfAlienHits == 3){
                     explosion.startPlay();
                     System.out.println("game over - lose");
                 }
             }
         }
-        if (stoneHasCollision){
-            stones.get(stoneIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
-            stones.get(stoneIndex).setRandomY(0, this.windowHeight - this.stone2.getHeight());
-            stoneHasCollision = false;
+        if (alienHasCollision){
+            alienSpaceships.get(alienIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
+            alienSpaceships.get(alienIndex).setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight());
+            alienHasCollision = false;
 
         }
-        if (fuelHasCollision){
-            this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
-            this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
-            System.out.println("Fuel hits: " + counterOfFuelHits);
-            fuelHasCollision = false;
-        }
+//        if (fuelHasCollision){
+//            this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
+//            this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
+//            System.out.println("Fuel hits: " + counterOfFuelHits);
+//            fuelHasCollision = false;
+//        }
+    }
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public boolean isFailed() {
+        return isFailed;
     }
 
     public Sound getSceneSound() {

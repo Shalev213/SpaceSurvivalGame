@@ -49,14 +49,15 @@
                 if (this.signInPanel.hasEmptyField()) {
                     JOptionPane.showMessageDialog(null, "One or more of your fields are empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    if (JDBC.validateLogin(teamName, teamPassword)) {
-                        System.out.println("login success");
+//                    if (JDBC.validateLogin(teamName, teamPassword)) {
+//                        System.out.println("login success");
                         this.signInPanel.setVisible(false);
                         this.signInPanel.restartPanel();
                         this.levelsPanel.setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+////                    }
+//                    else {
+//                        JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
+//                    }
                 }
             });
             this.levelsPanel.getReturnButton().addActionListener(e -> {
@@ -96,7 +97,7 @@
             this.levelsPanel.getLevelButton1().addActionListener(e -> {
                 this.levelsPanel.setVisible(false);
                 String teamName = signInPanel.getTeamName();
-                levelOne = new LevelOne(windowWidth, windowHeight, teamName);
+                this.levelOne = new LevelOne(windowWidth, windowHeight, teamName);
                 this.add(levelOne);
 
                 levelOne.addOptionSelectionListener(selectedOption -> {
@@ -140,8 +141,39 @@
             });
             this.levelsPanel.getLevelButton3().addActionListener(e -> {
                 this.levelsPanel.setVisible(false);
+                String teamName = signInPanel.getTeamName();
+                this.levelThree = new LevelThree(windowWidth, windowHeight, teamName);
                 this.add(levelThree);
+
+                levelThree.addOptionSelectionListener(selectedOption -> {
+                    if (selectedOption == 0) {
+                        levelThree.getSceneSound().stopPlay();
+                        this.remove(levelThree);
+                        levelsPanel.setVisible(true);
+                        if (levelThree.isSuccess()){
+                            this.levelsPanel.getLevelButton4().setEnabled(true);
+                        }
+                        // פעולה ל-"Lobby"
+                    } else if (selectedOption == 1) {
+                        if (levelThree.isSuccess()) {
+                            levelThree.getSceneSound().stopPlay();
+                            this.remove(levelThree);
+                            this.levelsPanel.getLevelButton4().setEnabled(true);
+                            this.levelsPanel.getLevelButton4().doClick();
+                        } else if (levelThree.isFailed()) {
+                            this.levelThree.getSceneSound().stopPlay();
+                            this.remove(levelThree);
+                            this.levelsPanel.getLevelButton3().doClick();
+                        }
+                    } else {
+                        System.out.println("No option selected or window closed");
+                    }
+                });
+
                 levelThree.setVisible(true);
+                levelThree.setFocusable(true);
+                levelThree.requestFocus();
+                levelThree.requestFocusInWindow();
             });
 
 
