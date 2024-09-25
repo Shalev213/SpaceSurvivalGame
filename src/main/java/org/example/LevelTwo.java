@@ -15,12 +15,18 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private boolean rightPressed = false;
     private boolean leftPressed = false;
     private int fakeButtonWidth = 200;
+    private int xOfAstronaut;
 
 
     public LevelTwo(int width, int height) {
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
         super.windowWidth = width;
         super.windowHeight = height;
+
+        this.astronaut = new Astronaut();
+        this.astronaut.setY(((windowHeight - this.astronaut.getHeight()) / 2) + 60);
+        this.xOfAstronaut = (int) ((windowWidth - this.astronaut.getWidth()) / 2);
+        this.astronaut.setX(xOfAstronaut);
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
         this.spaceBackgroundOne = null;
         this.spaceBackgroundTwo = null;
@@ -47,7 +53,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.fakeRiddleButton.setContentAreaFilled(false);
         this.fakeRiddleButton.setBorderPainted(false);
         this.fakeRiddleButton.setFocusPainted(false);
-//        this.fakeRiddleButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.fakeRiddleButton.setFocusable(false);
         this.fakeRiddleButton.setForeground(new Color(60, 124, 144, 255));
 
@@ -58,9 +63,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.add(fakeRiddleButton);
 
 
-        this.astronaut = new Astronaut();
-        this.astronaut.setX((int) ((windowWidth - this.astronaut.getWidth()) / 2));
-        this.astronaut.setY(((windowHeight - this.astronaut.getHeight()) / 2) + 60);
 
 
         this.setFocusable(true);
@@ -69,6 +71,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.requestFocusInWindow();
         mainGameLoop();
     }
+
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         if (spaceshipBackground != null) {
@@ -76,7 +79,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             this.riddleButton.setBounds(xOfBackground + 1320,140,28,45);
             this.fakeRiddleButton.setBounds(xOfBackground + (spaceshipBackground.getIconWidth() - this.fakeButtonWidth) / 2,260,this.fakeButtonWidth,45);
         }
-
         astronaut.paintAstronaut(graphics);
     }
 
@@ -87,11 +89,15 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
 
     @Override
     public void gameScene() {
-        if (rightPressed && (this.xOfBackground + this.getBackgroundWidth()) > this.windowWidth ) {
+        if (rightPressed && (this.xOfBackground + this.getBackgroundWidth()) > this.windowWidth && !(xOfAstronaut > this.astronaut.getX()) ) {
             takeBackgroundLeft();
+        } else if (rightPressed && (this.astronaut.getX() + this.astronaut.getWidth()) < this.windowWidth) {
+            this.astronaut.leftRightMove(1);
         }
-        if (leftPressed && this.xOfBackground < 0) {
+        if (leftPressed && this.xOfBackground < 0 && !(xOfAstronaut < this.astronaut.getX())) {
             takeBackgroundRight();
+        }else if (leftPressed && this.astronaut.getX() > 0) {
+            this.astronaut.leftRightMove(-1);
         }
         repaint();
     }
@@ -106,28 +112,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     public void takeBackgroundLeft() {
         this.xOfBackground -= 1;
     }
-
-//    @Override
-//    public void keyTyped(KeyEvent e) {
-//
-//    }
-//
-//    @Override
-//    public void keyPressed(KeyEvent e) {
-//        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//            System.out.println("right");
-////            this.rightPressed = true; // עדכון הדגל
-//        }
-//        if (e.getKeyCode() == KeyEvent.VK_LEFT){
-//            System.out.println("left");
-////            this.leftPressed = true; // עדכון הדגל
-//        }
-//    }
-//
-//    @Override
-//    public void keyReleased(KeyEvent e) {
-//
-//    }
 
     @Override
     public void keyTyped(KeyEvent e) {
