@@ -70,6 +70,6 @@ public class AlienSpaceship extends Thread{
     }
 
     public Rectangle rectangle() {
-        return new Rectangle (this.x, this.y , this.width, this.height);
+        return new Rectangle (this.x, this.y + 10 , this.width - 15 , this.height - 20);
     }
 }

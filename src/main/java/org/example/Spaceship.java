@@ -26,26 +26,26 @@ public class Spaceship {
         this.y = y;
     }
 
-    public int getY() {
-        return y;
+    public short getX() {
+        return (short) this.x;
+    }
+
+    public short getY() {
+        return (short) y;
     }
 
     public short getHeight() {
         return height;
     }
-
     public void upDownMove(int dy) {
         this.y += dy;
     }
+
     public void leftRightMove(int dx) {
         this.x += dx;
     }
 
-    public double getX() {
-        return this.x;
-    }
-
-    public double getWidth() {
+    public short getWidth() {
         return this.width;
     }
 

@@ -28,8 +28,15 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private boolean sPressed = false;
     private boolean aPressed = false;
     private boolean dPressed = false;
+    private boolean spacePressed = false;
+    private boolean enterPressed = false;
+
     private List<AlienSpaceship> alienSpaceships;
     private boolean alienHasCollision = false;
+    private boolean laser1Colision = false;
+    private boolean laser2Colision = false;
+    private boolean laser1Move = false;
+    private boolean laser2Move = false;
     private byte alienIndex;
     private int counterOfAlienHits = 0;
     private boolean fuelHasCollision = false;
@@ -51,6 +58,9 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private AlienSpaceship alienSpaceship3;
     private AlienSpaceship alienSpaceship4;
     private AlienSpaceship alienSpaceship5;
+    private Laser laser1;
+    private Laser laser2;
+
 
 
 
@@ -110,21 +120,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.alienSpaceship5.setRandomY(0, this.windowHeight - this.alienSpaceship5.getHeight());
         this.alienSpaceship5.start();
 
-//        this.stone6 = new Stone("src/main/java/resources/stone3.png");
-//        this.stone6.setRandomX(this.windowWidth, this.windowWidth * 2);
-//        this.stone6.setRandomY(0, this.windowHeight - this.stone6.getHeight());
-//        this.stone6.start();
-//
-//        this.stone7 = new Stone("src/main/java/resources/stone1.png");
-//        this.stone7.setRandomX(this.windowWidth, this.windowWidth * 2);
-//        this.stone7.setRandomY(0, this.windowHeight - this.stone7.getHeight());
-//        this.stone7.start();
-//
-//        this.stone8 = new Stone("src/main/java/resources/stone2.png");
-//        this.stone8.setRandomX(this.windowWidth, this.windowWidth * 2);
-//        this.stone8.setRandomY(0, this.windowHeight - this.stone8.getHeight());
-//        this.stone8.start();
-
 
         alienSpaceships = new ArrayList<>();
         alienSpaceships.add(alienSpaceship1);
@@ -132,9 +127,15 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         alienSpaceships.add(alienSpaceship3);
         alienSpaceships.add(alienSpaceship4);
         alienSpaceships.add(alienSpaceship5);
-//        stones.add(stone6);
-//        stones.add(stone7);
-//        stones.add(stone8);
+
+
+        this.laser1 = new Laser("src/main/java/resources/YellowLaser.png");
+        this.laser1.setX(this.spaceship1.getWidth());
+        this.laser1.setY(this.spaceship1.getHeight());
+
+        this.laser2 = new Laser("src/main/java/resources/YellowLaser.png");
+        this.laser2.setX(this.spaceship2.getWidth());
+        this.laser2.setY(this.spaceship2.getHeight());
 
 
         this.sceneSound = new Sound();
@@ -211,11 +212,22 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             spaceship2.leftRightMove(-2);
         }
 
+        if (spacePressed && !laser1Move) { // רק אם הלייזר לא בתנועה, אפשר לירות
+            laser1Move = true; // הלייזר מתחיל לנוע
+        }
+
+        if (enterPressed && !laser2Move) { // רק אם הלייזר לא בתנועה, אפשר לירות
+            laser2Move = true; // הלייזר מתחיל לנוע
+        }
+
+
 
 
 //        hideTools();
         alienSpaceshipsLoop();   //חזרה של האבנים
-        checkCollision();  // בדיקת פגיעה בין האבנים לחלליות
+        checkCollision();
+        keepLaser();// בדיקת פגיעה בין האבנים לחלליות
+        moveLaser();
 //        fuelLoop(); //בדיקת פגיעה בין הדלק לחלליות
     }
 
@@ -310,6 +322,9 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         alienSpaceship3.paintAlienSpaceship(graphics);
         alienSpaceship4.paintAlienSpaceship(graphics);
         alienSpaceship5.paintAlienSpaceship(graphics);
+        laser1.paintLaser(graphics);
+        laser2.paintLaser(graphics);
+
 //        stone6.paintStone(graphics);
 //        stone7.paintStone(graphics);
 //        stone8.paintStone(graphics);
@@ -326,6 +341,17 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_S -> sPressed = true;
             case KeyEvent.VK_A -> aPressed = true;
             case KeyEvent.VK_D -> dPressed = true;
+            case KeyEvent.VK_SPACE -> {
+                if (!laser1Move) { // לייזר 1 זז רק אם הוא לא בתנועה
+                    laser1Move = true;
+                }
+            }
+            case KeyEvent.VK_ENTER -> {
+                if (!laser2Move) { // לייזר 2 זז רק אם הוא לא בתנועה
+                    laser2Move = true;
+                }
+            }
+
         }
     }
 
@@ -340,6 +366,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_S -> sPressed = false;
             case KeyEvent.VK_A -> aPressed = false;
             case KeyEvent.VK_D -> dPressed = false;
+//            case KeyEvent.VK_SPACE -> spacePressed = false;
+//            case KeyEvent.VK_ENTER -> enterPressed = false;
+
+
         }
     }
 
@@ -383,14 +413,38 @@ public class LevelThree extends AbstractLevel implements KeyListener {
                     explosion.startPlay();
                     System.out.println("game over - lose");
                 }
+            } else if (this.alienSpaceships.get(i).rectangle().intersects(this.laser1.rectangle())) {
+                alienHasCollision = true;
+                alienIndex = (byte) i;
+                laser1Colision = true;
+            } else if (this.alienSpaceships.get(i).rectangle().intersects(this.laser2.rectangle())) {
+                alienHasCollision = true;
+                alienIndex = (byte) i;
+                laser2Colision = true;
             }
         }
+
         if (alienHasCollision){
             alienSpaceships.get(alienIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
             alienSpaceships.get(alienIndex).setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight());
             alienHasCollision = false;
 
         }
+
+        if (laser1Colision) {
+            this.laser1.setX((short) (this.spaceship1.getX() + spaceship1.getWidth() / 2));
+            this.laser1.setY(this.spaceship1.getY());
+            laser1Move = false; // הלייזר חוזר להיות מסונכרן עם החללית
+        }
+        if (laser2Colision) {
+            this.laser2.setX((short) (this.spaceship2.getX() + spaceship2.getWidth() / 2));
+            this.laser2.setY(this.spaceship2.getY());
+            laser2Move = false; // הלייזר חוזר להיות מסונכרן עם החללית
+        }
+
+
+
+
 //        if (fuelHasCollision){
 //            this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
 //            this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
@@ -398,6 +452,54 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 //            fuelHasCollision = false;
 //        }
     }
+
+    public void keepLaser() {
+        if (!laser1Move) {
+            laser1.setX((short) (this.spaceship1.getX() + spaceship1.getWidth() / 2));
+            laser1.setY(this.spaceship1.getY());
+        }
+        if (!laser2Move) {
+            laser2.setX((short) (this.spaceship2.getX() + spaceship2.getWidth() / 2));
+            laser2.setY(this.spaceship2.getY());
+        }
+    }
+
+    public void moveLaser() {
+        if (laser1Move) {
+            laser1.setY((short) (laser1.getY() - 5)); // הזזת לייזר 1 כלפי מעלה בקצב קבוע
+            if (laser1.getY() < 0) {
+                laser1Move = false; // הלייזר יצא מהמסך, מפסיק תנועה
+                resetLaser1(); // מחזיר את הלייזר לחללית
+            }
+        }
+
+        if (laser2Move) {
+            laser2.setY((short) (laser2.getY() - 5)); // הזזת לייזר 2 כלפי מעלה בקצב קבוע
+            if (laser2.getY() < 0) {
+                laser2Move = false; // הלייזר יצא מהמסך, מפסיק תנועה
+                resetLaser2(); // מחזיר את הלייזר לחללית
+            }
+        }
+    }
+
+    public void resetLaser1() {
+        laser1.setX((short) (spaceship1.getX() + spaceship1.getWidth() / 2));
+        laser1.setY(spaceship1.getY());
+        laser1Move = false; // מחזירים את הלייזר למקום ומפסיקים את התנועה
+    }
+
+    public void resetLaser2() {
+        laser2.setX((short) (spaceship2.getX() + spaceship2.getWidth() / 2));
+        laser2.setY(spaceship2.getY());
+        laser2Move = false; // מחזירים את הלייזר למקום ומפסיקים את התנועה
+    }
+
+
+
+
+
+
+
     public boolean isSuccess() {
         return isSuccess;
     }
