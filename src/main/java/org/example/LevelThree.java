@@ -432,12 +432,12 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         }
 
         if (laser1Colision) {
-            this.laser1.setX((short) (this.spaceship1.getX() + spaceship1.getWidth() / 2));
+            this.laser1.setX((short) (this.spaceship1.getX()));
             this.laser1.setY(this.spaceship1.getY());
             laser1Move = false; // הלייזר חוזר להיות מסונכרן עם החללית
         }
         if (laser2Colision) {
-            this.laser2.setX((short) (this.spaceship2.getX() + spaceship2.getWidth() / 2));
+            this.laser2.setX((short) (this.spaceship2.getX()));
             this.laser2.setY(this.spaceship2.getY());
             laser2Move = false; // הלייזר חוזר להיות מסונכרן עם החללית
         }
@@ -455,27 +455,27 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
     public void keepLaser() {
         if (!laser1Move) {
-            laser1.setX((short) (this.spaceship1.getX() + spaceship1.getWidth() / 2));
+            laser1.setX((short) (this.spaceship1.getX()));
             laser1.setY(this.spaceship1.getY());
         }
         if (!laser2Move) {
-            laser2.setX((short) (this.spaceship2.getX() + spaceship2.getWidth() / 2));
+            laser2.setX((short) (this.spaceship2.getX()));
             laser2.setY(this.spaceship2.getY());
         }
     }
 
     public void moveLaser() {
         if (laser1Move) {
-            laser1.setY((short) (laser1.getY() - 5)); // הזזת לייזר 1 כלפי מעלה בקצב קבוע
-            if (laser1.getY() < 0) {
+            laser1.fire();
+            if (laser1.getX() > windowWidth) {
                 laser1Move = false; // הלייזר יצא מהמסך, מפסיק תנועה
                 resetLaser1(); // מחזיר את הלייזר לחללית
             }
         }
 
         if (laser2Move) {
-            laser2.setY((short) (laser2.getY() - 5)); // הזזת לייזר 2 כלפי מעלה בקצב קבוע
-            if (laser2.getY() < 0) {
+            laser2.fire();
+            if (laser2.getX() > windowWidth) {
                 laser2Move = false; // הלייזר יצא מהמסך, מפסיק תנועה
                 resetLaser2(); // מחזיר את הלייזר לחללית
             }
@@ -483,13 +483,13 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     }
 
     public void resetLaser1() {
-        laser1.setX((short) (spaceship1.getX() + spaceship1.getWidth() / 2));
+        laser1.setX((short) (spaceship1.getX()));
         laser1.setY(spaceship1.getY());
         laser1Move = false; // מחזירים את הלייזר למקום ומפסיקים את התנועה
     }
 
     public void resetLaser2() {
-        laser2.setX((short) (spaceship2.getX() + spaceship2.getWidth() / 2));
+        laser2.setX((short) (spaceship2.getX()));
         laser2.setY(spaceship2.getY());
         laser2Move = false; // מחזירים את הלייזר למקום ומפסיקים את התנועה
     }
