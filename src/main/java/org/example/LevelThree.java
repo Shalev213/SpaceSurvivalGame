@@ -12,14 +12,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private Spaceship spaceship1;
     private Spaceship spaceship2;
 //    private Fuel fuel;
-//    private Stone stone1;
-//    private Stone stone2;
-//    private Stone stone3;
-//    private Stone stone4;
-//    private Stone stone5;
-//    private Stone stone6;
-//    private Stone stone7;
-//    private Stone stone8;
+
     private boolean downPressed = false;
     private boolean upPressed = false;
     private boolean rightPressed = false;
@@ -63,21 +56,17 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private Laser laser2;
 
 
-
-
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
 
 
 
-
-
     public LevelThree(int width, int height, String teamName) {
-        // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
+
         this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelThreeBackground.png");
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelThreeMirror.png");
         this.finalBackground = new ImageIcon("src/main/java/resources/final_moon.png");
 
-        // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
+
         super.windowWidth = width;
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
@@ -131,12 +120,12 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
         this.laser1 = new Laser("src/main/java/resources/YellowLaser.png");
-        this.laser1.setX(this.spaceship1.getWidth());
-        this.laser1.setY(this.spaceship1.getHeight());
+        this.laser1.setX(this.spaceship1.getWidth() + 200);
+        this.laser1.setY(this.spaceship1.getHeight() + 150);
 
         this.laser2 = new Laser("src/main/java/resources/YellowLaser.png");
-        this.laser2.setX(this.spaceship2.getWidth());
-        this.laser2.setY(this.spaceship2.getHeight());
+        this.laser2.setX(this.spaceship2.getWidth() + 200);
+        this.laser2.setY(this.spaceship2.getHeight() + 150);
 
 
         this.sceneSound = new Sound();
@@ -159,7 +148,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
 
-
         this.setFocusable(true);
         this.requestFocus();
         this.addKeyListener(this);
@@ -179,13 +167,11 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.sceneSound.startBackgroundPlay();
         this.sceneSound.loopPlay();
 
-//        System.out.println(isSuccess);
         this.isSuccess = counterOfFuelHits >= 5;
         this.isFailed = counterOfAlienHits >= 3;
         this.gameCondition = !isFailed && !isSuccess;
 
 
-        // חללית 1 - תנועה אנכית ואופקית
         if (downPressed && this.spaceship1.getY() <= (windowHeight - 1.5 * spaceship1.getHeight())) {
             spaceship1.upDownMove(1);
         }
@@ -213,23 +199,13 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             spaceship2.leftRightMove(-2);
         }
 
-//        if (spacePressed && laser1Move) { // רק אם הלייזר לא בתנועה, אפשר לירות
-//            laser1Move = true; // הלייזר מתחיל לנוע
-//        }
-//
-//        if (enterPressed && laser2Move) { // רק אם הלייזר לא בתנועה, אפשר לירות
-//            laser2Move = true; // הלייזר מתחיל לנוע
-//        }
 
 
 
-
-//        hideTools();
         moveLaser();
-        keepLaser();// בדיקת פגיעה בין האבנים לחלליות
+        keepLaser();
         alienSpaceshipsLoop();
         checkCollision();
-//        fuelLoop(); //בדיקת פגיעה בין הדלק לחלליות
     }
 
     @Override
@@ -258,8 +234,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
     public void showSuccessDialog() {
-//        this.options[0] = "Lobby";
-//        this.options = new Object[]{"Lobby", ""};
         this.options[1] = "Next level";
 
         this.selectedOption = JOptionPane.showOptionDialog(null,
@@ -325,10 +299,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         alienSpaceship5.paintAlienSpaceship(graphics);
         laser1.paintLaser(graphics);
         laser2.paintLaser(graphics);
-
-//        stone6.paintStone(graphics);
-//        stone7.paintStone(graphics);
-//        stone8.paintStone(graphics);
     }
 
     @Override
@@ -343,12 +313,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_A -> aPressed = true;
             case KeyEvent.VK_D -> dPressed = true;
             case KeyEvent.VK_SPACE -> {
-                System.out.println("space");
                 spacePressed = true;
                 laser1Move = true;
             }
             case KeyEvent.VK_ENTER -> {
-                System.out.println("enter");
                 enterPressed = true;
                 laser2Move = true;
             }
@@ -432,15 +400,15 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         }
 
         if (laser1Colision) {
-            this.laser1.setX((short) (this.spaceship1.getX()));
+            this.laser1.setX((this.spaceship1.getX()));
             this.laser1.setY(this.spaceship1.getY());
-            laser1Move = false; // הלייזר חוזר להיות מסונכרן עם החללית
+            laser1Move = false;
             laser1Colision = false;
         }
         if (laser2Colision) {
-            this.laser2.setX((short) (this.spaceship2.getX()));
+            this.laser2.setX((this.spaceship2.getX()));
             this.laser2.setY(this.spaceship2.getY());
-            laser2Move = false; // הלייזר חוזר להיות מסונכרן עם החללית
+            laser2Move = false;
             laser2Colision = false;
         }
 
@@ -457,11 +425,11 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
     public void keepLaser() {
         if (!laser1Move) {
-            laser1.setX((short) (this.spaceship1.getX()));
+            laser1.setX(this.spaceship1.getX());
             laser1.setY(this.spaceship1.getY());
         }
         if (!laser2Move) {
-            laser2.setX((short) (this.spaceship2.getX()));
+            laser2.setX(this.spaceship2.getX());
             laser2.setY(this.spaceship2.getY());
         }
     }
@@ -470,30 +438,28 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         if (laser1Move) {
             laser1.fire();
             if (laser1.getX() > windowWidth) {
-                resetLaser1(); // מחזיר את הלייזר לחללית
-                laser1Move = false; // הלייזר יצא מהמסך, מפסיק תנועה
+                resetLaser1();
+                laser1Move = false;
             }
         }
 
         if (laser2Move) {
             laser2.fire();
             if (laser2.getX() > windowWidth) {
-                resetLaser2(); // מחזיר את הלייזר לחללית
-                laser2Move = false; // הלייזר יצא מהמסך, מפסיק תנועה
+                resetLaser2();
+                laser2Move = false;
             }
         }
     }
 
     public void resetLaser1() {
-        laser1.setX((short) (spaceship1.getX()));
+        laser1.setX((spaceship1.getX()));
         laser1.setY(spaceship1.getY());
-//        laser1Move = false; // מחזירים את הלייזר למקום ומפסיקים את התנועה
     }
 
     public void resetLaser2() {
-        laser2.setX((short) (spaceship2.getX()));
+        laser2.setX(spaceship2.getX());
         laser2.setY(spaceship2.getY());
-//        laser2Move = false; // מחזירים את הלייזר למקום ומפסיקים את התנועה
     }
 
 

@@ -5,8 +5,8 @@ import java.awt.*;
 
 
 public class Laser {
-    private short x;
-    private short y;
+    private int x;
+    private int y;
     private final byte width = 50;
     private final byte height = 12;
     private Image laser;
@@ -28,18 +28,18 @@ public class Laser {
         return new Rectangle(this.x, this.y, this.width , this.height);
     }
 
-    public void setX(short x) {
+    public void setX(int x) {
         this.x = x;
     }
-    public void setY(short y) {
+    public void setY(int y) {
         this.y = y;
     }
 
-    public short getX() {
+    public int getX() {
         return x;
     }
 
-    public short getY() {
+    public int getY() {
         return y;
     }
 }
