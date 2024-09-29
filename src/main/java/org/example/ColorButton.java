@@ -3,26 +3,32 @@ package org.example;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static java.awt.Color.blue;
 
 public class ColorButton extends JButton {
-    private int width = 35;
-    private int height = 35;
+    private int width = 50;
+    private int height = 50;
     private int x = 10;
-    private int y = 100;
-    private String[] colors;
-
-    public ColorButton(int x, int y) {
+    private int y = 450;
+    private int index = 0;
+    private  Color[] colors = {Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA};
+    public ColorButton(int x, int index) {
         this.x = x;
-        this.y = y;
+        this.index = index;
+        this.changeColor();
 
 //        this.setFont(new Font("Arial", Font.BOLD, 25));
         this.setBounds(this.x, this.y, this.width,this.height);
-//        this.returnButton.setFocusPainted(false);
-//        this.returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-
+        this.addActionListener(e -> {
+            changeColor();
+        });
     }
     public void changeColor(){
-//        this.setBackground(Color.);
+        this.setBackground(colors[index % 6]);
+        this.index++;
     }
 
     @Override

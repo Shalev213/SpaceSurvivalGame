@@ -50,6 +50,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private AlienSpaceship alienSpaceship5;
     private Laser laser1;
     private Laser laser2;
+    private int laser1X = 0;
+    private int laser1Y = 0;
+    private int laser2X = 0;
+    private int laser2Y = 0;
 
 
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
@@ -73,6 +77,13 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.spaceship1.setY(200);
         this.spaceship2 = new Spaceship("src/main/java/resources/Spaceship2.png");
         this.spaceship2.setY(500);
+
+        this.laser1X = this.spaceship1.getX() + 60;
+        this.laser1Y = this.spaceship1.getY() + 35;
+
+        this.laser2X = this.spaceship2.getX() + 60;
+        this.laser2Y = this.spaceship2.getY() + 35;
+
 
 //        this.fuel = new Fuel();
 //        this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
@@ -115,12 +126,14 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
         this.laser1 = new Laser("src/main/java/resources/YellowLaser.png");
-        this.laser1.setX(this.spaceship1.getWidth() + 200);
-        this.laser1.setY(this.spaceship1.getHeight() + 150);
+        this.laser1.setX(laser1X);
+        this.laser1.setY(laser1Y);
+
 
         this.laser2 = new Laser("src/main/java/resources/YellowLaser.png");
-        this.laser2.setX(this.spaceship2.getWidth() + 200);
-        this.laser2.setY(this.spaceship2.getHeight() + 150);
+        this.laser2.setX(laser2X);
+        this.laser2.setY(laser2Y);
+
 
 
         this.sceneSound = new Sound();
@@ -384,7 +397,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
                 hasMisses = true;
                 alienIndex = (byte) i;
                 counterOfMisses++;
-                System.out.println("Miss: " + counterOfMisses);
+//                System.out.println("Miss: " + counterOfMisses);
             }
         }
 
@@ -395,14 +408,17 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         }
 
         if (laser1Colision) {
-            this.laser1.setX((this.spaceship1.getX()));
-            this.laser1.setY(this.spaceship1.getY());
+            this.laser1.setX(laser1X);
+            this.laser1.setY(laser1Y);
+
             laser1Move = false;
             laser1Colision = false;
         }
+
         if (laser2Colision) {
-            this.laser2.setX((this.spaceship2.getX()));
-            this.laser2.setY(this.spaceship2.getY());
+            this.laser2.setX(laser2X);
+            this.laser2.setY(laser2Y);
+
             laser2Move = false;
             laser2Colision = false;
         }
@@ -420,12 +436,13 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
     public void keepLaser() {
         if (!laser1Move) {
-            laser1.setX(this.spaceship1.getX());
-            laser1.setY(this.spaceship1.getY());
+            this.laser1.setX(laser1X);
+            this.laser1.setY(laser1Y);
+
         }
         if (!laser2Move) {
-            laser2.setX(this.spaceship2.getX());
-            laser2.setY(this.spaceship2.getY());
+            this.laser2.setX(laser2X);
+            this.laser2.setY(laser2Y);
         }
     }
 
@@ -448,13 +465,13 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     }
 
     public void resetLaser1() {
-        laser1.setX((spaceship1.getX()));
-        laser1.setY(spaceship1.getY());
+        laser1.setX(laser1X);
+        laser1.setY(laser1Y);
     }
 
     public void resetLaser2() {
-        laser2.setX(spaceship2.getX());
-        laser2.setY(spaceship2.getY());
+        laser2.setX(laser2X);
+        laser2.setY(laser2Y);
     }
 
 

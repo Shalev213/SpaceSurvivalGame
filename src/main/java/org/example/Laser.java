@@ -14,6 +14,8 @@ public class Laser {
 
     public Laser(String imagePath){
         this.laser = new ImageIcon(imagePath).getImage();
+//        this.x = x;
+//        this.y = y;
     }
 
     public void paintLaser(Graphics graphics) {
