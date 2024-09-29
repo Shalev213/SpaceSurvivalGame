@@ -101,14 +101,13 @@
                 this.add(levelOne);
 
                 levelOne.addOptionSelectionListener(selectedOption -> {
-                    if (selectedOption == 0) {
+                    if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
                         levelOne.getSceneSound().stopPlay();
                         this.remove(levelOne);
                         levelsPanel.setVisible(true);
                         if (levelOne.isSuccess()){
                             this.levelsPanel.getLevelButton2().setEnabled(true);
                         }
-                        // פעולה ל-"Lobby"
                     } else if (selectedOption == 1) {
                         if (levelOne.isSuccess()) {
                             levelOne.getSceneSound().stopPlay();
@@ -146,14 +145,13 @@
                 this.add(levelThree);
 
                 levelThree.addOptionSelectionListener(selectedOption -> {
-                    if (selectedOption == 0) {
+                    if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
                         levelThree.getSceneSound().stopPlay();
                         this.remove(levelThree);
                         levelsPanel.setVisible(true);
                         if (levelThree.isSuccess()){
                             this.levelsPanel.getLevelButton4().setEnabled(true);
                         }
-                        // פעולה ל-"Lobby"
                     } else if (selectedOption == 1) {
                         if (levelThree.isSuccess()) {
                             levelThree.getSceneSound().stopPlay();
@@ -165,7 +163,7 @@
                             this.remove(levelThree);
                             this.levelsPanel.getLevelButton3().doClick();
                         }
-                    } else {
+                    }else {
                         System.out.println("No option selected or window closed");
                     }
                 });

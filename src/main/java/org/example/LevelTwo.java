@@ -16,12 +16,17 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private boolean leftPressed = false;
     private int fakeButtonWidth = 200;
     private int xOfAstronaut;
+    private RiddlePanel riddlePanel;
+    private int xOfRiddlePanel;
+    private int yOfRiddlePanel;
+
 
 
     public LevelTwo(int width, int height) {
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
         super.windowWidth = width;
         super.windowHeight = height;
+
 
         this.astronaut = new Astronaut();
         this.astronaut.setY(((windowHeight - this.astronaut.getHeight()) / 2) + 60);
@@ -32,6 +37,13 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.spaceBackgroundTwo = null;
         this.spaceshipBackground = new ImageIcon("src/main/java/resources/levelTwoBackground.png");
         this.xOfBackground = -(this.spaceshipBackground.getIconWidth() - this.windowWidth) / 2;
+
+        this.riddlePanel = new RiddlePanel();
+
+        this.xOfRiddlePanel = (this.windowWidth - this.riddlePanel.getWidth()) / 2;
+        this.yOfRiddlePanel = (this.windowHeight - this.riddlePanel.getHeight()) / 2;
+        this.riddlePanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, this.riddlePanel.getWidth(), this.riddlePanel.getHeight());
+        this.add(riddlePanel);
 
         this.riddleButton = new JButton("?");
         this.riddleButton.setFont(new Font("Arial", Font.BOLD, 25));
@@ -44,6 +56,20 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
 
         this.riddleButton.addActionListener(e -> {
             System.out.println("you clicked on: showRiddleButton");
+//            this.riddlePanel = new RiddlePanel();
+//
+//            this.xOfRiddlePanel = (this.windowWidth - this.riddlePanel.getWidth()) / 2;
+//            this.yOfRiddlePanel = (this.windowHeight - this.riddlePanel.getHeight()) / 2;
+////            this.riddlePanel.setX((this.windowWidth - this.riddlePanel.getWidth()) / 2);
+////            this.riddlePanel.setY((this.windowHeight - this.riddlePanel.getHeight()) / 2);
+////            this.riddlePanel.setBounds();
+//            this.riddlePanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, this.riddlePanel.getWidth(), this.riddlePanel.getHeight());
+//            this.add(riddlePanel);
+            this.riddlePanel.setVisible(true);
+            this.riddlePanel.setFocusable(true);
+            this.riddlePanel.requestFocus();
+            this.riddlePanel.requestFocusInWindow();
+
         });
 
         this.add(riddleButton);
@@ -80,6 +106,8 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             this.fakeRiddleButton.setBounds(xOfBackground + (spaceshipBackground.getIconWidth() - this.fakeButtonWidth) / 2,260,this.fakeButtonWidth,45);
         }
         astronaut.paintAstronaut(graphics);
+//        this.riddlePanel.setX((this.windowWidth - this.riddlePanel.getWidth()) / 2);
+//        this.riddlePanel.setY((this.windowHeight - this.riddlePanel.getHeight()) / 2);
     }
 
     @Override

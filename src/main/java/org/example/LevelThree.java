@@ -11,8 +11,6 @@ import java.util.List;
 public class LevelThree extends AbstractLevel implements KeyListener {
     private Spaceship spaceship1;
     private Spaceship spaceship2;
-//    private Fuel fuel;
-
     private boolean downPressed = false;
     private boolean upPressed = false;
     private boolean rightPressed = false;
@@ -21,20 +19,18 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private boolean sPressed = false;
     private boolean aPressed = false;
     private boolean dPressed = false;
-
     private boolean spacePressed = false;
     private boolean enterPressed = false;
     private boolean laser1Move = false;
     private boolean laser2Move = false;
-
     private List<AlienSpaceship> alienSpaceships;
     private boolean alienHasCollision = false;
     private boolean laser1Colision = false;
     private boolean laser2Colision = false;
     private byte alienIndex;
+    private int counterOfMisses = 0;
+    private boolean hasMisses = false;
     private int counterOfAlienHits = 0;
-    private boolean fuelHasCollision = false;
-    private int counterOfFuelHits = 0;
     private Sound sceneSound;
     private Sound fuelSound;
     private Sound crashing;
@@ -45,8 +41,8 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private int finalBackgroundX = windowWidth;
     private Object[] options;
     private int selectedOption;
-    private boolean isSuccess = counterOfFuelHits >= 5;
-    private boolean isFailed = counterOfAlienHits >= 3;
+    private boolean isSuccess = counterOfAlienHits >= 4;
+    private boolean isFailed = counterOfMisses >= 3;
     private AlienSpaceship alienSpaceship1;
     private AlienSpaceship alienSpaceship2;
     private AlienSpaceship alienSpaceship3;
@@ -57,7 +53,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
-
 
 
     public LevelThree(int width, int height, String teamName) {
@@ -100,23 +95,23 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.alienSpaceship3.start();
 
 
-        this.alienSpaceship4 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
-        this.alienSpaceship4.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship4.setRandomY(0, this.windowHeight - this.alienSpaceship4.getHeight());
-        this.alienSpaceship4.start();
-
-        this.alienSpaceship5 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
-        this.alienSpaceship5.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship5.setRandomY(0, this.windowHeight - this.alienSpaceship5.getHeight());
-        this.alienSpaceship5.start();
+//        this.alienSpaceship4 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
+//        this.alienSpaceship4.setRandomX(this.windowWidth, this.windowWidth * 2);
+//        this.alienSpaceship4.setRandomY(0, this.windowHeight - this.alienSpaceship4.getHeight());
+//        this.alienSpaceship4.start();
+//
+//        this.alienSpaceship5 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
+//        this.alienSpaceship5.setRandomX(this.windowWidth, this.windowWidth * 2);
+//        this.alienSpaceship5.setRandomY(0, this.windowHeight - this.alienSpaceship5.getHeight());
+//        this.alienSpaceship5.start();
 
 
         alienSpaceships = new ArrayList<>();
         alienSpaceships.add(alienSpaceship1);
         alienSpaceships.add(alienSpaceship2);
         alienSpaceships.add(alienSpaceship3);
-        alienSpaceships.add(alienSpaceship4);
-        alienSpaceships.add(alienSpaceship5);
+//        alienSpaceships.add(alienSpaceship4);
+//        alienSpaceships.add(alienSpaceship5);
 
 
         this.laser1 = new Laser("src/main/java/resources/YellowLaser.png");
@@ -167,8 +162,8 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.sceneSound.startBackgroundPlay();
         this.sceneSound.loopPlay();
 
-        this.isSuccess = counterOfFuelHits >= 5;
-        this.isFailed = counterOfAlienHits >= 3;
+        this.isSuccess = counterOfAlienHits >= 4;
+        this.isFailed = counterOfMisses >= 3;
         this.gameCondition = !isFailed && !isSuccess;
 
 
@@ -201,7 +196,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
 
-
         moveLaser();
         keepLaser();
         alienSpaceshipsLoop();
@@ -215,7 +209,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
                 repaint();
                 finalBackgroundX -= 1;
                 try {
-                    Thread.sleep(7);
+                    Thread.sleep(6);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -264,7 +258,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
         // מפעיל את כל המאזינים עם התוצאה שנבחרה
         notifyListeners(selectedOption);
+
     }
+
+
 
 
 
@@ -295,8 +292,8 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         alienSpaceship1.paintAlienSpaceship(graphics);
         alienSpaceship2.paintAlienSpaceship(graphics);
         alienSpaceship3.paintAlienSpaceship(graphics);
-        alienSpaceship4.paintAlienSpaceship(graphics);
-        alienSpaceship5.paintAlienSpaceship(graphics);
+//        alienSpaceship4.paintAlienSpaceship(graphics);
+//        alienSpaceship5.paintAlienSpaceship(graphics);
         laser1.paintLaser(graphics);
         laser2.paintLaser(graphics);
     }
@@ -365,30 +362,29 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
     public void checkCollision() {
-//        if (this.fuel.rectangle().intersects(this.spaceship1.rectangle()) || this.fuel.rectangle().intersects(this.spaceship2.rectangle())){
-//            fuelSound.startPlay();
-//            System.out.println(" fuel crash");
-//            fuelHasCollision = true;
-//            counterOfFuelHits++;
-//        }
+
         for (int i = 0; i < alienSpaceships.size(); i++) {
             if (this.alienSpaceships.get(i).rectangle().intersects(this.spaceship1.rectangle()) || this.alienSpaceships.get(i).rectangle().intersects(this.spaceship2.rectangle())) {
                 crashing.startPlay();
-                counterOfAlienHits++;
+                counterOfMisses++;
+                System.out.println("Miss: " + counterOfMisses);
                 alienHasCollision = true;
                 alienIndex = (byte) i;
-                if (counterOfAlienHits == 3){
-                    explosion.startPlay();
-                    System.out.println("game over - lose");
-                }
             } else if (this.alienSpaceships.get(i).rectangle().intersects(this.laser1.rectangle())) {
                 alienHasCollision = true;
                 alienIndex = (byte) i;
                 laser1Colision = true;
+                counterOfAlienHits++;
             } else if (this.alienSpaceships.get(i).rectangle().intersects(this.laser2.rectangle())) {
                 alienHasCollision = true;
                 alienIndex = (byte) i;
                 laser2Colision = true;
+                counterOfAlienHits++;
+            } else if (this.alienSpaceships.get(i).getX() < 0){
+                hasMisses = true;
+                alienIndex = (byte) i;
+                counterOfMisses++;
+                System.out.println("Miss: " + counterOfMisses);
             }
         }
 
@@ -396,7 +392,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             alienSpaceships.get(alienIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
             alienSpaceships.get(alienIndex).setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight());
             alienHasCollision = false;
-
         }
 
         if (laser1Colision) {
@@ -412,15 +407,15 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             laser2Colision = false;
         }
 
+        if (hasMisses){
+            alienSpaceships.get(alienIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
+            alienSpaceships.get(alienIndex).setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight());
+            hasMisses = false;
+        }
 
-
-
-//        if (fuelHasCollision){
-//            this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
-//            this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
-//            System.out.println("Fuel hits: " + counterOfFuelHits);
-//            fuelHasCollision = false;
-//        }
+        if (counterOfMisses == 3){
+            explosion.startPlay();
+        }
     }
 
     public void keepLaser() {
