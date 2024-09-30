@@ -1,5 +1,7 @@
 package org.example;
 
+import resources.MainRiddlePanel;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -16,9 +18,11 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private boolean leftPressed = false;
     private int fakeButtonWidth = 200;
     private int xOfAstronaut;
-    private RiddlePanel riddlePanel;
+    private ButtonsPanel buttonsPanel;
     private int xOfRiddlePanel;
     private int yOfRiddlePanel;
+//    private HintsPanel hintsPanel;
+    private MainRiddlePanel mainRiddlePanel;
 
 
 
@@ -38,12 +42,22 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.spaceshipBackground = new ImageIcon("src/main/java/resources/levelTwoBackground.png");
         this.xOfBackground = -(this.spaceshipBackground.getIconWidth() - this.windowWidth) / 2;
 
-        this.riddlePanel = new RiddlePanel();
+//        this.buttonsPanel = new ButtonsPanel();
+//
+//        this.xOfRiddlePanel = (this.windowWidth - this.buttonsPanel.getWidth()) / 2;
+//        this.yOfRiddlePanel = (this.windowHeight - this.buttonsPanel.getHeight()) / 2;
+//        this.buttonsPanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, this.buttonsPanel.getWidth(), this.buttonsPanel.getHeight());
+//        this.add(buttonsPanel);
 
-        this.xOfRiddlePanel = (this.windowWidth - this.riddlePanel.getWidth()) / 2;
-        this.yOfRiddlePanel = (this.windowHeight - this.riddlePanel.getHeight()) / 2;
-        this.riddlePanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, this.riddlePanel.getWidth(), this.riddlePanel.getHeight());
-        this.add(riddlePanel);
+        this.mainRiddlePanel = new MainRiddlePanel();
+
+        this.xOfRiddlePanel = (this.windowWidth - this.mainRiddlePanel.getWidth()) / 2;
+        this.yOfRiddlePanel = (this.windowHeight - this.mainRiddlePanel.getHeight()) / 2;
+        this.mainRiddlePanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, this.mainRiddlePanel.getWidth(), this.mainRiddlePanel.getHeight());
+        this.add(mainRiddlePanel);
+//        this.hintsPanel = new HintsPanel();
+//        this.hintsPanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, windowWidth, windowHeight);
+//        this.add(hintsPanel);
 
         this.riddleButton = new JButton("?");
         this.riddleButton.setFont(new Font("Arial", Font.BOLD, 25));
@@ -54,25 +68,37 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.riddleButton.setFocusable(false);
         this.riddleButton.setForeground(new Color(142, 109, 4, 224));
 
+//        this.riddleButton.addActionListener(e -> {
+//            System.out.println("you clicked on: showRiddleButton");
+//
+//            this.buttonsPanel.setVisible(true);
+//            this.buttonsPanel.setFocusable(true);
+//            this.buttonsPanel.requestFocus();
+//            this.buttonsPanel.requestFocusInWindow();
+//
+//        });
         this.riddleButton.addActionListener(e -> {
             System.out.println("you clicked on: showRiddleButton");
-//            this.riddlePanel = new RiddlePanel();
-//
-//            this.xOfRiddlePanel = (this.windowWidth - this.riddlePanel.getWidth()) / 2;
-//            this.yOfRiddlePanel = (this.windowHeight - this.riddlePanel.getHeight()) / 2;
-////            this.riddlePanel.setX((this.windowWidth - this.riddlePanel.getWidth()) / 2);
-////            this.riddlePanel.setY((this.windowHeight - this.riddlePanel.getHeight()) / 2);
-////            this.riddlePanel.setBounds();
-//            this.riddlePanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, this.riddlePanel.getWidth(), this.riddlePanel.getHeight());
-//            this.add(riddlePanel);
-            this.riddlePanel.setVisible(true);
-            this.riddlePanel.setFocusable(true);
-            this.riddlePanel.requestFocus();
-            this.riddlePanel.requestFocusInWindow();
+
+            this.mainRiddlePanel.setVisible(true);
+            this.mainRiddlePanel.setFocusable(true);
+            this.riddleButton.requestFocus();
+            this.riddleButton.requestFocusInWindow();
 
         });
 
         this.add(riddleButton);
+
+
+
+//        this.MainRiddlePanel.getHintsButton().addActionListener(e -> {
+//            this.MainRiddlePanel.setVisible(false);
+//            this.hintsPanel.setBounds(0, 0, this.hintsPanel.getWidth(), this.hintsPanel.getHeight()); // הגדרת המיקום והגודל של hintsPanel
+//            this.hintsPanel.setVisible(true);
+//            this.hintsPanel.setFocusable(true);
+//            this.hintsPanel.requestFocus();
+//            this.hintsPanel.requestFocusInWindow();
+//        });
 
         this.fakeRiddleButton = new JButton("click here");
         this.fakeRiddleButton.setFont(new Font("Arial", Font.BOLD, 30));
@@ -106,8 +132,8 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             this.fakeRiddleButton.setBounds(xOfBackground + (spaceshipBackground.getIconWidth() - this.fakeButtonWidth) / 2,260,this.fakeButtonWidth,45);
         }
         astronaut.paintAstronaut(graphics);
-//        this.riddlePanel.setX((this.windowWidth - this.riddlePanel.getWidth()) / 2);
-//        this.riddlePanel.setY((this.windowHeight - this.riddlePanel.getHeight()) / 2);
+//        this.MainRiddlePanel.setX((this.windowWidth - this.MainRiddlePanel.getWidth()) / 2);
+//        this.MainRiddlePanel.setY((this.windowHeight - this.MainRiddlePanel.getHeight()) / 2);
     }
 
     @Override

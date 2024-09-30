@@ -9,14 +9,14 @@ import java.awt.event.ActionListener;
 import static java.awt.Color.blue;
 
 public class ColorButton extends JButton {
-    private int width = 50;
-    private int height = 50;
-    private int x = 10;
-    private int y = 450;
+    private int width = 58;
+    private int height = 44;
+    private int x = 705;
+    private int y;
     private int index = 0;
     private  Color[] colors = {Color.BLUE, Color.BLACK, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA};
-    public ColorButton(int x, int index) {
-        this.x = x;
+    public ColorButton(int y, int index) {
+        this.y = y;
         this.index = index;
         this.changeColor();
 

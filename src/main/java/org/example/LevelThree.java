@@ -438,7 +438,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         if (!laser1Move) {
             this.laser1.setX(laser1X);
             this.laser1.setY(laser1Y);
-
         }
         if (!laser2Move) {
             this.laser2.setX(laser2X);
