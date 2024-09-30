@@ -47,8 +47,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private AlienSpaceship alienSpaceship1;
     private AlienSpaceship alienSpaceship2;
     private AlienSpaceship alienSpaceship3;
-    private AlienSpaceship alienSpaceship4;
-    private AlienSpaceship alienSpaceship5;
     private Laser laser1;
     private Laser laser2;
     private int laser1X = 0;
@@ -86,24 +84,19 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.laser2Y = this.spaceship2.getY() + 30;
 
 
-//        this.fuel = new Fuel();
-//        this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
-//        this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
-//        this.fuel.start();
-
         this.alienSpaceship1 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
         this.alienSpaceship1.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship1.setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight());
+        this.alienSpaceship1.setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight() - 30);
         this.alienSpaceship1.start();
 
         this.alienSpaceship2 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
         this.alienSpaceship2.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship2.setRandomY(0, this.windowHeight - this.alienSpaceship2.getHeight());
+        this.alienSpaceship2.setRandomY(0, this.windowHeight - this.alienSpaceship2.getHeight() - 30);
         this.alienSpaceship2.start();
 
         this.alienSpaceship3 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
         this.alienSpaceship3.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship3.setRandomY(0, this.windowHeight - this.alienSpaceship3.getHeight());
+        this.alienSpaceship3.setRandomY(0, this.windowHeight - this.alienSpaceship3.getHeight() - 30);
         this.alienSpaceship3.start();
 
 
@@ -364,18 +357,11 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         for (int i = 0; i < alienSpaceships.size(); i++) {
             if (alienSpaceships.get(i).getX() < -alienSpaceships.get(i).getWidth()) {
                 alienSpaceships.get(i).setRandomX(this.windowWidth, this.windowWidth + 600);
-                alienSpaceships.get(i).setRandomY(0, this.windowHeight - this.alienSpaceships.get(i).getHeight());
+                alienSpaceships.get(i).setRandomY(0, this.windowHeight - this.alienSpaceships.get(i).getHeight() - 30);
             }
         }
     }
 
-//    public void fuelLoop() {
-//        if (fuel.getX() < -fuel.getWidth()){
-//            this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
-//            this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
-//
-//        }
-//    }
 
 
     public void checkCollision() {
@@ -407,7 +393,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
         if (alienHasCollision){
             alienSpaceships.get(alienIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
-            alienSpaceships.get(alienIndex).setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight());
+            alienSpaceships.get(alienIndex).setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight() - 30);
             alienHasCollision = false;
         }
 
