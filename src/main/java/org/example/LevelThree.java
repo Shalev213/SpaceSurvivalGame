@@ -32,7 +32,8 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private boolean hasMisses = false;
     private int counterOfAlienHits = 0;
     private Sound sceneSound;
-    private Sound fuelSound;
+    private Sound laserShot1;
+    private Sound laserShot2;
     private Sound crashing;
     private Sound explosion;
     private Sound passedLevel;
@@ -106,23 +107,12 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.alienSpaceship3.start();
 
 
-//        this.alienSpaceship4 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
-//        this.alienSpaceship4.setRandomX(this.windowWidth, this.windowWidth * 2);
-//        this.alienSpaceship4.setRandomY(0, this.windowHeight - this.alienSpaceship4.getHeight());
-//        this.alienSpaceship4.start();
-//
-//        this.alienSpaceship5 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
-//        this.alienSpaceship5.setRandomX(this.windowWidth, this.windowWidth * 2);
-//        this.alienSpaceship5.setRandomY(0, this.windowHeight - this.alienSpaceship5.getHeight());
-//        this.alienSpaceship5.start();
-
 
         alienSpaceships = new ArrayList<>();
         alienSpaceships.add(alienSpaceship1);
         alienSpaceships.add(alienSpaceship2);
         alienSpaceships.add(alienSpaceship3);
-//        alienSpaceships.add(alienSpaceship4);
-//        alienSpaceships.add(alienSpaceship5);
+
 
 
         this.laser1 = new Laser("src/main/java/resources/YellowLaser.png");
@@ -139,8 +129,11 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.sceneSound = new Sound();
         this.sceneSound.playSound("src/main/java/resources/space_background.wav");
 
-        this.fuelSound = new Sound();
-        this.fuelSound.playSound("src/main/java/resources/catching_fuel.wav");
+        this.laserShot1 = new Sound();
+        this.laserShot1.playSound("src/main/java/resources/laser-sound.wav");
+
+        this.laserShot2 = new Sound();
+        this.laserShot2.playSound("src/main/java/resources/laser-sound.wav");
 
         this.crashing = new Sound();
         this.crashing.playSound("src/main/java/resources/crashing.wav");
@@ -205,6 +198,14 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         }
         if (aPressed && this.spaceship2.getX() >= 0) {
             spaceship2.leftRightMove(-2);
+        }
+
+
+        if (this.laser1.getX() == this.spaceship1.getX() + 65 && enterPressed){
+            this.laserShot1.startPlay();
+        }
+        if (this.laser2.getX() == this.spaceship2.getX() + 65 && spacePressed){
+            this.laserShot2.startPlay();
         }
 
 
@@ -324,10 +325,12 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_A -> aPressed = true;
             case KeyEvent.VK_D -> dPressed = true;
             case KeyEvent.VK_SPACE -> {
+//                laserShot2.startPlay();
                 spacePressed = true;
                 laser2Move = true;
             }
             case KeyEvent.VK_ENTER -> {
+//                laserShot1.startPlay();
                 enterPressed = true;
                 laser1Move = true;
             }
@@ -449,11 +452,19 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             this.laser2.setX(laser2X);
             this.laser2.setY(laser2Y);
         }
+
+//        if (this.laser1.getX() == this.spaceship1.getX() + 65 && enterPressed){
+//            laserShot1.startPlay();
+//        }
+//        if (this.laser2.getX() == this.spaceship2.getX() + 65 && spacePressed){
+//            this.laserShot2.startPlay();
+//        }
     }
 
     public void moveLaser() {
         if (laser1Move) {
             laser1.fire();
+            //laserShot1.startPlay();
             if (laser1.getX() > windowWidth) {
                 resetLaser1();
                 laser1Move = false;
@@ -462,6 +473,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
         if (laser2Move) {
             laser2.fire();
+//            laserShot1.startPlay();
             if (laser2.getX() > windowWidth) {
                 resetLaser2();
                 laser2Move = false;
