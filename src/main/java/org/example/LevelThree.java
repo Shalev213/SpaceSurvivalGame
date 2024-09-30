@@ -41,7 +41,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private int finalBackgroundX = windowWidth;
     private Object[] options;
     private int selectedOption;
-    private boolean isSuccess = counterOfAlienHits >= 4;
+    private boolean isSuccess = counterOfAlienHits >= 15;
     private boolean isFailed = counterOfMisses >= 3;
     private AlienSpaceship alienSpaceship1;
     private AlienSpaceship alienSpaceship2;
@@ -78,11 +78,11 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.spaceship2 = new Spaceship("src/main/java/resources/Spaceship2.png");
         this.spaceship2.setY(500);
 
-        this.laser1X = this.spaceship1.getX() + 60;
-        this.laser1Y = this.spaceship1.getY() + 35;
+        this.laser1X = this.spaceship1.getX() + 65;
+        this.laser1Y = this.spaceship1.getY() + 30;
 
-        this.laser2X = this.spaceship2.getX() + 60;
-        this.laser2Y = this.spaceship2.getY() + 35;
+        this.laser2X = this.spaceship2.getX() + 65;
+        this.laser2Y = this.spaceship2.getY() + 30;
 
 
 //        this.fuel = new Fuel();
@@ -175,7 +175,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.sceneSound.startBackgroundPlay();
         this.sceneSound.loopPlay();
 
-        this.isSuccess = counterOfAlienHits >= 4;
+        this.isSuccess = counterOfAlienHits >= 15;
         this.isFailed = counterOfMisses >= 3;
         this.gameCondition = !isFailed && !isSuccess;
 
@@ -299,6 +299,8 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         super.paintComponent(graphics);
 
         finalBackground.paintIcon(null, graphics, finalBackgroundX, windowHeight - finalBackground.getIconHeight());
+        laser1.paintLaser(graphics);
+        laser2.paintLaser(graphics);
         spaceship1.paintSpaceship(graphics);
         spaceship2.paintSpaceship(graphics);
 //        fuel.paintFuel(graphics);
@@ -307,8 +309,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         alienSpaceship3.paintAlienSpaceship(graphics);
 //        alienSpaceship4.paintAlienSpaceship(graphics);
 //        alienSpaceship5.paintAlienSpaceship(graphics);
-        laser1.paintLaser(graphics);
-        laser2.paintLaser(graphics);
+
     }
 
     @Override
@@ -324,11 +325,11 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_D -> dPressed = true;
             case KeyEvent.VK_SPACE -> {
                 spacePressed = true;
-                laser1Move = true;
+                laser2Move = true;
             }
             case KeyEvent.VK_ENTER -> {
                 enterPressed = true;
-                laser2Move = true;
+                laser1Move = true;
             }
         }
     }
@@ -436,10 +437,15 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
     public void keepLaser() {
         if (!laser1Move) {
+            this.laser1X = spaceship1.getX() + 65;
+            this.laser1Y = spaceship1.getY() + 30;
             this.laser1.setX(laser1X);
             this.laser1.setY(laser1Y);
+
         }
         if (!laser2Move) {
+            this.laser2X = this.spaceship2.getX() + 65;
+            this.laser2Y = this.spaceship2.getY() + 30;
             this.laser2.setX(laser2X);
             this.laser2.setY(laser2Y);
         }
