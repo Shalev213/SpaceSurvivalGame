@@ -50,27 +50,32 @@ public class ButtonsPanel extends JPanel {
         this.add(colorButton5);
         this.add(colorButton6);
 
+
+//        this.hintsPanel = new HintsPanel();
+//        this.add(hintsPanel);
+
+        this.hintsButton = new JButton("hints");
+        this.hintsButton.setFont(new Font("Arial", Font.BOLD, 25));
+        this.hintsButton.setBounds((this.panelWidth - this.returnButtonWidth) / 11, 135, this.returnButtonWidth,40);
+        this.hintsButton.setFocusPainted(false);
+        this.hintsButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.hintsButton.setBackground(new Color(176,224,219));
+        this.hintsButton.setForeground(new Color(0,0,0));
+
+
         this.returnButton = new JButton("return");
         this.returnButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.returnButton.setBounds((this.panelWidth - this.returnButtonWidth) / 2, (int) (this.colorButton1.getY() + 1.5 * this.colorButton1.getHeight()), this.returnButtonWidth,40);
+        this.returnButton.setBounds((this.panelWidth - this.returnButtonWidth) / 11, 225, this.returnButtonWidth,40);
         this.returnButton.setFocusPainted(false);
         this.returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.returnButton.setBackground(new Color(176,224,219));
+        this.returnButton.setForeground(new Color(0,0,0));
 
         this.returnButton.addActionListener(e -> {
             this.setVisible(false);
         });
 
         this.add(returnButton);
-
-        this.hintsPanel = new HintsPanel();
-        this.add(hintsPanel);
-
-        this.hintsButton = new JButton("hints");
-        this.hintsButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.hintsButton.setBounds((this.panelWidth - this.returnButtonWidth) / 5, 100, this.returnButtonWidth,40);
-        this.hintsButton.setFocusPainted(false);
-        this.hintsButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-
 //        this.hintsButton.addActionListener(e -> {
 ////            this.setVisible(false);
 ////            this.hidePanel();
@@ -112,5 +117,9 @@ public class ButtonsPanel extends JPanel {
         this.colorButton6.setVisible(false);
         this.returnButton.setVisible(false);
         this.hintsPanel.setVisible(false);
+    }
+
+    public JButton getReturnButton() {
+        return returnButton;
     }
 }

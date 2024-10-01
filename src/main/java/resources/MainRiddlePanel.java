@@ -13,6 +13,14 @@ public class MainRiddlePanel extends JPanel {
     private int x = 0;
     private int y = 0;
 
+    public HintsPanel getHintsPanel() {
+        return hintsPanel;
+    }
+
+    public ButtonsPanel getButtonsPanel() {
+        return buttonsPanel;
+    }
+
     public MainRiddlePanel() {
         this.buttonsPanel = new ButtonsPanel();
         this.buttonsPanel.setVisible(true);
@@ -38,5 +46,11 @@ public class MainRiddlePanel extends JPanel {
             this.hintsPanel.requestFocus();
             this.hintsPanel.requestFocusInWindow();
         });
+        this.buttonsPanel.getReturnButton().addActionListener(e -> {
+            this.buttonsPanel.setVisible(true);
+//            this.hintsPanel.setVisible(false);
+            this.setVisible(false);
+        });
+
     }
 }

@@ -68,37 +68,24 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.riddleButton.setFocusable(false);
         this.riddleButton.setForeground(new Color(142, 109, 4, 224));
 
-//        this.riddleButton.addActionListener(e -> {
-//            System.out.println("you clicked on: showRiddleButton");
-//
-//            this.buttonsPanel.setVisible(true);
-//            this.buttonsPanel.setFocusable(true);
-//            this.buttonsPanel.requestFocus();
-//            this.buttonsPanel.requestFocusInWindow();
-//
-//        });
+
         this.riddleButton.addActionListener(e -> {
             System.out.println("you clicked on: showRiddleButton");
 
             this.mainRiddlePanel.setVisible(true);
             this.mainRiddlePanel.setFocusable(true);
-            this.riddleButton.requestFocus();
-            this.riddleButton.requestFocusInWindow();
+            this.mainRiddlePanel.getButtonsPanel().setVisible(true);
+            this.mainRiddlePanel.requestFocus();
+            this.mainRiddlePanel.requestFocusInWindow();
+
+//            this.mainRiddlePanel.revalidate();
+//            this.mainRiddlePanel.repaint();
 
         });
 
         this.add(riddleButton);
 
 
-
-//        this.MainRiddlePanel.getHintsButton().addActionListener(e -> {
-//            this.MainRiddlePanel.setVisible(false);
-//            this.hintsPanel.setBounds(0, 0, this.hintsPanel.getWidth(), this.hintsPanel.getHeight()); // הגדרת המיקום והגודל של hintsPanel
-//            this.hintsPanel.setVisible(true);
-//            this.hintsPanel.setFocusable(true);
-//            this.hintsPanel.requestFocus();
-//            this.hintsPanel.requestFocusInWindow();
-//        });
 
         this.fakeRiddleButton = new JButton("click here");
         this.fakeRiddleButton.setFont(new Font("Arial", Font.BOLD, 30));
