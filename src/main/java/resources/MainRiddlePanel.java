@@ -46,11 +46,15 @@ public class MainRiddlePanel extends JPanel {
             this.hintsPanel.requestFocus();
             this.hintsPanel.requestFocusInWindow();
         });
-        this.buttonsPanel.getReturnButton().addActionListener(e -> {
+        this.buttonsPanel.getExitButton().addActionListener(e -> {
             this.buttonsPanel.setVisible(true);
-//            this.hintsPanel.setVisible(false);
+            this.hintsPanel.setVisible(false);
             this.setVisible(false);
         });
 
+        this.hintsPanel.getReturnButton().addActionListener(e -> {
+            this.hintsPanel.setVisible(false);
+            this.buttonsPanel.setVisible(true);
+        });
     }
 }

@@ -10,7 +10,7 @@ public class ButtonsPanel extends JPanel {
     private ImageIcon riddleBackground;
 //    private int x = 0;
 //    private int y = 0;
-    private JButton returnButton;
+    private JButton exitButton;
     private JButton hintsButton;
     private int returnButtonWidth = 80;
     private ColorButton colorButton1;
@@ -51,8 +51,6 @@ public class ButtonsPanel extends JPanel {
         this.add(colorButton6);
 
 
-//        this.hintsPanel = new HintsPanel();
-//        this.add(hintsPanel);
 
         this.hintsButton = new JButton("hints");
         this.hintsButton.setFont(new Font("Arial", Font.BOLD, 25));
@@ -62,32 +60,23 @@ public class ButtonsPanel extends JPanel {
         this.hintsButton.setBackground(new Color(176,224,219));
         this.hintsButton.setForeground(new Color(0,0,0));
 
+        this.add(hintsButton);
 
-        this.returnButton = new JButton("return");
-        this.returnButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.returnButton.setBounds((this.panelWidth - this.returnButtonWidth) / 11, 225, this.returnButtonWidth,40);
-        this.returnButton.setFocusPainted(false);
-        this.returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        this.returnButton.setBackground(new Color(176,224,219));
-        this.returnButton.setForeground(new Color(0,0,0));
 
-        this.returnButton.addActionListener(e -> {
+        this.exitButton = new JButton("exit");
+        this.exitButton.setFont(new Font("Arial", Font.BOLD, 25));
+        this.exitButton.setBounds((this.panelWidth - this.returnButtonWidth) / 11, 225, this.returnButtonWidth,40);
+        this.exitButton.setFocusPainted(false);
+        this.exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.exitButton.setBackground(new Color(176,224,219));
+        this.exitButton.setForeground(new Color(0,0,0));
+
+        this.exitButton.addActionListener(e -> {
             this.setVisible(false);
         });
 
-        this.add(returnButton);
-//        this.hintsButton.addActionListener(e -> {
-////            this.setVisible(false);
-////            this.hidePanel();
-//            this.hintsPanel.setBounds(this.x, this.y, this.hintsPanel.getWidth(), this.hintsPanel.getHeight()); // הגדרת המיקום והגודל של hintsPanel
-//            this.hintsPanel.setVisible(true);
-//            this.hintsPanel.setFocusable(true);
-//            this.hintsPanel.requestFocus();
-//            this.hintsPanel.requestFocusInWindow();
-//        });
+        this.add(exitButton);
 
-
-        this.add(hintsButton);
     }
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -115,11 +104,11 @@ public class ButtonsPanel extends JPanel {
         this.colorButton4.setVisible(false);
         this.colorButton5.setVisible(false);
         this.colorButton6.setVisible(false);
-        this.returnButton.setVisible(false);
+        this.exitButton.setVisible(false);
         this.hintsPanel.setVisible(false);
     }
 
-    public JButton getReturnButton() {
-        return returnButton;
+    public JButton getExitButton() {
+        return exitButton;
     }
 }
