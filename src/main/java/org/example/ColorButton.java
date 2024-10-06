@@ -14,7 +14,7 @@ public class ColorButton extends JButton {
     private int x = 705;
     private int y;
     private int index = 0;
-    private  Color[] colors = {Color.BLUE, Color.WHITE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA};
+    private final Color[] colors = {Color.BLUE, Color.WHITE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA};
     public ColorButton(int y, int index) {
         this.y = y;
         this.index = index;
@@ -65,5 +65,9 @@ public class ColorButton extends JButton {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public Color getColor(){
+        return this.getBackground();
     }
 }
