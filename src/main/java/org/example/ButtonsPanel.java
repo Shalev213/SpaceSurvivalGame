@@ -41,7 +41,7 @@ public class ButtonsPanel extends JPanel {
 
         this.isSuccessLabel = new JLabel("<html><div style='text-align: center;'>Find the<br/>right order</div><html>");
         this.isSuccessLabel.setFont(new Font("Arial", Font.BOLD , 37));
-        this.isSuccessLabel.setBounds((panelWidth - 200) / 2, 170, 200, 110);
+        this.isSuccessLabel.setBounds((panelWidth - 200) / 2, 170, 190, 110);
         this.isSuccessLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.isSuccessLabel.setForeground(new Color(176,224,219));
         this.add(isSuccessLabel);
