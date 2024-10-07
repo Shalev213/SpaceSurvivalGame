@@ -11,6 +11,8 @@ import java.awt.event.KeyListener;
 public class LevelTwo extends AbstractLevel implements KeyListener {
     private final JButton riddleButton;
     private final JButton fakeRiddleButton;
+    private int xOfFakePanel;
+    private int yOfFakePanel;
     private ImageIcon spaceshipBackground;
     private Astronaut astronaut;
     private int xOfBackground = 0;
@@ -23,6 +25,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private int yOfRiddlePanel;
 //    private HintsPanel hintsPanel;
     private MainRiddlePanel mainRiddlePanel;
+    private FakePanel fakePanel;
 
 
 
@@ -50,10 +53,10 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
 //        this.add(buttonsPanel);
 
         this.mainRiddlePanel = new MainRiddlePanel();
-
         this.xOfRiddlePanel = (this.windowWidth - this.mainRiddlePanel.getWidth()) / 2;
         this.yOfRiddlePanel = (this.windowHeight - this.mainRiddlePanel.getHeight()) / 2;
         this.mainRiddlePanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, this.mainRiddlePanel.getWidth(), this.mainRiddlePanel.getHeight());
+
         this.add(mainRiddlePanel);
 //        this.hintsPanel = new HintsPanel();
 //        this.hintsPanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, windowWidth, windowHeight);
@@ -66,7 +69,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.riddleButton.setFocusPainted(false);
         this.riddleButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.riddleButton.setFocusable(false);
-        this.riddleButton.setForeground(new Color(142, 109, 4, 224));
+        this.riddleButton.setForeground(new Color(142, 109, 4, 150));
 
 
         this.riddleButton.addActionListener(e -> {
@@ -86,7 +89,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.add(riddleButton);
 
 
-
         this.fakeRiddleButton = new JButton("click here");
         this.fakeRiddleButton.setFont(new Font("Arial", Font.BOLD, 30));
         this.fakeRiddleButton.setContentAreaFilled(false);
@@ -95,11 +97,33 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.fakeRiddleButton.setFocusable(false);
         this.fakeRiddleButton.setForeground(new Color(60, 124, 144, 255));
 
+        this.add(fakeRiddleButton);
+
+        this.fakePanel = new FakePanel();
+        this.xOfFakePanel = (this.windowWidth - this.fakePanel.getWidth()) / 2;
+        this.yOfFakePanel = (this.windowHeight - this.fakePanel.getHeight()) / 2;
+        this.fakePanel.setBounds(this.xOfFakePanel, this.yOfFakePanel, this.fakePanel.getWidth(), this.fakePanel.getHeight());
+
+        this.add(this.fakePanel);
+        this.setComponentZOrder(fakePanel, 0);
+
+
         this.fakeRiddleButton.addActionListener(e -> {
             System.out.println("hahahaha you clicked on: fakeRiddleButton");
+//            this.fakePanel.setVisible(true);
+            this.fakeRiddleButton.setEnabled(false);
+            this.fakePanel.setVisible(true);
+            this.fakePanel.setFocusable(true);
+            this.fakePanel.requestFocus();
+            this.fakePanel.requestFocusInWindow();
         });
 
-        this.add(fakeRiddleButton);
+        this.fakePanel.getExitButton().addActionListener(e -> {
+            this.fakePanel.setVisible(false);
+            this.fakeRiddleButton.setEnabled(true);
+
+        });
+
 
 
 
@@ -179,5 +203,11 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_RIGHT -> this.rightPressed = false;
             case KeyEvent.VK_LEFT -> this.leftPressed = false;
         }
+    }
+    public JButton getNextLevelButton() {
+        return this.mainRiddlePanel.getButtonsPanel().getNextLevelButton();
+    }
+    public JButton getLobbyButton() {
+        return this.mainRiddlePanel.getButtonsPanel().getLobbyButton();
     }
 }

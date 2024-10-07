@@ -11,11 +11,9 @@ public class ButtonsPanel extends JPanel {
     private JButton lobbyButton;
     private JButton checkButton;
     private ImageIcon riddleBackground;
-//    private int x = 0;
-//    private int y = 0;
     private JButton exitButton;
     private JButton hintsButton;
-    private int returnButtonWidth = 80;
+    private int exitButtonWidth = 80;
     private ColorButton colorButton1;
     private ColorButton colorButton2;
     private ColorButton colorButton3;
@@ -23,8 +21,6 @@ public class ButtonsPanel extends JPanel {
     private ColorButton colorButton5;
     private ColorButton colorButton6;
     private int spaceBetweenButtons = 7;
-//    private JLabel hint1;
-    private HintsPanel hintsPanel;
     private JLabel isSuccessLabel;
 
     public ButtonsPanel(){
@@ -62,7 +58,7 @@ public class ButtonsPanel extends JPanel {
 
         this.hintsButton = new JButton("hints");
         this.hintsButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.hintsButton.setBounds((this.panelWidth - this.returnButtonWidth) / 11, 135, this.returnButtonWidth,40);
+        this.hintsButton.setBounds((this.panelWidth - this.exitButtonWidth) / 11, 135, this.exitButtonWidth,40);
         this.hintsButton.setFocusPainted(false);
         this.hintsButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.hintsButton.setBackground(new Color(176,224,219));
@@ -73,7 +69,7 @@ public class ButtonsPanel extends JPanel {
 
         this.checkButton = new JButton("check");
         this.checkButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.checkButton.setBounds(this.colorButton1.getX() - (this.returnButtonWidth - this.colorButton1.getWidth()), this.colorButton6.getY() + this.colorButton6.getHeight() + 2 * this.spaceBetweenButtons, this.returnButtonWidth,40);
+        this.checkButton.setBounds(this.colorButton1.getX() - (this.exitButtonWidth - this.colorButton1.getWidth()), this.colorButton6.getY() + this.colorButton6.getHeight() + 2 * this.spaceBetweenButtons, this.exitButtonWidth,40);
         this.checkButton.setFocusPainted(false);
         this.checkButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.checkButton.setBackground(new Color(176,224,219));
@@ -100,7 +96,7 @@ public class ButtonsPanel extends JPanel {
 
         this.exitButton = new JButton("exit");
         this.exitButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.exitButton.setBounds((this.panelWidth - this.returnButtonWidth) / 11, 225, this.returnButtonWidth,40);
+        this.exitButton.setBounds((this.panelWidth - this.exitButtonWidth) / 11, 225, this.exitButtonWidth,40);
         this.exitButton.setFocusPainted(false);
         this.exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.exitButton.setBackground(new Color(176,224,219));
@@ -114,7 +110,7 @@ public class ButtonsPanel extends JPanel {
 
         this.nextLevelButton = new JButton("Next level");
         this.nextLevelButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.nextLevelButton.setBounds(this.panelWidth / 2, this.panelHeight - 2 * 43, (int) (1.5 * this.returnButtonWidth),35);
+        this.nextLevelButton.setBounds(this.panelWidth / 2, this.panelHeight - 2 * 43, (int) (1.5 * this.exitButtonWidth),35);
         this.nextLevelButton.setFocusPainted(false);
         this.nextLevelButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.nextLevelButton.setBackground(new Color(244, 213, 2));
@@ -123,7 +119,7 @@ public class ButtonsPanel extends JPanel {
 
         this.lobbyButton = new JButton("Lobby");
         this.lobbyButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.lobbyButton.setBounds((int) ((this.panelWidth / 2) - 1.4 * this.returnButtonWidth - 3 * this.spaceBetweenButtons), this.panelHeight - 2 * 43, (int) (1.4 * this.returnButtonWidth),35);
+        this.lobbyButton.setBounds((int) ((this.panelWidth / 2) - 1.4 * this.exitButtonWidth - 3 * this.spaceBetweenButtons), this.panelHeight - 2 * 43, (int) (1.4 * this.exitButtonWidth),35);
         this.lobbyButton.setFocusPainted(false);
         this.lobbyButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.lobbyButton.setBackground(new Color(244, 213, 2));
@@ -153,16 +149,16 @@ public class ButtonsPanel extends JPanel {
     public JButton getHintsButton() {
         return hintsButton;
     }
-    public void hidePanel(){
-        this.colorButton1.setVisible(false);
-        this.colorButton2.setVisible(false);
-        this.colorButton3.setVisible(false);
-        this.colorButton4.setVisible(false);
-        this.colorButton5.setVisible(false);
-        this.colorButton6.setVisible(false);
-        this.exitButton.setVisible(false);
-        this.hintsPanel.setVisible(false);
-    }
+//    public void hidePanel(){
+//        this.colorButton1.setVisible(false);
+//        this.colorButton2.setVisible(false);
+//        this.colorButton3.setVisible(false);
+//        this.colorButton4.setVisible(false);
+//        this.colorButton5.setVisible(false);
+//        this.colorButton6.setVisible(false);
+//        this.exitButton.setVisible(false);
+//        this.hintsPanel.setVisible(false);
+//    }
     public boolean isSuccess() {
         System.out.println(STR."1) \{colorButton1.getColor()}2) \{colorButton2.getColor()}3) \{colorButton3.getColor()}4) \{colorButton4.getColor()}5) \{colorButton5.getColor()}6) \{colorButton6.getColor()}");
         return colorButton1.getColor().equals(Color.MAGENTA) && colorButton2.getColor().equals(Color.YELLOW) && colorButton3.getColor().equals(Color.WHITE) && colorButton4.getColor().equals(Color.RED) && colorButton5.getColor().equals(Color.GREEN) && colorButton6.getColor().equals(Color.BLUE);
@@ -171,5 +167,13 @@ public class ButtonsPanel extends JPanel {
 
     public JButton getExitButton() {
         return exitButton;
+    }
+
+    public JButton getNextLevelButton() {
+        return nextLevelButton;
+    }
+
+    public JButton getLobbyButton() {
+        return lobbyButton;
     }
 }

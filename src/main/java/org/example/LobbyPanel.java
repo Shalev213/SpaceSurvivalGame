@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 
-public class LevelsPanel extends JPanel {
+public class LobbyPanel extends JPanel {
     private final JButton returnButton;
     private JLabel title;
     private LevelButton levelButton1;
@@ -17,7 +17,7 @@ public class LevelsPanel extends JPanel {
     private int space = 30;
 
 
-    public LevelsPanel(int width, int height) {
+    public LobbyPanel(int width, int height) {
         this.setBackground(Color.orange);
         this.setSize(width, height);
         this.setLayout(null);
