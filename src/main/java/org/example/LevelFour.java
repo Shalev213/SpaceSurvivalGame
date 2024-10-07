@@ -28,8 +28,9 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
 
         circuitBreaker1 = new CircuitBreakerOne();
-        this.xOfCircuit = (this.windowWidth - this.circuitBreaker1.getWidth()) / 2;
-        this.yOfCircuit = (this.windowHeight - this.circuitBreaker1.getHeight()) / 2;
+        this.circuitBreaker1.setVisible(false);
+        this.xOfCircuit = (this.windowWidth - this.circuitBreaker1.getPanelWidth()) / 2;
+        this.yOfCircuit = (this.windowHeight - this.circuitBreaker1.getPanelHeight()) / 2;
         this.circuitBreaker1.setBounds(this.xOfCircuit, this.yOfCircuit, this.circuitBreaker1.getWidth(), this.circuitBreaker1.getHeight());
         this.add(circuitBreaker1);
 
@@ -101,6 +102,8 @@ public class LevelFour extends AbstractLevel implements KeyListener {
             this.circuitButton.setBounds(xOfBackground + (spaceshipBackground.getIconWidth() - this.fakeButtonWidth) / 2,260,this.fakeButtonWidth,45);
         }
         astronaut.paintAstronaut(graphics);
+
+//        circuitBreaker1.paintCircuit1(graphics);
     }
 
 
@@ -117,6 +120,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         }else if (leftPressed && this.astronaut.getX() > 0) {
             this.astronaut.leftRightMove(-1);
         }
+
         repaint();
     }
 

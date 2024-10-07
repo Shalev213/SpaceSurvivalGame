@@ -30,7 +30,6 @@ public class FakePanel extends JPanel {
         this.exitButton.setBackground(new Color(176,224,219));
         this.exitButton.setForeground(new Color(0,0,0));
 
-
         this.add(this.exitButton);
 
         this.message = new JLabel("Keep                   looking");
