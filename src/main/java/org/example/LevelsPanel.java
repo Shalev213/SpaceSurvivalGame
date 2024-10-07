@@ -47,6 +47,7 @@ public class LevelsPanel extends JPanel {
         this.levelButton3.setEnabled(true);//***
         this.add(levelButton3);
         this.levelButton4 = new LevelButton(levelButtonsX + 3 * (space + levelButton1.getWidth()), levelButtonsY, "4");
+        this.levelButton4.setEnabled(true);//***
         this.add(levelButton4);
         this.levelButton5 = new LevelButton(levelButtonsX + 4 * (space + levelButton1.getWidth()), levelButtonsY, "5");
         this.add(levelButton5);

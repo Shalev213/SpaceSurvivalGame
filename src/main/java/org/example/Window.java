@@ -14,6 +14,7 @@
         private LevelOne levelOne;
         private LevelTwo levelTwo;
         private LevelThree levelThree;
+        private LevelFour levelFour;
 //        private Sounds sceneSound;
 
 
@@ -36,6 +37,11 @@
             levelsPanel.setVisible(false);
 
             levelTwo = new LevelTwo(windowWidth, windowHeight);
+
+
+            levelFour = new LevelFour(windowWidth, windowHeight);
+
+
 //            levelThree = new LevelThree(windowWidth, windowHeight);
 
             UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 20));
@@ -172,6 +178,17 @@
                 levelThree.setFocusable(true);
                 levelThree.requestFocus();
                 levelThree.requestFocusInWindow();
+            });
+
+
+
+            this.levelsPanel.getLevelButton4().addActionListener(e -> {
+                this.levelsPanel.setVisible(false);
+                this.add(levelFour);
+                levelFour.setVisible(true);
+                levelFour.setFocusable(true);
+                levelFour.requestFocus();
+                levelFour.requestFocusInWindow();
             });
 
 

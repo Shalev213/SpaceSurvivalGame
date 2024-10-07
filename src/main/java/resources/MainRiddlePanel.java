@@ -13,13 +13,7 @@ public class MainRiddlePanel extends JPanel {
     private int x = 0;
     private int y = 0;
 
-    public HintsPanel getHintsPanel() {
-        return hintsPanel;
-    }
 
-    public ButtonsPanel getButtonsPanel() {
-        return buttonsPanel;
-    }
 
     public MainRiddlePanel() {
         this.buttonsPanel = new ButtonsPanel();
@@ -56,5 +50,14 @@ public class MainRiddlePanel extends JPanel {
             this.hintsPanel.setVisible(false);
             this.buttonsPanel.setVisible(true);
         });
+    }
+
+
+    public HintsPanel getHintsPanel() {
+        return hintsPanel;
+    }
+
+    public ButtonsPanel getButtonsPanel() {
+        return buttonsPanel;
     }
 }
