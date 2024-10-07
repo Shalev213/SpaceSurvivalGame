@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CircuitBreakerOne extends JPanel implements KeyListener {
     private final int panelWidth = 1000;
@@ -11,6 +13,10 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
     private int x = 0;
     private int y = 0;
     private ImageIcon circuitBreaker1;
+
+    private List<Point> trail = new ArrayList<>();
+    private int xOfMoving = 50, yOfMoving = 50; // מיקום התחלתי
+    private int speed = 10; // מהירות תנועה
 
 
 
