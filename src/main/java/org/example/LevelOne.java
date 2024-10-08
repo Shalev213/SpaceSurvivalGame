@@ -176,7 +176,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 //        System.out.println(isSuccess);
         this.isSuccess = counterOfFuelHits >= 5;
         this.isFailed = counterOfStoneHits >= 3;
-        this.gameCondition = !isFailed && !isSuccess;
+        super.gameCondition = !isFailed && !isSuccess;
         
 
             // חללית 1 - תנועה אנכית ואופקית

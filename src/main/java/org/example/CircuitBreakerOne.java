@@ -71,8 +71,8 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
         if (checkCollision() && !isFailed) {
             isFailed = true;
-            JOptionPane.showMessageDialog(null, "פגעת בקיר!");
-
+            JOptionPane.showMessageDialog(null, "פגעת בקיר!");// isFailed = false  להפוך בלחיצה עליו
+            rematch();
         }
 //        // צייר את האובייקט עצמו
 //        graphics.setColor(Color.RED);
@@ -83,34 +83,35 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_DOWN ->{
-                downPressed = true;
-                upPressed = false;
-                rightPressed = false;
-                leftPressed = false;
-            }
-            case KeyEvent.VK_UP -> {
-                upPressed = true;
-                downPressed = false;
-                rightPressed = false;
-                leftPressed = false;
-            }
-            case KeyEvent.VK_RIGHT -> {
-                rightPressed = true;
-                downPressed = false;
-                upPressed = false;
-                leftPressed = false;
-            }
-            case KeyEvent.VK_LEFT ->{
-                leftPressed = true;
-                downPressed = false;
-                upPressed = false;
-                rightPressed = false;
-            }
+        if (!isFailed) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_DOWN -> {
+                    downPressed = true;
+                    upPressed = false;
+                    rightPressed = false;
+                    leftPressed = false;
+                }
+                case KeyEvent.VK_UP -> {
+                    upPressed = true;
+                    downPressed = false;
+                    rightPressed = false;
+                    leftPressed = false;
+                }
+                case KeyEvent.VK_RIGHT -> {
+                    rightPressed = true;
+                    downPressed = false;
+                    upPressed = false;
+                    leftPressed = false;
+                }
+                case KeyEvent.VK_LEFT -> {
+                    leftPressed = true;
+                    downPressed = false;
+                    upPressed = false;
+                    rightPressed = false;
+                }
 
+            }
         }
-
     }
 
     @Override
@@ -145,6 +146,14 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
         return panelHeight;
     }
 
+    public void rematch() {
+        upPressed = false;
+        downPressed = false;
+        rightPressed = false;
+        leftPressed = false;
 
+        trail.clear();
+
+    }
 
 }

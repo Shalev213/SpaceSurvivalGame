@@ -12,7 +12,7 @@ public class LobbyPanel extends JPanel {
     private LevelButton levelButton3;
     private LevelButton levelButton4;
     private LevelButton levelButton5;
-    private int levelButtonsX = 70;
+    private int levelButtonsX = 60;
     private int levelButtonsY = 200;
     private int space = 30;
 
