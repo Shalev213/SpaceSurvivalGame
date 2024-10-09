@@ -36,7 +36,7 @@
             this.add(lobbyPanel);
             lobbyPanel.setVisible(false);
 
-            levelTwo = new LevelTwo(windowWidth, windowHeight);
+//            levelTwo = new LevelTwo(windowWidth, windowHeight);
 
 
 //            levelFour = new LevelFour(windowWidth, windowHeight);
@@ -136,28 +136,32 @@
                 levelOne.requestFocusInWindow();
             });
 
-            this.levelTwo.getNextLevelButton().addActionListener(_ ->{
-//                this.levelTwo.getSceneSound().stopPlay();
-                this.remove(this.levelTwo);
-                this.lobbyPanel.getLevelButton3().setEnabled(true);
-                this.lobbyPanel.getLevelButton3().doClick();
-            });
-            this.levelTwo.getLobbyButton().addActionListener(_ ->{
-//                this.levelTwo.getSceneSound().stopPlay();
-                this.remove(this.levelTwo);
-                this.lobbyPanel.setVisible(true);
-//                if (levelOne.isSuccess()){
-                this.lobbyPanel.getLevelButton3().setEnabled(true);
-            });
 
             this.lobbyPanel.getLevelButton2().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
+                levelTwo = new LevelTwo(windowWidth, windowHeight);
                 this.add(levelTwo);
+//                levelTwo.setGameCondition(true);
                 levelTwo.setVisible(true);
                 levelTwo.setFocusable(true);
                 levelTwo.requestFocus();
                 levelTwo.requestFocusInWindow();
+                this.levelTwo.getNextLevelButton().addActionListener(_ ->{
+                    this.levelTwo.getSceneSound().stopPlay();
+                    this.remove(this.levelTwo);
+                    this.lobbyPanel.getLevelButton3().setEnabled(true);
+                    this.lobbyPanel.getLevelButton3().doClick();
+                });
+                this.levelTwo.getLobbyButton().addActionListener(_ ->{
+                    this.levelTwo.getSceneSound().stopPlay();
+                    this.remove(this.levelTwo);
+                    this.lobbyPanel.setVisible(true);
+//                if (levelOne.isSuccess()){
+                    this.lobbyPanel.getLevelButton3().setEnabled(true);
+                });
             });
+
+
             this.lobbyPanel.getLevelButton3().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
                 String teamName = signInPanel.getTeamName();

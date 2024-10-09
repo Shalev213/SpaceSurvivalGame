@@ -26,6 +26,12 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
 //    private HintsPanel hintsPanel;
     private MainRiddlePanel mainRiddlePanel;
     private FakePanel fakePanel;
+    private Sound sceneSound;
+    private Sound fuelSound;
+    private Sound crashing;
+    private Sound explosion;
+    private Sound passedLevel;
+    private Sound missionComplete;
 
 
 
@@ -33,7 +39,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
         super.windowWidth = width;
         super.windowHeight = height;
-
 
         this.astronaut = new Astronaut();
         this.astronaut.setY(((windowHeight - this.astronaut.getHeight()) / 2) + 60);
@@ -45,12 +50,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.spaceshipBackground = new ImageIcon("src/main/java/resources/levelTwoBackground.png");
         this.xOfBackground = -(this.spaceshipBackground.getIconWidth() - this.windowWidth) / 2;
 
-//        this.buttonsPanel = new ButtonsPanel();
-//
-//        this.xOfRiddlePanel = (this.windowWidth - this.buttonsPanel.getWidth()) / 2;
-//        this.yOfRiddlePanel = (this.windowHeight - this.buttonsPanel.getHeight()) / 2;
-//        this.buttonsPanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, this.buttonsPanel.getWidth(), this.buttonsPanel.getHeight());
-//        this.add(buttonsPanel);
 
         this.mainRiddlePanel = new MainRiddlePanel();
         this.xOfRiddlePanel = (this.windowWidth - this.mainRiddlePanel.getWidth()) / 2;
@@ -58,9 +57,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.mainRiddlePanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, this.mainRiddlePanel.getWidth(), this.mainRiddlePanel.getHeight());
 
         this.add(mainRiddlePanel);
-//        this.hintsPanel = new HintsPanel();
-//        this.hintsPanel.setBounds(this.xOfRiddlePanel, this.yOfRiddlePanel, windowWidth, windowHeight);
-//        this.add(hintsPanel);
+
 
         this.riddleButton = new JButton("?");
         this.riddleButton.setFont(new Font("Arial", Font.BOLD, 25));
@@ -81,8 +78,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             this.mainRiddlePanel.requestFocus();
             this.mainRiddlePanel.requestFocusInWindow();
 
-//            this.mainRiddlePanel.revalidate();
-//            this.mainRiddlePanel.repaint();
 
         });
 
@@ -110,7 +105,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
 
         this.fakeRiddleButton.addActionListener(e -> {
             System.out.println("hahahaha you clicked on: fakeRiddleButton");
-//            this.fakePanel.setVisible(true);
             this.fakeRiddleButton.setEnabled(false);
             this.fakePanel.setVisible(true);
             this.fakePanel.setFocusable(true);
@@ -125,6 +119,24 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         });
 
 
+        this.sceneSound = new Sound();
+        this.sceneSound.playSound("src/main/java/resources/spaceship-alarm.wav");
+
+
+        this.fuelSound = new Sound();
+        this.fuelSound.playSound("src/main/java/resources/catching_fuel.wav");
+
+        this.crashing = new Sound();
+        this.crashing.playSound("src/main/java/resources/crashing.wav");
+
+        this.explosion = new Sound();
+        this.explosion.playSound("src/main/java/resources/explosion.wav");
+
+        this.passedLevel = new Sound();
+        this.passedLevel.playSound("src/main/java/resources/passed_level.wav");
+
+        this.missionComplete = new Sound();
+        this.missionComplete.playSound("src/main/java/resources/mission_completed.wav");
 
 
 
@@ -132,6 +144,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.addKeyListener(this);
         this.requestFocus();
         this.requestFocusInWindow();
+
         mainGameLoop();
     }
 
@@ -154,6 +167,10 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
 
     @Override
     public void gameScene() {
+        this.sceneSound.startBackgroundPlay();
+        this.sceneSound.loopPlay();
+//        super.gameCondition = true;
+
         if (rightPressed && (this.xOfBackground + this.getBackgroundWidth()) > this.windowWidth && !(xOfAstronaut > this.astronaut.getX()) ) {
             takeBackgroundLeft();
         } else if (rightPressed && (this.astronaut.getX() + this.astronaut.getWidth()) < this.windowWidth) {
@@ -165,11 +182,13 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             this.astronaut.leftRightMove(-1);
         }
         repaint();
+        this.sceneSound.startBackgroundPlay();
+        this.sceneSound.loopPlay();
     }
 
     @Override
     public void gameOver() {
-
+        System.out.println("jjj");
     }
     public void takeBackgroundRight() {
         this.xOfBackground += 1;
@@ -209,5 +228,8 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     }
     public JButton getLobbyButton() {
         return this.mainRiddlePanel.getButtonsPanel().getLobbyButton();
+    }
+    public Sound getSceneSound() {
+        return sceneSound;
     }
 }
