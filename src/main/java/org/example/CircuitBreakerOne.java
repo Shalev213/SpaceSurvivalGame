@@ -100,7 +100,7 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
         graphics.setColor(Color.GREEN);
         for (Point p : trail1) {
-            graphics.fillRect(p.x, p.y, 10, 10);
+            graphics.fillRect(p.x, p.y, 5, 5);
 
         }
         if(upPressed) {
@@ -120,7 +120,7 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
         graphics.setColor(Color.RED);
         for (Point p : trail2) {
-            graphics.fillRect(p.x, p.y, 10, 10);
+            graphics.fillRect(p.x, p.y, 5, 5);
         }
         if(wPressed) {
             yOfMoving2 -= speed;
