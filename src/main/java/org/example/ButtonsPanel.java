@@ -23,6 +23,9 @@ public class ButtonsPanel extends JPanel {
     private int spaceBetweenButtons = 7;
     private JLabel isSuccessLabel;
 
+
+
+
     public ButtonsPanel(){
 //        this.setBackground(Color.green);
         this.riddleBackground = new ImageIcon("src/main/java/resources/RiddleBackground.png");

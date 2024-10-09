@@ -4,6 +4,8 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LevelFour extends AbstractLevel implements KeyListener {
     private ImageIcon spaceshipBackground;
@@ -19,7 +21,10 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     private int yOfCircuit;
     private CircuitBreakerOne circuitBreaker1;
 
+    private Object[] options;
+    private int selectedOption;
 
+    private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
 
 
 
@@ -44,6 +49,9 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         this.spaceBackgroundTwo = null;
         this.spaceshipBackground = new ImageIcon("src/main/java/resources/levelTwoBackground.png");
         this.xOfBackground = -(this.spaceshipBackground.getIconWidth() - this.windowWidth) / 2;
+
+
+        this.options = new Object[]{"Lobby", ""};
 
 
         this.fakeButton = new JButton("?");
@@ -79,8 +87,6 @@ public class LevelFour extends AbstractLevel implements KeyListener {
             this.circuitBreaker1.requestFocusInWindow();
         });
         this.add(circuitButton);
-
-
 
 
 
@@ -121,11 +127,23 @@ public class LevelFour extends AbstractLevel implements KeyListener {
             this.astronaut.leftRightMove(-1);
         }
 
+
+        gameCondition = circuitBreaker1.isGameCondition();
+
         repaint();
     }
 
     @Override
     public void gameOver() {
+
+        if (circuitBreaker1.isSuccess()){
+            showSuccessDialog();
+        } else if (circuitBreaker1.isFailed()) {
+            showFailedDialog();
+        }
+
+        circuitBreaker1.setVisible(false);
+        remove(circuitBreaker1);
 
     }
 
@@ -168,5 +186,66 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     public void takeBackgroundLeft() {
         this.xOfBackground -= 1;
     }
+
+
+    public void showSuccessDialog() {
+        this.options[1] = "Next level";
+
+        this.selectedOption = JOptionPane.showOptionDialog(null,
+                "Mission Complete",
+                null,
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        // מפעיל את כל המאזינים עם התוצאה שנבחרה
+        notifyListeners(selectedOption);
+    }
+
+    public void showFailedDialog() {
+        this.options[1] = "Play again";
+//        this.options[3] = "Lobby";
+
+        this.selectedOption = JOptionPane.showOptionDialog(null,
+                "Mission Failed",
+                null,
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        // מפעיל את כל המאזינים עם התוצאה שנבחרה
+        notifyListeners(selectedOption);
+
+    }
+
+    public interface OptionSelectionListener {
+        void onOptionSelected(int selectedOption);
+    } // פעולה להוספת מאזין לרשימה
+
+    public void addOptionSelectionListener(OptionSelectionListener listener) {
+        listeners.add(listener);
+    }
+
+    // פעולה להפעיל את כל המאזינים כאשר אופציה נבחרת
+    private void notifyListeners(int selectedOption) {
+        for (OptionSelectionListener listener : listeners) {
+            listener.onOptionSelected(selectedOption); // מפעיל את המאזין
+        }
+    }
+
+
+
+    public boolean isSuccess() {
+        return circuitBreaker1.isSuccess();
+    }
+
+    public boolean isFailed() {
+        return circuitBreaker1.isFailed();
+    }
+
 
 }

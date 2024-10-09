@@ -1,8 +1,12 @@
 package org.example;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +26,24 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
     private int xOfMoving = 50, yOfMoving = 50; // מיקום התחלתי
     private int speed = 1; // מהירות תנועה
     private boolean isFailed = false;
+    private boolean isSuccess = false;
+
+
+
+    private BufferedImage backgroundImage; // תמונת הרקע שנקראת מהקובץ
+
+    private boolean gameCondition = true;
+
+
+    private int pixelColor;
+    private Color currentColor;
+
+
+
+//    private boolean isFailed = false;
+
+
+
 
 
     public CircuitBreakerOne() {
@@ -31,6 +53,16 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
         this.setSize(panelWidth, panelHeight);
         this.setLayout(null);
         this.setVisible(false);
+
+
+
+        try {
+            // טען את תמונת הרקע
+            backgroundImage = ImageIO.read(new File("src/main/java/resources/CircuitBreaker1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
 
 
@@ -64,6 +96,7 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
             xOfMoving += speed;
         }
 
+
         // שמור את המיקום הנוכחי לשובל
         trail.add(new Point(xOfMoving, yOfMoving));
         this.currentPoint = trail.getLast();
@@ -71,9 +104,15 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
         if (checkCollision() && !isFailed) {
             isFailed = true;
-            JOptionPane.showMessageDialog(null, "פגעת בקיר!");
+            gameCondition = false;
+//            JOptionPane.showMessageDialog(null, "פגעת בקיר!");
 
         }
+
+
+
+//        repaint();
+
 //        // צייר את האובייקט עצמו
 //        graphics.setColor(Color.RED);
 //        graphics.fillRect(x, y, 10, 10);
@@ -81,7 +120,36 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
     }
 
 
-    @Override
+
+//    public void mainGameLoop() {
+//        new Thread(() -> {
+//            while (gameCondition) {
+////                backgroundLoop();
+//                gameScene();
+//                repaint();
+//
+//                try {
+//                    Thread.sleep(7);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//            gameOver();
+//        }).start();
+//    }
+//
+//
+//    public void gameScene() {
+//
+//    }
+//
+//    public void gameOver() {
+//
+//    }
+
+
+
+        @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN ->{
@@ -125,16 +193,33 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
 
 
-
-    // מתודה שמדמה בדיקת פגיעה בקיר
     private boolean checkCollision() {
-        // לדוגמה, אם האובייקט נוגע בקצוות החלון
-        if (xOfMoving < 0 || yOfMoving < 0 || xOfMoving > this.panelWidth || yOfMoving > this.panelHeight) {
 
+       if (xOfMoving > 0 && yOfMoving > 0 && xOfMoving < this.panelWidth && yOfMoving < this.panelHeight){  //תנאי שהבדיקה תתבצע בתוך תחומי התמונה בלבד ולא מחוצה לה, שאחרת יהיו שגיאות
+
+           pixelColor = backgroundImage.getRGB(xOfMoving, yOfMoving);
+           currentColor = new Color(pixelColor);
+
+//        System.out.println(currentColor);
+
+           int tolerance = 20;   // טווח קרוב לצבע השחור
+           if (isColorCloseToBlack(currentColor, tolerance)) { // אם פגע במחיצה
+               return true;
+           }
+       }
+
+        if (xOfMoving < 0 || yOfMoving < 0 || xOfMoving > this.panelWidth || yOfMoving > this.panelHeight) {
             return true;
         }
+
         return false;
     }
+
+    // פונקציה שעוזרת לבדוק אם הצבע קרוב לשחור
+    private boolean isColorCloseToBlack(Color color, int tolerance) {
+        return color.getRed() < tolerance && color.getGreen() < tolerance && color.getBlue() < tolerance;
+    }
+
 
 
     public int getPanelWidth() {
@@ -146,5 +231,16 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
     }
 
 
+    public boolean isGameCondition() {
+        return gameCondition;
+    }
 
+
+    public boolean isFailed() {
+        return isFailed;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
 }

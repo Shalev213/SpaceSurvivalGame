@@ -64,4 +64,9 @@ public abstract class AbstractLevel extends JPanel {
     public abstract void gameScene();
     public abstract void gameOver();
 //    public abstract  void paintComponent();
+
+
+
+
+
 }

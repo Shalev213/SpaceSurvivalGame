@@ -39,7 +39,7 @@
             levelTwo = new LevelTwo(windowWidth, windowHeight);
 
 
-            levelFour = new LevelFour(windowWidth, windowHeight);
+//            levelFour = new LevelFour(windowWidth, windowHeight);
 
 
 //            levelThree = new LevelThree(windowWidth, windowHeight);
@@ -198,12 +198,58 @@
 
             this.lobbyPanel.getLevelButton4().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
+
+
+                this.levelFour = new LevelFour(windowWidth, windowHeight);
                 this.add(levelFour);
+                levelFour.setVisible(true);
+//                levelFour.setFocusable(true);
+//                levelFour.requestFocus();
+//                levelFour.requestFocusInWindow();
+
+//                this.lobbyPanel.setVisible(false);
+//                String teamName = signInPanel.getTeamName();
+//                this.levelThree = new LevelThree(windowWidth, windowHeight, teamName);
+//                this.add(levelThree);
+
+
+
+                levelFour.addOptionSelectionListener(selectedOption -> {
+                    if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
+//                        levelFour.getSceneSound().stopPlay();
+                        this.remove(levelFour);
+                        lobbyPanel.setVisible(true);
+                        if (levelFour.isSuccess()){
+                            this.lobbyPanel.getLevelButton5().setEnabled(true);
+                        }
+                    } else if (selectedOption == 1) {
+                        if (levelFour.isSuccess()) {
+//                            levelFour.getSceneSound().stopPlay();
+                            this.remove(levelFour);
+                            this.lobbyPanel.getLevelButton5().setEnabled(true);
+                            this.lobbyPanel.getLevelButton5().doClick();
+                        } else if (levelFour.isFailed()) {
+//                            this.levelFour.getSceneSound().stopPlay();
+                            this.remove(levelFour);
+                            this.lobbyPanel.getLevelButton4().doClick();
+                        }
+                    }else {
+                        System.out.println("No option selected or window closed");
+                    }
+                });
+
                 levelFour.setVisible(true);
                 levelFour.setFocusable(true);
                 levelFour.requestFocus();
                 levelFour.requestFocusInWindow();
             });
+
+
+
+
+
+
+
 
 
         }
