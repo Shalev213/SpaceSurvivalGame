@@ -128,8 +128,8 @@ public class LevelFour extends AbstractLevel implements KeyListener {
             this.astronaut.leftRightMove(-1);
         }
 
+        super.gameCondition = circuitBreaker1.isGameCondition();
 
-        gameCondition = circuitBreaker1.isGameCondition();
 
         repaint();
     }

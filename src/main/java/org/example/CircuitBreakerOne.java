@@ -11,19 +11,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CircuitBreakerOne extends JPanel implements KeyListener {
-    private final int panelWidth;
-    private final int panelHeight;
-    private int x = 0;
-    private int y = 0;
+    private int panelWidth ;
+    private int panelHeight ;
+    private final int x = 0;
+    private final int y = 0;
     private ImageIcon circuitBreaker1;
     private boolean upPressed = false;
     private boolean downPressed = false;
     private boolean rightPressed = false;
     private boolean leftPressed = false;
+
+    private boolean sPressed = false;
+    private boolean wPressed = false;
+    private boolean dPressed = false;
+    private boolean aPressed = false;
+
+
+
+
+
     private Point currentPoint;
 
-    private List<Point> trail = new ArrayList<>();
-    private int xOfMoving = 50, yOfMoving = 50; // מיקום התחלתי
+    private List<Point> trail1 = new ArrayList<>();
+    private List<Point> trail2 = new ArrayList<>();
+
+    private int xOfMoving1 = 50, yOfMoving1 = 50; // מיקום התחלתי
+    private int xOfMoving2 = 50, yOfMoving2 = 75; // מיקום התחלתי
+
     private int speed = 1; // מהירות תנועה
     private boolean isFailed = false;
     private boolean isSuccess = false;
@@ -35,8 +49,11 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
     private boolean gameCondition = true;
 
 
-    private int pixelColor;
-    private Color currentColor;
+    private int pixelColor1;
+    private Color currentColor1;
+
+    private int pixelColor2;
+    private Color currentColor2;
 
 
 
@@ -47,18 +64,18 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
 
     public CircuitBreakerOne() {
+        this.setLayout(null);
+        this.setVisible(false);
         this.circuitBreaker1 = new ImageIcon("src/main/java/resources/CircuitBreaker1.png");
         this.panelHeight = this.circuitBreaker1.getIconHeight();
         this.panelWidth = this.circuitBreaker1.getIconWidth();
         this.setSize(panelWidth, panelHeight);
-        this.setLayout(null);
-        this.setVisible(false);
-
 
 
         try {
             // טען את תמונת הרקע
             backgroundImage = ImageIO.read(new File("src/main/java/resources/CircuitBreaker1.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,31 +93,49 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        if (circuitBreaker1 != null) {
-            this.circuitBreaker1.paintIcon(null, graphics, 0, 0);
-//            graphics.drawImage(this.circuitBreaker1, this.x, this.y, this.panelWidth, this.panelHeight, null);
+        if (backgroundImage != null) {
+//            this.circuitBreaker1.paintIcon(null, graphics, 0, 0);
+            graphics.drawImage(this.backgroundImage, 0, 0, this.panelWidth , this.panelHeight, null);
         }
 
         graphics.setColor(Color.GREEN);
-        for (Point p : trail) {
+        for (Point p : trail1) {
             graphics.fillRect(p.x, p.y, 10, 10);
 
         }
         if(upPressed) {
-            yOfMoving -= speed;
+            yOfMoving1 -= speed;
         } else if (downPressed) {
-            yOfMoving += speed;
+            yOfMoving1 += speed;
         } else if (leftPressed) {
-            xOfMoving -= speed;
+            xOfMoving1 -= speed;
         } else if (rightPressed) {
-            xOfMoving += speed;
+            xOfMoving1 += speed;
         }
 
 
 
         // שמור את המיקום הנוכחי לשובל
-        trail.add(new Point(xOfMoving, yOfMoving));
-        this.currentPoint = trail.getLast();
+        trail1.add(new Point(xOfMoving1, yOfMoving1));
+
+        graphics.setColor(Color.RED);
+        for (Point p : trail2) {
+            graphics.fillRect(p.x, p.y, 10, 10);
+        }
+        if(wPressed) {
+            yOfMoving2 -= speed;
+        } else if (sPressed) {
+            yOfMoving2 += speed;
+        } else if (aPressed) {
+            xOfMoving2 -= speed;
+        } else if (dPressed) {
+            xOfMoving2 += speed;
+        }
+
+
+
+        // שמור את המיקום הנוכחי לשובל
+        trail2.add(new Point(xOfMoving2, yOfMoving2));
 
 
         if (checkCollision() && !isFailed) {
@@ -112,41 +147,10 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
 
 
-//        repaint();
-
-//        // צייר את האובייקט עצמו
-//        graphics.setColor(Color.RED);
-//        graphics.fillRect(x, y, 10, 10);
-
     }
 
 
 
-//    public void mainGameLoop() {
-//        new Thread(() -> {
-//            while (gameCondition) {
-////                backgroundLoop();
-//                gameScene();
-//                repaint();
-//
-//                try {
-//                    Thread.sleep(7);
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//            gameOver();
-//        }).start();
-//    }
-//
-//
-//    public void gameScene() {
-//
-//    }
-//
-//    public void gameOver() {
-//
-//    }
 
 
 
@@ -177,8 +181,33 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
                 upPressed = false;
                 rightPressed = false;
             }
+            case KeyEvent.VK_S ->{
+                sPressed = true;
+                wPressed = false;
+                dPressed = false;
+                aPressed = false;
+            }
+            case KeyEvent.VK_W -> {
+                wPressed = true;
+                sPressed = false;
+                dPressed = false;
+                aPressed = false;
+            }
+            case KeyEvent.VK_D -> {
+                dPressed = true;
+                sPressed = false;
+                wPressed = false;
+                aPressed = false;
+            }
+            case KeyEvent.VK_A ->{
+                aPressed = true;
+                sPressed = false;
+                wPressed = false;
+                dPressed = false;
+            }
 
         }
+
 
     }
 
@@ -195,31 +224,51 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
 
     private boolean checkCollision() {
+        int tolerance = 25;   // טווח קרוב לצבע השחור
 
-       if (xOfMoving > 0 && yOfMoving > 0 && xOfMoving < this.panelWidth && yOfMoving < this.panelHeight){  //תנאי שהבדיקה תתבצע בתוך תחומי התמונה בלבד ולא מחוצה לה, שאחרת יהיו שגיאות
+        if (xOfMoving1 > 0 && yOfMoving1 > 0 && xOfMoving1 < this.panelWidth && yOfMoving1 < this.panelHeight || xOfMoving2 > 0 && yOfMoving2 > 0 && xOfMoving2 < this.panelWidth && yOfMoving2 < this.panelHeight){  //תנאי שהבדיקה תתבצע בתוך תחומי התמונה בלבד ולא מחוצה לה, שאחרת יהיו שגיאות
 
-           pixelColor = backgroundImage.getRGB(xOfMoving, yOfMoving);
-           currentColor = new Color(pixelColor);
+           pixelColor1 = backgroundImage.getRGB(xOfMoving1, yOfMoving1);
+           currentColor1 = new Color(pixelColor1);
 
-//        System.out.println(currentColor);
+            pixelColor2 = backgroundImage.getRGB(xOfMoving2, yOfMoving2);
+            currentColor2 = new Color(pixelColor2);
 
-           int tolerance = 20;   // טווח קרוב לצבע השחור
-           if (isColorCloseToBlack(currentColor, tolerance)) { // אם פגע במחיצה
+
+            if (isColorCloseToBlack(currentColor1, tolerance) || isColorCloseToBlack(currentColor2, tolerance)) { // אם פגע במחיצה
                return true;
            }
        }
 
-        if (xOfMoving < 0 || yOfMoving < 0 || xOfMoving > this.panelWidth || yOfMoving > this.panelHeight) {
-            return true;
-        }
 
         return false;
     }
+
+
+
+//    private boolean checkCollision2() {
+//        int tolerance = 30;   // טווח קרוב לצבע השחור
+//
+//        if (xOfMoving2 > 0 && yOfMoving2 > 0 && xOfMoving2 < this.panelWidth && yOfMoving2 < this.panelHeight) {  //תנאי שהבדיקה תתבצע בתוך תחומי התמונה בלבד ולא מחוצה לה, שאחרת יהיו שגיאות
+//
+//            pixelColor2 = backgroundImage.getRGB(xOfMoving2, yOfMoving2);
+//            currentColor2 = new Color(pixelColor2);
+//
+//
+//            // טווח קרוב לצבע השחור
+//            if (isColorCloseToBlack(currentColor2, tolerance)) { // אם פגע במחיצה
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     // פונקציה שעוזרת לבדוק אם הצבע קרוב לשחור
     private boolean isColorCloseToBlack(Color color, int tolerance) {
         return color.getRed() < tolerance && color.getGreen() < tolerance && color.getBlue() < tolerance;
     }
+
+
 
 
 
