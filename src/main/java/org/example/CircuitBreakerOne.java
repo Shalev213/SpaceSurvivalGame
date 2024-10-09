@@ -97,6 +97,7 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
         }
 
 
+
         // שמור את המיקום הנוכחי לשובל
         trail.add(new Point(xOfMoving, yOfMoving));
         this.currentPoint = trail.getLast();

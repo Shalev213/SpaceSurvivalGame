@@ -91,6 +91,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
 
 
 
+
         this.setFocusable(true);
         this.requestFocus();
         this.addKeyListener(this);
