@@ -10,12 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CircuitBreakerOne extends JPanel implements KeyListener {
+public class CircuitBreakerSecond extends JPanel implements KeyListener {
     private int panelWidth ;
     private int panelHeight ;
     private final int x = 0;
     private final int y = 0;
-    private ImageIcon circuitBreaker1;
+    private ImageIcon circuitBreaker2;
     private boolean upPressed = false;
     private boolean downPressed = false;
     private boolean rightPressed = false;
@@ -70,22 +70,27 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
 
 
-    public CircuitBreakerOne() {
+    public CircuitBreakerSecond() {
         this.setLayout(null);
         this.setVisible(false);
-        this.circuitBreaker1 = new ImageIcon("src/main/java/resources/CircuitBreaker1.png");
-        this.panelHeight = this.circuitBreaker1.getIconHeight();
-        this.panelWidth = this.circuitBreaker1.getIconWidth();
+        this.circuitBreaker2 = new ImageIcon("src/main/java/resources/CircuitBreaker2.png");
+        this.panelHeight = this.circuitBreaker2.getIconHeight();
+        this.panelWidth = this.circuitBreaker2.getIconWidth();
         this.setSize(panelWidth, panelHeight);
 
 
         try {
             // טען את תמונת הרקע
-            backgroundImage = ImageIO.read(new File("src/main/java/resources/CircuitBreaker1.png"));
+            backgroundImage = ImageIO.read(new File("src/main/java/resources/CircuitBreaker2.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.xOfMoving1 = circuitBreaker2.getIconWidth() - 50;
+        this.xOfMoving2 = circuitBreaker2.getIconWidth() - 50;
+
+
 
 
 
@@ -175,7 +180,7 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
 
 
-        @Override
+    @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN ->{
@@ -250,17 +255,17 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
         if (xOfMoving1 > 0 && yOfMoving1 > 0 && xOfMoving1 < this.panelWidth && yOfMoving1 < this.panelHeight || xOfMoving2 > 0 && yOfMoving2 > 0 && xOfMoving2 < this.panelWidth && yOfMoving2 < this.panelHeight){  //תנאי שהבדיקה תתבצע בתוך תחומי התמונה בלבד ולא מחוצה לה, שאחרת יהיו שגיאות
 
-           pixelColor1 = backgroundImage.getRGB(xOfMoving1, yOfMoving1);
-           currentColor1 = new Color(pixelColor1);
+            pixelColor1 = backgroundImage.getRGB(xOfMoving1, yOfMoving1);
+            currentColor1 = new Color(pixelColor1);
 
             pixelColor2 = backgroundImage.getRGB(xOfMoving2, yOfMoving2);
             currentColor2 = new Color(pixelColor2);
 
 
             if (isColorCloseToBlack(currentColor1, tolerance) || isColorCloseToBlack(currentColor2, tolerance)) { // אם פגע במחיצה
-               return true;
-           }
-       }
+                return true;
+            }
+        }
 
 
         return false;
