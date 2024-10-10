@@ -248,5 +248,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         return circuitBreaker1.isFailed();
     }
 
-
+    public JButton getCircuitButton() {
+        return circuitButton;
+    }
 }

@@ -236,6 +236,7 @@
 //                            this.levelFour.getSceneSound().stopPlay();
                             this.remove(levelFour);
                             this.lobbyPanel.getLevelButton4().doClick();
+                            this.levelFour.getCircuitButton().doClick();
                         }
                     }else {
                         System.out.println("No option selected or window closed");

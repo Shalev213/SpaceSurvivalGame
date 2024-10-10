@@ -8,7 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CircuitBreakerOne extends JPanel implements KeyListener {
     private int panelWidth ;
@@ -73,10 +75,11 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
     public CircuitBreakerOne() {
         this.setLayout(null);
         this.setVisible(false);
-        this.circuitBreaker1 = new ImageIcon("src/main/java/resources/CircuitBreaker1.png");
-        this.panelHeight = this.circuitBreaker1.getIconHeight();
-        this.panelWidth = this.circuitBreaker1.getIconWidth();
-        this.setSize(panelWidth, panelHeight);
+
+//        this.circuitBreaker1 = new ImageIcon("src/main/java/resources/CircuitBreaker1.png");
+//        this.panelHeight = this.circuitBreaker1.getIconHeight();
+//        this.panelWidth = this.circuitBreaker1.getIconWidth();
+//        this.setSize(panelWidth, panelHeight);
 
 
         try {
@@ -87,6 +90,9 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
             e.printStackTrace();
         }
 
+        this.panelHeight = this.backgroundImage.getHeight();
+        this.panelWidth = this.backgroundImage.getWidth();
+        this.setSize(panelWidth, panelHeight);
 
 
 
@@ -159,9 +165,15 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 //            JOptionPane.showMessageDialog(null, "פגעת בקיר!");
 
         }
+        if (checkTrailsCollision() && !isFailed) {
+            isFailed = true;
+            gameCondition = false;
+            // פסילה
+        }
 
 
-        if (checkWinCollision() && !isSuccess){
+
+        if (checkWinCollision() && !isSuccess ){
             isSuccess = true;
             gameCondition = false;
         }
@@ -246,7 +258,7 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
 
     private boolean checkCollision() {
-        int tolerance = 25;   // טווח קרוב לצבע השחור
+        int tolerance = 15;   // טווח קרוב לצבע השחור
 
         if (xOfMoving1 > 0 && yOfMoving1 > 0 && xOfMoving1 < this.panelWidth && yOfMoving1 < this.panelHeight || xOfMoving2 > 0 && yOfMoving2 > 0 && xOfMoving2 < this.panelWidth && yOfMoving2 < this.panelHeight){  //תנאי שהבדיקה תתבצע בתוך תחומי התמונה בלבד ולא מחוצה לה, שאחרת יהיו שגיאות
 
@@ -257,12 +269,22 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
             currentColor2 = new Color(pixelColor2);
 
 
-            if (isColorCloseToBlack(currentColor1, tolerance) || isColorCloseToBlack(currentColor2, tolerance)) { // אם פגע במחיצה
+            if (isColorCloseToBlack(currentColor1, tolerance) || isColorCloseToBlack(currentColor2, 0)) { // אם פגע במחיצה
                return true;
            }
        }
 
 
+        return false;
+    }
+
+    private boolean checkTrailsCollision() {
+        Set<Point> trail1Set = new HashSet<>(trail1);
+        for (Point p2 : trail2) {
+            if (trail1Set.contains(p2)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -286,12 +308,12 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
             currentColor2 = new Color(pixelColor2);
 
 
-            if (isColorCloseToGrey(currentColor1, tolerance)){
+            if (isColorCloseToGrey(currentColor1, tolerance) && yOfMoving1 > this.panelHeight / 2){
                 success1 = true;
 //                isStop1 = true;
 
             }
-            if (isColorCloseToGrey(currentColor2, tolerance)) {
+            if (isColorCloseToGrey(currentColor2, tolerance) && yOfMoving2 > this.panelHeight / 2) {
                 success2 = true;
 //                isStop2 = true;
             }
@@ -314,6 +336,22 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
         int targetRed = 72;
         int targetGreen = 76;
         int targetBlue = 74;
+
+        return Math.abs(color.getRed() - targetRed) < tolerance && Math.abs(color.getGreen() - targetGreen) < tolerance && Math.abs(color.getBlue() - targetBlue) < tolerance;
+    }
+
+    private boolean isColorCloseToRed(Color color, int tolerance) {
+        int targetRed = 255;
+        int targetGreen = 0;
+        int targetBlue = 0;
+
+        return Math.abs(color.getRed() - targetRed) < tolerance && Math.abs(color.getGreen() - targetGreen) < tolerance && Math.abs(color.getBlue() - targetBlue) < tolerance;
+    }
+
+    private boolean isColorCloseToYellow(Color color, int tolerance) {
+        int targetRed = 255;
+        int targetGreen = 242;
+        int targetBlue = 0;
 
         return Math.abs(color.getRed() - targetRed) < tolerance && Math.abs(color.getGreen() - targetGreen) < tolerance && Math.abs(color.getBlue() - targetBlue) < tolerance;
     }
