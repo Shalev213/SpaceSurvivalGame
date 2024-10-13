@@ -20,11 +20,9 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     private int xOfCircuit;
     private int yOfCircuit;
     private static int counterOfLevel = 1;
-
     private Object[] options;
     private CircuitBreaker circuitBreaker;
     private int selectedOption;
-
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
 
 
@@ -52,8 +50,8 @@ public class LevelFour extends AbstractLevel implements KeyListener {
             circuitBreaker.setxOfMoving1(50);
             circuitBreaker.setxOfMoving2(50);
 
-            circuitBreaker.setyOfMoving1(50);
-            circuitBreaker.setyOfMoving2(75);
+            circuitBreaker.setyOfMoving1(75);
+            circuitBreaker.setyOfMoving2(100);
         }
 
 

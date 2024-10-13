@@ -43,6 +43,10 @@ public class CircuitBreaker extends JPanel implements KeyListener {
     private Color currentColor2;
     private boolean success1 = false;
     private boolean success2 = false;
+    private Sound electricSound;
+    private Sound passedLevel;
+    private Sound missionComplete;
+
 
 
     public CircuitBreaker(String currentLevel) {
@@ -60,6 +64,16 @@ public class CircuitBreaker extends JPanel implements KeyListener {
         this.panelHeight = this.backgroundImage.getHeight();
         this.panelWidth = this.backgroundImage.getWidth();
         this.setSize(panelWidth, panelHeight);
+
+
+        this.electricSound = new Sound();
+        this.electricSound.playSound("src/main/java/resources/electric-sound.wav");
+
+        this.passedLevel = new Sound();
+        this.passedLevel.playSound("src/main/java/resources/passed_level.wav");
+
+        this.missionComplete = new Sound();
+        this.missionComplete.playSound("src/main/java/resources/mission_completed.wav");
 
 
         this.setFocusable(true);
@@ -184,6 +198,7 @@ public class CircuitBreaker extends JPanel implements KeyListener {
         }
 
         if ((checkCollision() || checkTrailsCollision()) && !isFailed) {
+            electricSound.startPlay();
             isFailed = true;
             gameCondition = false;
         }
@@ -252,11 +267,12 @@ public class CircuitBreaker extends JPanel implements KeyListener {
             }
             if (isColorCloseToGrey(currentColor2, tolerance) && yOfMoving2 > this.panelHeight / 2) {
                 success2 = true;
-//                isStop2 = true;
             }
 
 
             if (success1 && success2){
+                passedLevel.startPlay();
+                missionComplete.startPlay();
                 return true;
             }
         }
