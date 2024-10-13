@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CircuitBreakerOne extends JPanel implements KeyListener {
+public class CircuitBreaker extends JPanel implements KeyListener {
     private int panelWidth ;
     private int panelHeight ;
     private final int x = 0;
@@ -45,7 +45,7 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
     private boolean success2 = false;
 
 
-    public CircuitBreakerOne(String currentLevel) {
+    public CircuitBreaker(String currentLevel) {
         this.setLayout(null);
         this.setVisible(false);
 

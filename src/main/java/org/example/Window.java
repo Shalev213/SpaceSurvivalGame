@@ -229,7 +229,7 @@
                     } else if (selectedOption == 1) {
                         if (levelFour.isSuccess()) {
 
-                            if (levelFour.getLevelCounter() <= 2){
+                            if (levelFour.getLevelCounter() <= 3){
                                 System.out.println(levelFour.getLevelCounter());
                                 this.remove(levelFour);
                                 this.lobbyPanel.getLevelButton4().doClick();
@@ -239,6 +239,7 @@
                                 this.remove(levelFour);
                                 this.lobbyPanel.getLevelButton5().setEnabled(true);
                                 this.lobbyPanel.getLevelButton5().doClick();
+                                this.levelFour.setCounterOfLevel(1);
                             }
                         } else if (levelFour.isFailed()) {
 //                            this.levelFour.getSceneSound().stopPlay();
