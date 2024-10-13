@@ -228,10 +228,18 @@
                         }
                     } else if (selectedOption == 1) {
                         if (levelFour.isSuccess()) {
+
+                            if (levelFour.getLevelCounter() <= 2){
+                                System.out.println(levelFour.getLevelCounter());
+                                this.remove(levelFour);
+                                this.lobbyPanel.getLevelButton4().doClick();
+                                this.levelFour.getCircuitButton().doClick();
+                            } else {
 //                            levelFour.getSceneSound().stopPlay();
-                            this.remove(levelFour);
-                            this.lobbyPanel.getLevelButton5().setEnabled(true);
-                            this.lobbyPanel.getLevelButton5().doClick();
+                                this.remove(levelFour);
+                                this.lobbyPanel.getLevelButton5().setEnabled(true);
+                                this.lobbyPanel.getLevelButton5().doClick();
+                            }
                         } else if (levelFour.isFailed()) {
 //                            this.levelFour.getSceneSound().stopPlay();
                             this.remove(levelFour);

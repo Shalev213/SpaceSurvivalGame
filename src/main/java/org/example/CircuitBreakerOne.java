@@ -26,7 +26,6 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
     private boolean wPressed = false;
     private boolean dPressed = false;
     private boolean aPressed = false;
-
     private List<Point> trail1 = new ArrayList<>();
     private List<Point> trail2 = new ArrayList<>();
 
@@ -46,13 +45,13 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
     private boolean success2 = false;
 
 
-    public CircuitBreakerOne() {
+    public CircuitBreakerOne(String currentLevel) {
         this.setLayout(null);
         this.setVisible(false);
 
         try {
             // טען את תמונת הרקע
-            backgroundImage = ImageIO.read(new File("src/main/java/resources/CircuitBreaker1.png"));
+            backgroundImage = ImageIO.read(new File(currentLevel));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,6 +87,7 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
         }
 
         gameScene();
+
 
         trail1.add(new Point(xOfMoving1, yOfMoving1));
         trail2.add(new Point(xOfMoving2, yOfMoving2));
@@ -295,5 +295,39 @@ public class CircuitBreakerOne extends JPanel implements KeyListener {
 
     public boolean isSuccess() {
         return isSuccess;
+    }
+
+
+    public List<Point> getTrail1() {
+        return trail1;
+    }
+
+    public List<Point> getTrail2() {
+        return trail2;
+    }
+
+    public void setTrail1(List<Point> trail1) {
+        this.trail1 = trail1;
+    }
+
+    public void setTrail2(List<Point> trail2) {
+        this.trail2 = trail2;
+    }
+
+
+    public void setxOfMoving1(int xOfMoving1) {
+        this.xOfMoving1 = xOfMoving1;
+    }
+
+    public void setyOfMoving1(int yOfMoving1) {
+        this.yOfMoving1 = yOfMoving1;
+    }
+
+    public void setxOfMoving2(int xOfMoving2) {
+        this.xOfMoving2 = xOfMoving2;
+    }
+
+    public void setyOfMoving2(int yOfMoving2) {
+        this.yOfMoving2 = yOfMoving2;
     }
 }

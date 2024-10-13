@@ -19,9 +19,10 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     private final JButton fakeButton;
     private int xOfCircuit;
     private int yOfCircuit;
-    private CircuitBreakerOne circuitBreaker1;
+    private static int counterOfLevel = 1;
 
     private Object[] options;
+    private CircuitBreakerOne circuitBreaker1;
     private int selectedOption;
 
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
@@ -32,7 +33,20 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         super.windowWidth = width;
         super.windowHeight = height;
 
-        circuitBreaker1 = new CircuitBreakerOne();
+        if (counterOfLevel == 1){
+            circuitBreaker1 = new CircuitBreakerOne("src/main/java/resources/CircuitBreaker1.png");
+        } else if (counterOfLevel == 2) {
+            circuitBreaker1 = new CircuitBreakerOne("src/main/java/resources/CircuitBreaker2.png");
+            circuitBreaker1.setxOfMoving1(circuitBreaker1.getPanelWidth() - 50);
+            circuitBreaker1.setxOfMoving2(circuitBreaker1.getPanelWidth() - 50);
+
+            circuitBreaker1.setyOfMoving1(100);
+            circuitBreaker1.setyOfMoving2(125);
+
+//            circuitBreaker1.setyOfMoving1(circuitBreaker1.getPanelHeight() - 100);
+//            circuitBreaker1.setyOfMoving2(circuitBreaker1.getPanelHeight() - 75);
+
+        }
         this.circuitBreaker1.setVisible(false);
         this.xOfCircuit = (this.windowWidth - this.circuitBreaker1.getPanelWidth()) / 2;
         this.yOfCircuit = (this.windowHeight - this.circuitBreaker1.getPanelHeight()) / 2;
@@ -80,6 +94,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         this.circuitButton.setForeground(new Color(60, 124, 144, 255));
         this.circuitButton.addActionListener(e -> {
             System.out.println("you clicked on: showRiddleButton");
+
 
             this.circuitBreaker1.setVisible(true);
             this.circuitBreaker1.setFocusable(true);
@@ -138,6 +153,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     public void gameOver() {
 
         if (circuitBreaker1.isSuccess()){
+            counterOfLevel++;
             showSuccessDialog();
         } else if (circuitBreaker1.isFailed()) {
             showFailedDialog();
@@ -250,5 +266,10 @@ public class LevelFour extends AbstractLevel implements KeyListener {
 
     public JButton getCircuitButton() {
         return circuitButton;
+    }
+
+
+    public int getLevelCounter() {
+        return counterOfLevel;
     }
 }
