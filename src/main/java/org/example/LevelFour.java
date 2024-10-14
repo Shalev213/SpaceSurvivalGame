@@ -24,7 +24,9 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     private CircuitBreaker circuitBreaker;
     private int selectedOption;
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
-
+    private boolean isSuccessPart1 = false;
+    private boolean isSuccessPart2 = false;
+    private boolean isSuccessPart3 = false;
 
 
     public LevelFour(int width, int height) {
@@ -161,8 +163,8 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     public void gameOver() {
 
         if (circuitBreaker.isSuccess()){
-            counterOfLevel++;
             showSuccessDialog();
+//            counterOfLevel++;
         } else if (circuitBreaker.isFailed()) {
             showFailedDialog();
         }
@@ -214,10 +216,25 @@ public class LevelFour extends AbstractLevel implements KeyListener {
 
 
     public void showSuccessDialog() {
-        this.options[1] = "Next level";
+        String message = "";
+        switch (counterOfLevel){
+            case 1 -> {
+                message = "Part one Complete";
+                this.options[1] = "Next Part";
+            }
+            case 2 -> {
+                message = "Part two Complete";
+                this.options[1] = "Next Part";
+            }
+            case 3 -> {
+                message = "Mission Complete";
+                this.options[1] = "Next Level";
+            }
+        }
+        counterOfLevel++;
 
         this.selectedOption = JOptionPane.showOptionDialog(null,
-                "Mission Complete",
+                message,
                 null,
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
@@ -230,11 +247,23 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     }
 
     public void showFailedDialog() {
-        this.options[1] = "Play again";
+        this.options[1] = "Try again";
+        String message = "";
 //        this.options[3] = "Lobby";
+        switch (counterOfLevel){
+            case 1 -> {
+                message = "Part one Failed";
+            }
+            case 2 -> {
+                message = "Part two Failed";
+            }
+            case 3 -> {
+                message = "Part three Failed";
+            }
+        }
 
         this.selectedOption = JOptionPane.showOptionDialog(null,
-                "Mission Failed",
+                message,
                 null,
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,

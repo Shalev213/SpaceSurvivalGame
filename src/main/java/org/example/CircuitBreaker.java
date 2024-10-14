@@ -92,12 +92,12 @@ public class CircuitBreaker extends JPanel implements KeyListener {
 
         graphics.setColor(Color.GREEN);
         for (Point p : trail1) {
-            graphics.fillRect(p.x, p.y, 5, 5);
+            graphics.fillRect(p.x, p.y, 3, 3);
         }
 
         graphics.setColor(Color.RED);
         for (Point p : trail2) {
-            graphics.fillRect(p.x, p.y, 5, 5);
+            graphics.fillRect(p.x, p.y, 3, 3);
         }
 
         gameScene();
@@ -111,7 +111,7 @@ public class CircuitBreaker extends JPanel implements KeyListener {
         @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_DOWN ->{
+            case KeyEvent.VK_DOWN -> {
                 downPressed = true;
                 upPressed = false;
                 rightPressed = false;
@@ -260,12 +260,12 @@ public class CircuitBreaker extends JPanel implements KeyListener {
             currentColor2 = new Color(pixelColor2);
 
 
-            if (isColorCloseToGrey(currentColor1, tolerance) && yOfMoving1 > this.panelHeight / 2){
+            if (isColorCloseToGrey(currentColor1, tolerance) && (yOfMoving1 > this.panelHeight / 2 || xOfMoving1 > this.panelWidth / 2)){
                 success1 = true;
 //                isStop1 = true;
 
             }
-            if (isColorCloseToGrey(currentColor2, tolerance) && yOfMoving2 > this.panelHeight / 2) {
+            if (isColorCloseToGrey(currentColor2, tolerance) && (yOfMoving2 > this.panelHeight / 2 || xOfMoving2 > this.panelWidth / 2)) {
                 success2 = true;
             }
 
