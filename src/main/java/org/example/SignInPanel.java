@@ -8,6 +8,7 @@ import java.awt.*;
 public class SignInPanel extends JPanel {
     private final JButton signUpButton;
     private final JTextField nickname;
+    private final ImageIcon signInBackground;
     private JTextField teamName;
     private JPasswordField teamPassword;
     private final JCheckBox showPasswordCheckBox;
@@ -15,18 +16,23 @@ public class SignInPanel extends JPanel {
     private JButton loginButton;
     private int width;
     private int height;
+    private int labelWidth = 190;
+
+
 
     public SignInPanel(int width, int height) {
+        this.signInBackground = new ImageIcon("src/main/java/resources/spaceBackground.png");
         this.width = width;
         this.height = height;
-        this.setBackground(Color.cyan);
+//        this.setBackground(Color.cyan);
         this.setSize(this.width, this.height);
         this.setLayout(null);
         this.setVisible(true);
 
         this.welcomeLabel = new JLabel("Sign in: ");
-        this.welcomeLabel.setFont(new Font("Arial", Font.ITALIC , 40));
-        this.welcomeLabel.setBounds((width - 150) / 2, 150, 150, 70);
+        this.welcomeLabel.setFont(new Font("Arial", Font.ITALIC , 50));
+        this.welcomeLabel.setBounds((width - labelWidth) / 2, 150, labelWidth, 70);
+        this.welcomeLabel.setForeground(Color.white);
 
         this.add(welcomeLabel);
 
@@ -70,8 +76,10 @@ public class SignInPanel extends JPanel {
         this.add(teamPassword);
 
         this.showPasswordCheckBox = new JCheckBox("Show Password");
-        this.showPasswordCheckBox.setBounds((width - 600) / 2, teamPassword.getY() + 80, 150, 30);
-        this.showPasswordCheckBox.setBackground(Color.cyan);
+        this.showPasswordCheckBox.setFont(new Font("Arial", Font.BOLD, 14));
+        this.showPasswordCheckBox.setBounds((width - 600) / 2, teamPassword.getY() + 80, 140, 25);
+        this.showPasswordCheckBox.setForeground(Color.white);
+        this.showPasswordCheckBox.setBackground(new Color(0,0,0));
         this.showPasswordCheckBox.setFocusPainted(false);
         this.showPasswordCheckBox.addActionListener(e -> {
             if (showPasswordCheckBox.isSelected()) {
@@ -92,11 +100,18 @@ public class SignInPanel extends JPanel {
 
         this.signUpButton = new JButton("Sign up");
         this.signUpButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.signUpButton.setBounds(teamPassword.getX() + teamPassword.getWidth() - 115, showPasswordCheckBox.getY(),115,30);
+        this.signUpButton.setBounds(teamPassword.getX() + teamPassword.getWidth() - 115, showPasswordCheckBox.getY(),115,35);
         this.signUpButton.setFocusPainted(false);
         this.signUpButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         this.add(signUpButton);
+    }
+    public void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+        if (signInBackground != null){
+            this.signInBackground.paintIcon(null, graphics, 0, 0);
+        }
+
     }
 
     public JButton getLoginButton() {

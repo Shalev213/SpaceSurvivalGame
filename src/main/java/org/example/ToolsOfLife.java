@@ -12,10 +12,11 @@ public class ToolsOfLife {
     private boolean showTool1 = true;
     private boolean showTool2 = true;
     private boolean showTool3 = true;
-    private final short x = (short) (windowWidth- 170);
+    private final short x = (short) (windowWidth- 200);
     private final byte y = 10;
-    private final byte width = 40;
+    private final byte width = 45;
     private final byte height = 40;
+    private final byte space = 10;
 
 
     public ToolsOfLife(){
@@ -27,13 +28,13 @@ public class ToolsOfLife {
 
     public void paintTools(Graphics graphics) {
         if (showTool1) {
-            graphics.drawImage(this.tool1,  this.x,  this.y , width, height,null);
+            graphics.drawImage(this.tool1, this.x, this.y, this.width, this.height,null);
         }
         if (showTool2) {
-            graphics.drawImage(this.tool2,  this.x +50,  this.y , width, height,null);
+            graphics.drawImage(this.tool2, this.x + this.width + this.space, this.y, this.width, this.height, null);
         }
         if (showTool3) {
-            graphics.drawImage(this.tool3,  this.x + 100,  this.y , width, height,null);
+            graphics.drawImage(this.tool3, this.x + 2 * (this.width + this.space), this.y, this.width, this.height, null);
         }
     }
 

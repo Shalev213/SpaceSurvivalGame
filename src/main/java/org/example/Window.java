@@ -66,7 +66,7 @@
 //                    }
                 }
             });
-            this.lobbyPanel.getReturnButton().addActionListener(e -> {
+            this.lobbyPanel.getExitButton().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
                 this.signInPanel.setVisible(true);
             });

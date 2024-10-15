@@ -40,8 +40,8 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private Sound explosion;
     private Sound passedLevel;
     private Sound missionComplete;
-    private ImageIcon finalBackground;
-    private int finalBackgroundX = windowWidth;
+    private ImageIcon finalMoonImage;
+    private int finalMoonX = windowWidth;
     private Object[] options;
     private int selectedOption;
     private boolean isSuccess = counterOfFuelHits >= 5;
@@ -59,7 +59,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
         this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelOne.png");
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelOneMirror.png");
-        this.finalBackground = new ImageIcon("src/main/java/resources/final_moon.png");
+        this.finalMoonImage = new ImageIcon("src/main/java/resources/final_moon.png");
 
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
         super.windowWidth = width;
@@ -218,9 +218,9 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     @Override
     public void gameOver() {
         if (isSuccess){
-            while (finalBackgroundX > 0){
+            while (finalMoonX > 0){
                 repaint();
-                finalBackgroundX -= 1;
+                finalMoonX -= 2;
                 try {
                     Thread.sleep(7);
                 } catch (InterruptedException e) {
@@ -297,7 +297,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-        finalBackground.paintIcon(null, graphics, finalBackgroundX, windowHeight - finalBackground.getIconHeight());
+        finalMoonImage.paintIcon(null, graphics, finalMoonX, windowHeight - finalMoonImage.getIconHeight());
         spaceship1.paintSpaceship(graphics);
         spaceship2.paintSpaceship(graphics);
         fuel.paintFuel(graphics);

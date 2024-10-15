@@ -21,6 +21,7 @@ public class SignUpPanel extends JPanel {
     private int height;
     private int heightTextFields = 65;
     private int space = 20;
+    private int labelWidth = 200;
 
     public SignUpPanel(int width, int height) {
         this.width = width;
@@ -31,8 +32,10 @@ public class SignUpPanel extends JPanel {
         this.setVisible(true);
 
         this.welcomeLabel = new JLabel("Sign up: ");
-        this.welcomeLabel.setFont(new Font("Arial", Font.ITALIC , 40));
-        this.welcomeLabel.setBounds((width - 160) / 2, 50, 160, 70);
+        this.welcomeLabel.setFont(new Font("Arial", Font.ITALIC , 50));
+        this.welcomeLabel.setBounds((width - labelWidth) / 2, 50, labelWidth, 70);
+        this.welcomeLabel.setForeground(Color.white);
+
 
         this.add(welcomeLabel);
 

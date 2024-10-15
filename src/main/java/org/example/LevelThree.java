@@ -38,8 +38,8 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private Sound explosion;
     private Sound passedLevel;
     private Sound missionComplete;
-    private ImageIcon finalBackground;
-    private int finalBackgroundX = windowWidth;
+    private ImageIcon finalMoonImage;
+    private int finalMoonX = windowWidth;
     private Object[] options;
     private int selectedOption;
     private boolean isSuccess = counterOfAlienHits >= 15;
@@ -62,7 +62,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
         this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelThreeBackground.png");
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelThreeMirror.png");
-        this.finalBackground = new ImageIcon("src/main/java/resources/final_moon.png");
+        this.finalMoonImage = new ImageIcon("src/main/java/resources/final_moon.png");
 
 
         super.windowWidth = width;
@@ -212,9 +212,9 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     @Override
     public void gameOver() {
         if (isSuccess){
-            while (finalBackgroundX > 0){
+            while (finalMoonX > 0){
                 repaint();
-                finalBackgroundX -= 1;
+                finalMoonX -= 2;
                 try {
                     Thread.sleep(6);
                 } catch (InterruptedException e) {
@@ -292,7 +292,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-        finalBackground.paintIcon(null, graphics, finalBackgroundX, windowHeight - finalBackground.getIconHeight());
+        finalMoonImage.paintIcon(null, graphics, finalMoonX, windowHeight - finalMoonImage.getIconHeight());
         laser1.paintLaser(graphics);
         laser2.paintLaser(graphics);
         spaceship1.paintSpaceship(graphics);

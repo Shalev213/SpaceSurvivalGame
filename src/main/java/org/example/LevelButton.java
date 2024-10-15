@@ -10,7 +10,5 @@ public class LevelButton extends JButton {
         this.setFont(new Font("Arial", Font.BOLD, 80));
         this.setFocusPainted(false);
         this.setEnabled(false);
-//        this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-
     }
 }

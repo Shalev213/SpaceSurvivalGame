@@ -7,6 +7,7 @@ import java.awt.*;
 public class ButtonsPanel extends JPanel {
     private final int panelWidth;
     private final int panelHeight;
+    private Sound sceneSound;
     private JButton nextLevelButton;
     private JButton lobbyButton;
     private JButton checkButton;
@@ -22,16 +23,27 @@ public class ButtonsPanel extends JPanel {
     private ColorButton colorButton6;
     private int spaceBetweenButtons = 7;
     private JLabel isSuccessLabel;
-
-
+    private Sound wrongSound;
+    private Sound passedLevel;
+    private Sound missionComplete;
 
 
     public ButtonsPanel(){
-//        this.setBackground(Color.green);
         this.riddleBackground = new ImageIcon("src/main/java/resources/RiddleBackground.png");
-//        this.riddleBackground = new ImageIcon("src/main/java/resources/hintsBackground.png");
         this.panelWidth = this.riddleBackground.getIconWidth();
         this.panelHeight = this.riddleBackground.getIconHeight();
+
+        this.sceneSound = new Sound();
+        this.sceneSound.playSound("src/main/java/resources/spaceship-alarm.wav");
+
+        this.wrongSound = new Sound();
+        this.wrongSound.playSound("src/main/java/resources/wrong_answer.wav");
+
+        this.passedLevel = new Sound();
+        this.passedLevel.playSound("src/main/java/resources/passed_level.wav");
+
+        this.missionComplete = new Sound();
+        this.missionComplete.playSound("src/main/java/resources/mission_completed.wav");
 
 
         this.setSize(panelWidth, panelHeight);
@@ -78,22 +90,6 @@ public class ButtonsPanel extends JPanel {
         this.checkButton.setBackground(new Color(176,224,219));
         this.checkButton.setForeground(new Color(0,0,0));
 
-        this.checkButton.addActionListener(e -> {
-            if (isSuccess()){
-                this.isSuccessLabel.setText("SUCCESS");
-                this.isSuccessLabel.setForeground(Color.GREEN);
-                this.add(nextLevelButton);
-                this.add(lobbyButton);
-
-            }else {
-                this.isSuccessLabel.setText("FAILURE");
-                this.isSuccessLabel.setForeground(Color.RED);
-                this.remove(nextLevelButton);
-                this.remove(lobbyButton);
-
-            }
-        });
-
         this.add(checkButton);
 
 
@@ -128,9 +124,6 @@ public class ButtonsPanel extends JPanel {
         this.lobbyButton.setBackground(new Color(244, 213, 2));
         this.lobbyButton.setForeground(new Color(0,0,0));
 
-//        this.add(nextLevelButton);
-//        this.add(lobbyButton);
-
 
     }
     public void paintComponent(Graphics graphics) {
@@ -141,35 +134,39 @@ public class ButtonsPanel extends JPanel {
 
     }
 
-//    public void setX(int x) {
-//        this.x = x;
-//    }
-//
-//    public void setY(int y) {
-//        this.y = y;
-//    }
-
     public JButton getHintsButton() {
         return hintsButton;
     }
-//    public void hidePanel(){
-//        this.colorButton1.setVisible(false);
-//        this.colorButton2.setVisible(false);
-//        this.colorButton3.setVisible(false);
-//        this.colorButton4.setVisible(false);
-//        this.colorButton5.setVisible(false);
-//        this.colorButton6.setVisible(false);
-//        this.exitButton.setVisible(false);
-//        this.hintsPanel.setVisible(false);
-//    }
+
     public boolean isSuccess() {
         System.out.println(STR."1) \{colorButton1.getColor()}2) \{colorButton2.getColor()}3) \{colorButton3.getColor()}4) \{colorButton4.getColor()}5) \{colorButton5.getColor()}6) \{colorButton6.getColor()}");
         return colorButton1.getColor().equals(Color.MAGENTA) && colorButton2.getColor().equals(Color.YELLOW) && colorButton3.getColor().equals(Color.WHITE) && colorButton4.getColor().equals(Color.RED) && colorButton5.getColor().equals(Color.GREEN) && colorButton6.getColor().equals(Color.BLUE);
 
     }
 
+    public void success() {
+        this.passedLevel.startPlay();
+        this.missionComplete.startPlay();
+        this.isSuccessLabel.setText("SUCCESS");
+        this.isSuccessLabel.setForeground(Color.GREEN);
+        this.add(nextLevelButton);
+        this.add(lobbyButton);
+    }
+
+    public void failure() {
+        this.wrongSound.startPlay();
+        this.isSuccessLabel.setText("FAILURE");
+        this.isSuccessLabel.setForeground(Color.RED);
+        this.remove(nextLevelButton);
+        this.remove(lobbyButton);
+    }
+
     public JButton getExitButton() {
         return exitButton;
+    }
+
+    public JButton getCheckButton() {
+        return checkButton;
     }
 
     public JButton getNextLevelButton() {

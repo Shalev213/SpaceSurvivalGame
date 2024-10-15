@@ -23,16 +23,10 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private ButtonsPanel buttonsPanel;
     private int xOfRiddlePanel;
     private int yOfRiddlePanel;
-//    private HintsPanel hintsPanel;
     private MainRiddlePanel mainRiddlePanel;
     private FakePanel fakePanel;
     private Sound sceneSound;
-    private Sound fuelSound;
-    private Sound crashing;
-    private Sound explosion;
-    private Sound passedLevel;
-    private Sound missionComplete;
-
+    private Sound laughSound;
 
 
     public LevelTwo(int width, int height) {
@@ -68,17 +62,12 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.riddleButton.setFocusable(false);
         this.riddleButton.setForeground(new Color(142, 109, 4, 150));
 
-
         this.riddleButton.addActionListener(e -> {
-            System.out.println("you clicked on: showRiddleButton");
-
             this.mainRiddlePanel.setVisible(true);
             this.mainRiddlePanel.setFocusable(true);
             this.mainRiddlePanel.getButtonsPanel().setVisible(true);
             this.mainRiddlePanel.requestFocus();
             this.mainRiddlePanel.requestFocusInWindow();
-
-
         });
 
         this.add(riddleButton);
@@ -104,6 +93,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
 
 
         this.fakeRiddleButton.addActionListener(e -> {
+            this.laughSound.startPlay();
             System.out.println("hahahaha you clicked on: fakeRiddleButton");
             this.fakeRiddleButton.setEnabled(false);
             this.fakePanel.setVisible(true);
@@ -122,22 +112,18 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.sceneSound = new Sound();
         this.sceneSound.playSound("src/main/java/resources/spaceship-alarm.wav");
 
+        this.laughSound = new Sound();
+        this.laughSound.playSound("src/main/java/resources/evil-laughter.wav");
 
-        this.fuelSound = new Sound();
-        this.fuelSound.playSound("src/main/java/resources/catching_fuel.wav");
+        this.mainRiddlePanel.getButtonsPanel().getCheckButton().addActionListener(e -> {
+            if (mainRiddlePanel.getButtonsPanel().isSuccess()){
+                mainRiddlePanel.getButtonsPanel().success();
+                this.sceneSound.stopPlay();
 
-        this.crashing = new Sound();
-        this.crashing.playSound("src/main/java/resources/crashing.wav");
-
-        this.explosion = new Sound();
-        this.explosion.playSound("src/main/java/resources/explosion.wav");
-
-        this.passedLevel = new Sound();
-        this.passedLevel.playSound("src/main/java/resources/passed_level.wav");
-
-        this.missionComplete = new Sound();
-        this.missionComplete.playSound("src/main/java/resources/mission_completed.wav");
-
+            }else {
+               this.mainRiddlePanel.getButtonsPanel().failure();
+            }
+        });
 
 
         this.setFocusable(true);
@@ -156,8 +142,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             this.fakeRiddleButton.setBounds(xOfBackground + (spaceshipBackground.getIconWidth() - this.fakeButtonWidth) / 2,260,this.fakeButtonWidth,45);
         }
         astronaut.paintAstronaut(graphics);
-//        this.MainRiddlePanel.setX((this.windowWidth - this.MainRiddlePanel.getWidth()) / 2);
-//        this.MainRiddlePanel.setY((this.windowHeight - this.MainRiddlePanel.getHeight()) / 2);
     }
 
     @Override
@@ -169,7 +153,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     public void gameScene() {
         this.sceneSound.startBackgroundPlay();
         this.sceneSound.loopPlay();
-//        super.gameCondition = true;
 
         if (rightPressed && (this.xOfBackground + this.getBackgroundWidth()) > this.windowWidth && !(xOfAstronaut > this.astronaut.getX()) ) {
             takeBackgroundLeft();
@@ -182,12 +165,11 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             this.astronaut.leftRightMove(-1);
         }
         repaint();
-        this.sceneSound.startBackgroundPlay();
-        this.sceneSound.loopPlay();
     }
 
     @Override
     public void gameOver() {
+        this.sceneSound.stopPlay();
         System.out.println("jjj");
     }
     public void takeBackgroundRight() {
