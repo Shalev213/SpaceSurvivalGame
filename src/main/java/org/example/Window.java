@@ -60,6 +60,7 @@
                         this.signInPanel.setVisible(false);
                         this.signInPanel.restartPanel();
                         this.lobbyPanel.setVisible(true);
+
 ////                    }
 //                    else {
 //                        JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
@@ -111,14 +112,16 @@
                         this.levelOne.getSceneSound().stopPlay();
                         this.remove(levelOne);
                         lobbyPanel.setVisible(true);
-                        if (levelOne.isSuccess()){
+                        if (levelOne.isSuccess()) {
                             this.lobbyPanel.getLevelButton2().setEnabled(true);
+                            this.lobbyPanel.getLevelButton2().checkEnable();//************
                         }
                     } else if (selectedOption == 1) {
                         if (levelOne.isSuccess()) {
                             levelOne.getSceneSound().stopPlay();
                             this.remove(levelOne);
                             this.lobbyPanel.getLevelButton2().setEnabled(true);
+                            this.lobbyPanel.getLevelButton2().checkEnable();//**********
                             this.lobbyPanel.getLevelButton2().doClick();
                         } else if (levelOne.isFailed()) {
                             this.levelOne.getSceneSound().stopPlay();
@@ -150,6 +153,7 @@
                     this.levelTwo.getSceneSound().stopPlay();
                     this.remove(this.levelTwo);
                     this.lobbyPanel.getLevelButton3().setEnabled(true);
+                    this.lobbyPanel.getLevelButton3().checkEnable();//**********
                     this.lobbyPanel.getLevelButton3().doClick();
                 });
                 this.levelTwo.getLobbyButton().addActionListener(_ ->{
@@ -158,6 +162,7 @@
                     this.lobbyPanel.setVisible(true);
 //                if (levelOne.isSuccess()){
                     this.lobbyPanel.getLevelButton3().setEnabled(true);
+                    this.lobbyPanel.getLevelButton3().checkEnable();
                 });
             });
 
@@ -175,12 +180,14 @@
                         lobbyPanel.setVisible(true);
                         if (levelThree.isSuccess()){
                             this.lobbyPanel.getLevelButton4().setEnabled(true);
+                            this.lobbyPanel.getLevelButton4().checkEnable();//**********
                         }
                     } else if (selectedOption == 1) {
                         if (levelThree.isSuccess()) {
                             levelThree.getSceneSound().stopPlay();
                             this.remove(levelThree);
                             this.lobbyPanel.getLevelButton4().setEnabled(true);
+                            this.lobbyPanel.getLevelButton4().checkEnable();//**********
                             this.lobbyPanel.getLevelButton4().doClick();
                         } else if (levelThree.isFailed()) {
                             this.levelThree.getSceneSound().stopPlay();
@@ -225,6 +232,7 @@
                         lobbyPanel.setVisible(true);
                         if (levelFour.isSuccess()){
                             this.lobbyPanel.getLevelButton5().setEnabled(true);
+                            this.lobbyPanel.getLevelButton5().checkEnable();//**********
                         }
                     } else if (selectedOption == 1) {
                         if (levelFour.isSuccess()) {
@@ -238,6 +246,7 @@
 //                            levelFour.getSceneSound().stopPlay();
                                 this.remove(levelFour);
                                 this.lobbyPanel.getLevelButton5().setEnabled(true);
+                                this.lobbyPanel.getLevelButton5().checkEnable();//**********
                                 this.lobbyPanel.getLevelButton5().doClick();
                                 this.levelFour.setCounterOfLevel(1);
                             }
