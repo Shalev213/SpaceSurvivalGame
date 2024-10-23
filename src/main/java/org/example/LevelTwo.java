@@ -1,7 +1,5 @@
 package org.example;
 
-import resources.MainRiddlePanel;
-
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;

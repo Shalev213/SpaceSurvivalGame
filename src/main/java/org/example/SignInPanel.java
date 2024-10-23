@@ -21,7 +21,7 @@ public class SignInPanel extends JPanel {
 
 
     public SignInPanel(int width, int height) {
-        this.signInBackground = new ImageIcon("src/main/java/resources/spaceBackground.png");
+        this.signInBackground = new ImageIcon("src/main/java/resources/signInBackground.png");
         this.width = width;
         this.height = height;
 //        this.setBackground(Color.cyan);

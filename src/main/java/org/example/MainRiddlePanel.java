@@ -1,7 +1,4 @@
-package resources;
-
-import org.example.ButtonsPanel;
-import org.example.HintsPanel;
+package org.example;
 
 import javax.swing.*;
 
