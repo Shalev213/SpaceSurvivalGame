@@ -88,7 +88,7 @@ public class SignUpPanel extends JPanel {
                 BorderFactory.createTitledBorder(null, "Team password:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
                 BorderFactory.createEmptyBorder(5, 5, 5,5)
         ));
-        this.teamPassword.addActionListener(e -> {
+        this.teamPassword.addActionListener(_ -> {
             teamPasswordVerification.requestFocus();
         });
 

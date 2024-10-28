@@ -54,7 +54,6 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
 
 
-
     public LevelOne(int width, int height, String teamName) {
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
         this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelOne.png");
@@ -343,6 +342,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
 
