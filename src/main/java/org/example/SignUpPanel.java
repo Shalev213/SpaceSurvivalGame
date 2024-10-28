@@ -19,14 +19,16 @@ public class SignUpPanel extends JPanel {
     private JButton registerButton;
     private int width;
     private int height;
+    private final ImageIcon signUpBackground;
     private int heightTextFields = 65;
     private int space = 20;
     private int labelWidth = 200;
 
     public SignUpPanel(int width, int height) {
+        this.signUpBackground = new ImageIcon("src/main/java/resources/signUpBackground.png");
         this.width = width;
         this.height = height;
-        this.setBackground(Color.yellow);
+//        this.setBackground(Color.yellow);
         this.setSize(this.width, this.height);
         this.setLayout(null);
         this.setVisible(true);
@@ -92,8 +94,9 @@ public class SignUpPanel extends JPanel {
 
         this.add(teamPassword);
         this.showPassword1CheckBox = new JCheckBox("Show");
-        this.showPassword1CheckBox.setBounds(teamPassword.getX() - 70, teamPassword.getY() + 10, 60, 30);
-        this.showPassword1CheckBox.setBackground(null);
+        this.showPassword1CheckBox.setBounds(teamPassword.getX() - 70, teamPassword.getY() + 20, 60, 25);
+        this.showPassword1CheckBox.setBackground(Color.BLACK);
+        this.showPassword1CheckBox.setForeground(Color.WHITE);
         this.showPassword1CheckBox.setFocusPainted(false);
         this.showPassword1CheckBox.addActionListener(e -> {
             if (showPassword1CheckBox.isSelected()) {
@@ -118,8 +121,9 @@ public class SignUpPanel extends JPanel {
         this.add(teamPasswordVerification);
 
         this.showPassword2CheckBox = new JCheckBox("Show");
-        this.showPassword2CheckBox.setBounds(teamPasswordVerification.getX() - 70, teamPasswordVerification.getY() + 10, 60, 30);
-        this.showPassword2CheckBox.setBackground(null);
+        this.showPassword2CheckBox.setBounds(teamPasswordVerification.getX() - 70, teamPasswordVerification.getY() + 20, 60, 25);
+        this.showPassword2CheckBox.setBackground(Color.BLACK);
+        this.showPassword2CheckBox.setForeground(Color.WHITE);
         this.showPassword2CheckBox.setFocusPainted(false);
         this.showPassword2CheckBox.addActionListener(e -> {
             if (showPassword2CheckBox.isSelected()) {
@@ -158,6 +162,13 @@ public class SignUpPanel extends JPanel {
         this.returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         this.add(returnButton);
+    }
+    public void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+        if (this.signUpBackground != null){
+            this.signUpBackground.paintIcon(null, graphics, 0, 0);
+        }
+
     }
 
     public JButton getRegisterButton() {
