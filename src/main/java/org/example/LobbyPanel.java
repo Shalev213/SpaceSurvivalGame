@@ -1,7 +1,5 @@
 package org.example;
 
-import org.w3c.dom.css.RGBColor;
-
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
