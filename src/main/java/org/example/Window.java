@@ -15,6 +15,7 @@
         private LevelTwo levelTwo;
         private LevelThree levelThree;
         private LevelFour levelFour;
+        private LevelFive levelFive;
 //        private Sounds sceneSound;
 
 
@@ -57,9 +58,9 @@
                 } else {
 //                    if (JDBC.validateLogin(teamName, teamPassword)) {
 //                        System.out.println("login success");
-                        this.signInPanel.setVisible(false);
-                        this.signInPanel.restartPanel();
-                        this.lobbyPanel.setVisible(true);
+                    this.signInPanel.setVisible(false);
+                    this.signInPanel.restartPanel();
+                    this.lobbyPanel.setVisible(true);
 
 ////                    }
 //                    else {
@@ -149,14 +150,14 @@
                 levelTwo.setFocusable(true);
                 levelTwo.requestFocus();
                 levelTwo.requestFocusInWindow();
-                this.levelTwo.getNextLevelButton().addActionListener(_ ->{
+                this.levelTwo.getNextLevelButton().addActionListener(_ -> {
                     this.levelTwo.getSceneSound().stopPlay();
                     this.remove(this.levelTwo);
                     this.lobbyPanel.getLevelButton3().setEnabled(true);
                     this.lobbyPanel.getLevelButton3().checkEnable();//**********
                     this.lobbyPanel.getLevelButton3().doClick();
                 });
-                this.levelTwo.getLobbyButton().addActionListener(_ ->{
+                this.levelTwo.getLobbyButton().addActionListener(_ -> {
                     this.levelTwo.getSceneSound().stopPlay();
                     this.remove(this.levelTwo);
                     this.lobbyPanel.setVisible(true);
@@ -178,7 +179,7 @@
                         levelThree.getSceneSound().stopPlay();
                         this.remove(levelThree);
                         lobbyPanel.setVisible(true);
-                        if (levelThree.isSuccess()){
+                        if (levelThree.isSuccess()) {
                             this.lobbyPanel.getLevelButton4().setEnabled(true);
                             this.lobbyPanel.getLevelButton4().checkEnable();//**********
                         }
@@ -194,7 +195,7 @@
                             this.remove(levelThree);
                             this.lobbyPanel.getLevelButton3().doClick();
                         }
-                    }else {
+                    } else {
                         System.out.println("No option selected or window closed");
                     }
                 });
@@ -204,7 +205,6 @@
                 levelThree.requestFocus();
                 levelThree.requestFocusInWindow();
             });
-
 
 
             this.lobbyPanel.getLevelButton4().addActionListener(e -> {
@@ -224,20 +224,19 @@
 //                this.add(levelThree);
 
 
-
                 levelFour.addOptionSelectionListener(selectedOption -> {
                     if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
 //                        levelFour.getSceneSound().stopPlay();
                         this.remove(levelFour);
                         lobbyPanel.setVisible(true);
-                        if (levelFour.isSuccess()){
+                        if (levelFour.isSuccess()) {
                             this.lobbyPanel.getLevelButton5().setEnabled(true);
                             this.lobbyPanel.getLevelButton5().checkEnable();//**********
                         }
                     } else if (selectedOption == 1) {
                         if (levelFour.isSuccess()) {
 
-                            if (levelFour.getLevelCounter() <= 3){
+                            if (levelFour.getLevelCounter() <= 3) {
                                 System.out.println(levelFour.getLevelCounter());
                                 this.remove(levelFour);
                                 this.lobbyPanel.getLevelButton4().doClick();
@@ -256,7 +255,7 @@
                             this.lobbyPanel.getLevelButton4().doClick();
                             this.levelFour.getCircuitButton().doClick();
                         }
-                    }else {
+                    } else {
                         System.out.println("No option selected or window closed");
                     }
                 });
@@ -268,10 +267,62 @@
             });
 
 
+            this.lobbyPanel.getLevelButton5().addActionListener(e -> {
+                System.out.println("LEVEL 5");
+                this.lobbyPanel.setVisible(false);
+
+                this.levelFive = new LevelFive(windowWidth, windowHeight);
+                levelFive.setVisible(true);
+                this.add(levelFive);
+
+
+//                levelFive.addOptionSelectionListener(selectedOption -> {
+//                    if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
+//
+//                        this.remove(levelFive);
+//                        lobbyPanel.setVisible(true);
+
+//                        if (levelFive.isSuccess()) {
+//                            this.lobbyPanel.getLevelButton6().setEnabled(true);
+//                            this.lobbyPanel.getLevelButton6().checkEnable();//**********
+//
+//                            ////         מסך ניצחון של המשחק!!!!      :)
+//
+//
+//                        }
+//                    } else if (selectedOption == 1) {
+//                        if (levelFive.isSuccess()) {
+//
+//                            if (levelFive.getLevelCounter() <= 3) {
+//                                System.out.println(levelFive.getLevelCounter());
+//                                this.remove(levelFive);
+//                                this.lobbyPanel.getLevelButton4().doClick();
+//                                this.levelFive.getCircuitButton().doClick();
+//                            } else {
+////                            levelFour.getSceneSound().stopPlay();
+//                                this.remove(levelFive);
+//                                this.lobbyPanel.getLevelButton6().setEnabled(true);
+//                                this.lobbyPanel.getLevelButton6().checkEnable();//**********
+//                                this.lobbyPanel.getLevelButton6().doClick();
+//                            }
+//                        } else if (levelFive.isFailed()) {
+////                            this.levelFour.getSceneSound().stopPlay();
+//                            this.remove(levelFive);
+//                            this.lobbyPanel.getLevelButton5().doClick();
+//                        }
+//                    } else {
+//                        System.out.println("No option selected or window closed");
+//                    }
+//                });
+//
+                levelFive.setVisible(true);
+                levelFive.setFocusable(true);
+                levelFive.requestFocus();
+                levelFive.requestFocusInWindow();
 
 
 
-
+            });
 
 
         }

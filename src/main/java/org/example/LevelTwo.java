@@ -12,7 +12,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private int xOfFakePanel;
     private int yOfFakePanel;
     private ImageIcon spaceshipBackground;
-    private Astronaut astronaut;
+    private FlyingAstronaut astronaut;
     private int xOfBackground = 0;
     private boolean rightPressed = false;
     private boolean leftPressed = false;
@@ -32,7 +32,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         super.windowWidth = width;
         super.windowHeight = height;
 
-        this.astronaut = new Astronaut();
+        this.astronaut = new FlyingAstronaut();
         this.astronaut.setY(((windowHeight - this.astronaut.getHeight()) / 2) + 60);
         this.xOfAstronaut = (int) ((windowWidth - this.astronaut.getWidth()) / 2);
         this.astronaut.setX(xOfAstronaut);

@@ -27,7 +27,7 @@ public class LobbyPanel extends JPanel {
 
 
     public LobbyPanel(int width, int height) {
-        this.setBackground(Color.orange);
+
         this.lobbyBackground = new ImageIcon("src/main/java/resources/LevelsBackground-V.png");
         this.setSize(width, height);
         this.setLayout(null);
@@ -78,10 +78,11 @@ public class LobbyPanel extends JPanel {
         this.add(levelButton4);
 
         this.levelButton5 = new LevelButton(this.levelButton4.getX() + this.levelButton4.getWidth() + this.space, this.levelButtonsY);
-        this.levelButton5.setEnabled(false);
+        this.levelButton5.setEnabled(true);
         this.levelButton5.checkEnable();
         this.add(levelButton5);
     }
+
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         if (lobbyBackground != null){

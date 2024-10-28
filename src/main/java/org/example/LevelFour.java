@@ -9,7 +9,7 @@ import java.util.List;
 
 public class LevelFour extends AbstractLevel implements KeyListener {
     private ImageIcon spaceshipBackground;
-    private Astronaut astronaut;
+    private FlyingAstronaut astronaut;
     private int xOfBackground = 0;
     private boolean rightPressed = false;
     private boolean leftPressed = false;
@@ -63,7 +63,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         this.circuitBreaker.setBounds(this.xOfCircuit, this.yOfCircuit, this.circuitBreaker.getWidth(), this.circuitBreaker.getHeight());
         this.add(circuitBreaker);
 
-        this.astronaut = new Astronaut();
+        this.astronaut = new FlyingAstronaut();
         this.astronaut.setY(((windowHeight - this.astronaut.getHeight()) / 2) + 60);
         this.xOfAstronaut = (int) ((windowWidth - this.astronaut.getWidth()) / 2);
         this.astronaut.setX(xOfAstronaut);

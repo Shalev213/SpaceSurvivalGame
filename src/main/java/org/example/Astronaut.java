@@ -10,17 +10,19 @@ public class Astronaut {
 
     private Image astronautImage;
     private Image mirrorAstronautImage;
-    private final short width = 280;
-    private final short height = 280;
+    private final short width = 80;
+    private final short height = 80;
     private int y = 0;
     private int x = 40;
     private boolean isMirrorChosen = false;
+
 
 
     public Astronaut(){
         this.astronautImage = new ImageIcon(imagePath).getImage();
         this.mirrorAstronautImage = new ImageIcon(mirrorImagePath).getImage();
     }
+
 
     public void paintAstronaut(Graphics graphics){
         if (isMirrorChosen){
@@ -29,6 +31,7 @@ public class Astronaut {
             graphics.drawImage(this.astronautImage, this.x, this.y, this.width, this.height, null);
         }
     }
+
 
     public void setY(int y) {
         this.y = y;
@@ -41,6 +44,12 @@ public class Astronaut {
 //    public void upDownMove(int dy) {
 //        this.y += dy;
 //    }
+
+
+    public void upDownMove(int dy) {
+        this.y += dy;
+    }
+
 
     public void leftRightMove(int dx) {
         this.x += dx;
@@ -72,4 +81,5 @@ public class Astronaut {
     //    public Rectangle rectangle() {
 //        return new Rectangle(this.x, this.y + 8 , this.width - 5 , this.height - 16);
 //    }
+
 }
