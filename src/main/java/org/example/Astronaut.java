@@ -5,30 +5,32 @@ import java.awt.*;
 
 public class Astronaut {
 
-    private String imagePath = "src/main/java/resources/astronaut.png";
-    private String mirrorImagePath = "src/main/java/resources/astronautMirror.png";
+    private String astronautToRightPath = "src/main/java/resources/astronautWithWeaponToRight.png";
+    private String astronautToLeftPath = "src/main/java/resources/astronautWithWeaponToLeft.png";
 
-    private Image astronautImage;
-    private Image mirrorAstronautImage;
-    private final short width = 80;
-    private final short height = 80;
-    private int y = 0;
+    private Image astronautToRightImage;
+    private Image astronautToLeftImage;
+    private final short width = 120;
+    private final short height = 155;
+    private int y;
     private int x = 40;
-    private boolean isMirrorChosen = false;
+    private boolean isWalkingToRight = false;
 
 
 
     public Astronaut(){
-        this.astronautImage = new ImageIcon(imagePath).getImage();
-        this.mirrorAstronautImage = new ImageIcon(mirrorImagePath).getImage();
+        this.astronautToRightImage = new ImageIcon(astronautToRightPath).getImage();
+        this.astronautToLeftImage = new ImageIcon(astronautToLeftPath).getImage();
+
+        this.y = 750 - this.height - 50;
     }
 
 
     public void paintAstronaut(Graphics graphics){
-        if (isMirrorChosen){
-            graphics.drawImage(this.mirrorAstronautImage, this.x, this.y, this.width, this.height, null);
+        if (isWalkingToRight){
+            graphics.drawImage(this.astronautToLeftImage, this.x, this.y, this.width, this.height, null);
         }else {
-            graphics.drawImage(this.astronautImage, this.x, this.y, this.width, this.height, null);
+            graphics.drawImage(this.astronautToRightImage, this.x, this.y, this.width, this.height, null);
         }
     }
 
@@ -70,16 +72,16 @@ public class Astronaut {
         return height;
     }
 
-    public void setMirrorChosen(boolean mirrorChosen) {
-        isMirrorChosen = mirrorChosen;
+    public void setWalkingToRight(boolean walkingToRight) {
+        isWalkingToRight = walkingToRight;
     }
 
-    //    public void setImagePath(String imagePath) {
-//        this.imagePath = imagePath;
+    //    public void setImagePath(String astronautToRightPath) {
+//        this.astronautToRightPath = astronautToRightPath;
 //    }
 
-    //    public Rectangle rectangle() {
-//        return new Rectangle(this.x, this.y + 8 , this.width - 5 , this.height - 16);
-//    }
+        public Rectangle rectangle() {
+        return new Rectangle(this.x, this.y + 8 , this.width - 5 , this.height - 16);
+    }
 
 }

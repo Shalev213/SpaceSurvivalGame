@@ -7,29 +7,40 @@ import java.util.Random;
 public class Alien extends Thread {
 
     private final Random random;
-    private Image alien;
-    private final short width = 50;
-    private final short height = 70;
+    private Image alienToRight;
+    private Image alienToLeft;
+    private final short width = 180;
+    private final short height = 260;
     private int x = 20;
-    private int y = 50;
+    private int y;
     private int dx = 1;
+//    private int mdx = -1;
+
     private boolean isAlive = true;
 
+    private boolean isWalkingRight = true;
 
 
-    public Alien(String imagePath){
+
+
+    public Alien(String leftImagePath, String rightImagePath){
         this.random = new Random();
-//        this.x = random.nextInt(origin, bound);
-//        this.y = (short) (Window.getHeight());
-//        this.imagePath = imagePath;
-        alien = new ImageIcon(imagePath).getImage();
+
+        alienToRight = new ImageIcon(rightImagePath).getImage();
+        alienToLeft = new ImageIcon(leftImagePath).getImage();
+
+        this.y = 750 - this.height - 50;
+
 
     }
 
 
     public void paintAlien(Graphics graphics){
-//        System.out.println("Stone-> " + "x: " + x + ",y: " + y);
-        graphics.drawImage(this.alien, this.x, this.y, this.width, this.height, null);
+        if (isWalkingRight){
+            graphics.drawImage(this.alienToRight, this.x, this.y, this.width, this.height, null);
+        } else {
+            graphics.drawImage(this.alienToLeft, this.x, this.y, this.width, this.height, null);
+        }
 
     }
 
@@ -37,19 +48,38 @@ public class Alien extends Thread {
     public void run() {
 
         while (this.isAlive) {
-            this.move();
+            if (isWalkingRight){
+                this.moveRight();
+//                isWalkingRight = false;
+            } else {
+                this.moveLeft();
+//                isWalkingRight = true;
+            }
+
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
+//        if (isWalkingRight){
+//            System.out.println("END THREAD AND SET RANDOM RIGHT");
+//            setRandomX(-1500 ,-500);
+//        } else {
+//            System.out.println("END THREAD AND SET RANDOM LEFT");
+//            setRandomX(1100 ,1100*2);
+//        }
     }
 
 
-    public void move() {
+    public void moveLeft() {
         this.x -= dx;
     }
+
+    public void moveRight() {
+        this.x += dx;
+    }
+
 
     public short getHeight() {
         return height;
@@ -63,12 +93,17 @@ public class Alien extends Thread {
         return x;
     }
 
-    public void setRandomX(int origin, int bound) {
-        this.x = random.nextInt(origin, bound);
+    public void setRandomX() {
+        if (isWalkingRight){
+            System.out.println("END THREAD AND SET RANDOM RIGHT");
+            this.x = random.nextInt(-1500, -500);
+        } else {
+            System.out.println("END THREAD AND SET RANDOM LEFT");
+            this.x = random.nextInt(1100, 1100 * 2);
+
+        }
     }
-    public void setRandomY(int origin, int bound) {
-        this.y = random.nextInt(origin,bound);
-    }
+
 
     public Rectangle rectangle() {
         return new Rectangle (this.x, this.y + 10 , this.width - 15 , this.height - 20);
@@ -76,5 +111,11 @@ public class Alien extends Thread {
 
 
 
+    public void setWalkingRight(boolean walkingRight) {
+        isWalkingRight = walkingRight;
+    }
 
+    public boolean isWalkingRight() {
+        return isWalkingRight;
+    }
 }

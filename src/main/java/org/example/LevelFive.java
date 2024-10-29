@@ -20,6 +20,9 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
     private Alien alien1;
     private Alien alien2;
+    private Alien alien3;
+
+    private List<Alien> aliens;
 
 
     private boolean downPressed = false;
@@ -45,63 +48,59 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     private List<LevelThree.OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
 
 
-
-
-
-
+    private boolean alienHasCollision = false;
+    private byte alienIndex;
+    private int counterOfMisses = 0;
+    private boolean hasMisses = false;
+    private int counterOfAlienHits = 0;
 
 
 
     public LevelFive(int width, int height){
-
-
         this.background = new ImageIcon("src/main/java/resources/backroundLevelFive.png");
-
 
         super.windowWidth = width;
         super.windowHeight = height;
 
-
-
         this.astronaut1 = new Astronaut();
-
         this.astronaut2 = new Astronaut();
-
-//
-
-
 
         this.alienSpaceship1 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
         this.alienSpaceship1.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship1.setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight() - 30);
+        this.alienSpaceship1.setRandomY(0, this.windowHeight / 4 - this.alienSpaceship1.getHeight());
         this.alienSpaceship1.start();
 
+//        this.alienSpaceship2 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
+//        this.alienSpaceship2.setRandomX(this.windowWidth, this.windowWidth * 2);
+//        this.alienSpaceship2.setRandomY(0, this.windowHeight / 2 - this.alienSpaceship2.getHeight() - 30);
+//        this.alienSpaceship2.start();
 
-        this.alienSpaceship2 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
-        this.alienSpaceship2.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship2.setRandomY(0, this.windowHeight - this.alienSpaceship2.getHeight() - 30);
-        this.alienSpaceship2.start();
-////
-////
+
         this.alienSpaceships = new ArrayList<>();
         this.alienSpaceships.add(alienSpaceship1);
-        this.alienSpaceships.add(alienSpaceship2);
+//        this.alienSpaceships.add(alienSpaceship2);
 
-        this.alien1 = new Alien("src/main/java/resources/hybridAlien.png");
-        this.alien1.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alien1.setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight() - 30);
+        this.alien1 = new Alien("src/main/java/resources/hybridAlienToLeft.png","src/main/java/resources/hybridAlienToRight.png");
+        this.alien1.setWalkingRight(false);
+        this.alien1.setRandomX();
         this.alien1.start();
 
 
-        this.alien2 = new Alien("src/main/java/resources/ordinaryAlien.png");
-        this.alien2.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alien2.setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight() - 30);
+        this.alien2 = new Alien("src/main/java/resources/ordinaryAlien1ToLeft.png" , "src/main/java/resources/ordinaryAlien1ToRight.png");
+        this.alien2.setRandomX();
         this.alien2.start();
 
-
+        this.alien3 = new Alien("src/main/java/resources/ordinaryAlien2ToLeft.png", "src/main/java/resources/ordinaryAlien2ToRight.png");
+        this.alien3.setRandomX();
+        this.alien3.start();
 
 
         this.options = new Object[]{"Lobby", ""};
+
+        aliens = new ArrayList<>();
+        aliens.add(alien1);
+        aliens.add(alien2);
+        aliens.add(alien3);
 
 
 
@@ -181,7 +180,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
             this.background.paintIcon(null, graphics, xOfBackgroundOne, 0);
         }
         alienSpaceship1.paintAlienSpaceship(graphics);
-        alienSpaceship2.paintAlienSpaceship(graphics);
+//        alienSpaceship2.paintAlienSpaceship(graphics);
 
         astronaut1.paintAstronaut(graphics);
         astronaut2.paintAstronaut(graphics);
@@ -244,6 +243,10 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 //        }
 
         repaint();
+
+
+        alienSpaceshipsLoop();
+        checkAliensCollision();
 
 
 
@@ -309,6 +312,90 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     public void keyTyped(KeyEvent e) {
 
     }
+
+
+
+    public void alienSpaceshipsLoop() {
+        for (int i = 0; i < alienSpaceships.size(); i++) {
+            if (alienSpaceships.get(i).getX() < -alienSpaceships.get(i).getWidth()) {
+                alienSpaceships.get(i).setRandomX(this.windowWidth, this.windowWidth + 600);
+                alienSpaceships.get(i).setRandomY(0, this.windowHeight / 2 - this.alienSpaceship1.getHeight() - 30);
+            }
+        }
+    }
+
+
+
+    public void aliensLoop() {
+        for (int i = 0; i < aliens.size(); i++) {
+            if (aliens.get(i).getX() < -aliens.get(i).getWidth()) {
+                aliens.get(alienIndex).setWalkingRight(!aliens.get(alienIndex).isWalkingRight());
+                aliens.get(alienIndex).setRandomX();
+            }
+        }
+    }
+
+
+    public void checkAliensCollision() {
+
+        for (int i = 0; i < aliens.size() ; i++) {
+            if (this.aliens.get(i).rectangle().intersects(this.astronaut1.rectangle()) || this.aliens.get(i).rectangle().intersects(this.astronaut2.rectangle())) {
+                counterOfMisses++;
+                alienHasCollision = true;
+                alienIndex = (byte) i;
+            }
+//            else if (this.aliens.get(i).rectangle().intersects(this.laser1.rectangle())) {
+//                alienHasCollision = true;
+//                alienIndex = (byte) i;
+//                laser1Colision = true;
+//                counterOfAlienHits++;
+
+//            } else if (this.alienSpaceships.get(i).rectangle().intersects(this.laser2.rectangle())) {
+//                alienHasCollision = true;
+//                alienIndex = (byte) i;
+//                laser2Colision = true;
+//                counterOfAlienHits++;
+//            }
+        }
+
+        if (alienHasCollision){
+            aliens.get(alienIndex).setWalkingRight(!aliens.get(alienIndex).isWalkingRight());
+            aliens.get(alienIndex).setRandomX();
+            alienHasCollision = false;
+
+        }
+
+//        if (laser1Colision) {
+//            this.laser1.setX(laser1X);
+//            this.laser1.setY(laser1Y);
+//
+//            laser1Move = false;
+//            laser1Colision = false;
+//        }
+//
+//        if (laser2Colision) {
+//            this.laser2.setX(laser2X);
+//            this.laser2.setY(laser2Y);
+//
+//            laser2Move = false;
+//            laser2Colision = false;
+//        }
+
+//        if (hasMisses){
+//            alienSpaceships.get(alienIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
+//            alienSpaceships.get(alienIndex).setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight());
+//            hasMisses = false;
+//        }
+
+//        if (counterOfMisses == 3){
+////            explosion.startPlay();
+//        }
+    }
+
+
+
+
+
 
 
 

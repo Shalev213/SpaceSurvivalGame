@@ -16,9 +16,7 @@ public class LobbyPanel extends JPanel {
 //    private int levelButtonsX = 60;
 //    private int levelButtonsY = 200;
 //    private int space = 30;
-
     private int titleWidth = 430; // נסה לשנות את הערך כדי להתאים למיקום בתמונה
-
     private int levelButtonsX = 67; // נסה לשנות את הערך כדי להתאים למיקום בתמונה
     private int levelButtonsY = 520; // מיקום הקרוב יותר לתחתית התמונה
     private int space = 43; // המרווח בין הכפתורים
