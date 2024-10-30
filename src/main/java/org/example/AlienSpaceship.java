@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class AlienSpaceship extends Thread{
     private final Random random;
+    private int firePoint;
     private Image alienSpaceship;
     //    private String imagePath;
     private final short width = 120;
@@ -27,9 +28,7 @@ public class AlienSpaceship extends Thread{
 
 
     public void paintAlienSpaceship(Graphics graphics){
-//        System.out.println("Stone-> " + "x: " + x + ",y: " + y);
         graphics.drawImage(this.alienSpaceship, this.x, this.y, this.width, this.height, null);
-
 
     }
 
@@ -69,7 +68,23 @@ public class AlienSpaceship extends Thread{
         this.y = random.nextInt(origin,bound);
     }
 
+
+    public int randomFirePoint(int origin, int bound) {
+        firePoint = random.nextInt(origin, bound);
+        return firePoint;
+    }
+
+    public int getFirePoint() {
+        return firePoint;
+
+    }
+
+
     public Rectangle rectangle() {
         return new Rectangle (this.x, this.y + 10 , this.width - 15 , this.height - 20);
+    }
+
+    public int getY() {
+        return y;
     }
 }

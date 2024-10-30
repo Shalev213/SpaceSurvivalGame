@@ -22,8 +22,16 @@ public class Laser {
         graphics.drawImage(this.laser,  this.x,  this.y , width, height,null);
     }
 
-    public void fire() {
-        this.x += 4;
+    public void fire(Boolean isShootToRight) {
+        if (isShootToRight) {
+            this.x += 8;
+        }else {
+            this.x -= 8;
+        }
+    }
+
+    public void fireDown() {
+        this.y += 3;
     }
 
     public Rectangle rectangle() {
@@ -43,5 +51,9 @@ public class Laser {
 
     public int getY() {
         return y;
+    }
+
+    public byte getWidth() {
+        return width;
     }
 }

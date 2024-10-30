@@ -9,12 +9,11 @@ public class Alien extends Thread {
     private final Random random;
     private Image alienToRight;
     private Image alienToLeft;
-    private final short width = 180;
-    private final short height = 260;
+    private int width = 70;
+    private int height = 150;
     private int x = 20;
     private int y;
     private int dx = 1;
-//    private int mdx = -1;
 
     private boolean isAlive = true;
 
@@ -29,13 +28,13 @@ public class Alien extends Thread {
         alienToRight = new ImageIcon(rightImagePath).getImage();
         alienToLeft = new ImageIcon(leftImagePath).getImage();
 
-        this.y = 750 - this.height - 50;
-
+        this.y = 750 - this.height - 45;
 
     }
 
 
     public void paintAlien(Graphics graphics){
+
         if (isWalkingRight){
             graphics.drawImage(this.alienToRight, this.x, this.y, this.width, this.height, null);
         } else {
@@ -57,7 +56,7 @@ public class Alien extends Thread {
             }
 
             try {
-                Thread.sleep(5);
+                Thread.sleep(8);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -80,12 +79,11 @@ public class Alien extends Thread {
         this.x += dx;
     }
 
-
-    public short getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public short getWidth() {
+    public int getWidth() {
         return width;
     }
 
@@ -95,12 +93,9 @@ public class Alien extends Thread {
 
     public void setRandomX() {
         if (isWalkingRight){
-            System.out.println("END THREAD AND SET RANDOM RIGHT");
             this.x = random.nextInt(-1500, -500);
         } else {
-            System.out.println("END THREAD AND SET RANDOM LEFT");
             this.x = random.nextInt(1100, 1100 * 2);
-
         }
     }
 
@@ -117,5 +112,17 @@ public class Alien extends Thread {
 
     public boolean isWalkingRight() {
         return isWalkingRight;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

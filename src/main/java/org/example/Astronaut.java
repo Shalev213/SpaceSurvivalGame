@@ -10,27 +10,27 @@ public class Astronaut {
 
     private Image astronautToRightImage;
     private Image astronautToLeftImage;
-    private final short width = 120;
-    private final short height = 155;
+    private final int width = 110;
+    private final int height = 155;
     private int y;
     private int x = 40;
     private boolean isWalkingToRight = false;
 
 
 
-    public Astronaut(){
+    public Astronaut() {
         this.astronautToRightImage = new ImageIcon(astronautToRightPath).getImage();
         this.astronautToLeftImage = new ImageIcon(astronautToLeftPath).getImage();
 
-        this.y = 750 - this.height - 50;
+        this.y = 750 - this.height - 45;
     }
 
 
-    public void paintAstronaut(Graphics graphics){
-        if (isWalkingToRight){
-            graphics.drawImage(this.astronautToLeftImage, this.x, this.y, this.width, this.height, null);
-        }else {
+    public void paintAstronaut(Graphics graphics) {
+        if (isWalkingToRight) {
             graphics.drawImage(this.astronautToRightImage, this.x, this.y, this.width, this.height, null);
+        }else {
+            graphics.drawImage(this.astronautToLeftImage, this.x, this.y, this.width, this.height, null);
         }
     }
 
@@ -60,11 +60,11 @@ public class Astronaut {
         this.x = x;
     }
 
-    public double getX() {
+    public int getX() {
         return this.x;
     }
 
-    public double getWidth() {
+    public int getWidth() {
         return this.width;
     }
 
@@ -76,6 +76,10 @@ public class Astronaut {
         isWalkingToRight = walkingToRight;
     }
 
+    public boolean isWalkingToRight() {
+        return isWalkingToRight;
+    }
+
     //    public void setImagePath(String astronautToRightPath) {
 //        this.astronautToRightPath = astronautToRightPath;
 //    }
@@ -83,5 +87,6 @@ public class Astronaut {
         public Rectangle rectangle() {
         return new Rectangle(this.x, this.y + 8 , this.width - 5 , this.height - 16);
     }
+
 
 }
