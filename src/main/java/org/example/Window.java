@@ -279,6 +279,12 @@
                 this.add(levelFive);
 
 
+
+//                GifPanel gifPanel = new GifPanel("src/main/java/resources/gif.gif", 500, 500);
+                this.levelFive.getGifPanel().stop();
+                this.add(this.levelFive.getGifPanel());
+
+
                 levelFive.addOptionSelectionListener(selectedOption -> {
                     if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
                         this.remove(levelFive);

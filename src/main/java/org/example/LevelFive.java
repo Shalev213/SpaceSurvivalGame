@@ -62,15 +62,18 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     private int counterOfAlienHits = 0;
     private boolean isRightShoot1;
     private boolean isRightShoot2;
-    private GameOverScreen gameOverScreen;
+//    private GameOverScreen gameOverScreen;
     private boolean isSuccess = false;
     private boolean isFailed = false;
     private VideoBackground videoBackground;
+    private GifPanel gifPanel;
 
 
     public LevelFive(int width, int height){
-        videoBackground = new VideoBackground();
-        this.background = new ImageIcon("src/main/java/resources/backroundLevelFive.png");
+//        videoBackground = new VideoBackground();
+        gifPanel = new GifPanel("src/main/java/resources/FinalGifWatermark.gif", this.windowWidth, this.windowHeight);
+
+        this.background = new ImageIcon("src/main/java/resources/backgroundLevelFive.png");
 
         super.windowWidth = width;
         super.windowHeight = height;
@@ -161,7 +164,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         this.alienLaser.setY(laserAlienY);
 
 
-        this.gameOverScreen = new GameOverScreen();
+//        this.gameOverScreen = new GameOverScreen();
 
         this.setFocusable(true);
         this.requestFocus();
@@ -319,6 +322,17 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     public void gameOver() {
 
         if (isSuccess) {
+
+//            gifPanel = new GifPanel("src/main/resources/gif.gif", 500, 500);
+            this.setVisible(false);
+            this.gifPanel.start();
+            try {
+                Thread.sleep(28200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            this.gifPanel.stop();
+//            this.add(gifPanel);
 //            this.setVisible(false);
 //            this.add(this.gameOverScreen);
 ////            this.gameOverScreen.setVisible(true);
@@ -523,7 +537,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
             this.isFailed = true;
         }
 
-        if (counterOfAlienHits >= 20){
+        if (counterOfAlienHits >= 2){
             super.gameCondition = false;
             this.isSuccess = true;
         }
@@ -609,5 +623,9 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
     public boolean isFailed() {
         return isFailed;
+    }
+
+    public GifPanel getGifPanel() {
+        return gifPanel;
     }
 }
