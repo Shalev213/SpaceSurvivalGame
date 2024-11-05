@@ -1,5 +1,7 @@
 package org.example;
 
+import db.JDBC;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -25,9 +27,11 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private FakePanel fakePanel;
     private Sound sceneSound;
     private Sound laughSound;
+    private String teamName;
 
 
-    public LevelTwo(int width, int height) {
+    public LevelTwo(int width, int height, String teamName) {
+        this.teamName = teamName;
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
         super.windowWidth = width;
         super.windowHeight = height;
@@ -115,6 +119,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
 
         this.mainRiddlePanel.getButtonsPanel().getCheckButton().addActionListener(e -> {
             if (mainRiddlePanel.getButtonsPanel().isSuccess()){
+                JDBC.updateLevel(teamName, 3);
                 mainRiddlePanel.getButtonsPanel().success();
                 this.sceneSound.stopPlay();
 
@@ -168,7 +173,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     @Override
     public void gameOver() {
         this.sceneSound.stopPlay();
-        System.out.println("jjj");
     }
     public void takeBackgroundRight() {
         this.xOfBackground += 1;

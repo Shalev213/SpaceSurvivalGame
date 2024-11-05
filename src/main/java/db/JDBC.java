@@ -51,7 +51,7 @@ public class JDBC {
 
     public static boolean validateLogin(String teamName, String password){
         try{
-            Connection connection = DriverManager.getConnection(DB_URL,DB_USERNAME,DB_PASSWORD);
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
             PreparedStatement validateUser = connection.prepareStatement(
                     "SELECT * FROM " + DB_USERS_TABLE_NAME +

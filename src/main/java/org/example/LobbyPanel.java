@@ -1,5 +1,7 @@
 package org.example;
 
+import db.JDBC;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -24,7 +26,8 @@ public class LobbyPanel extends JPanel {
 
 
 
-    public LobbyPanel(int width, int height) {
+    public LobbyPanel(int width, int height, String teamName) {
+        this.teamName = teamName;
 
         this.lobbyBackground = new ImageIcon("src/main/java/resources/LevelsBackground-V.png");
         this.setSize(width, height);
@@ -76,7 +79,7 @@ public class LobbyPanel extends JPanel {
         this.add(levelButton4);
 
         this.levelButton5 = new LevelButton(this.levelButton4.getX() + this.levelButton4.getWidth() + this.space, this.levelButtonsY);
-        this.levelButton5.setEnabled(true);
+        this.levelButton5.setEnabled(false);
         this.levelButton5.checkEnable();
         this.add(levelButton5);
     }
@@ -86,7 +89,6 @@ public class LobbyPanel extends JPanel {
         if (lobbyBackground != null){
             this.lobbyBackground.paintIcon(null, graphics, 0, 0);
         }
-
     }
 
     public JButton getExitButton() {
@@ -111,6 +113,17 @@ public class LobbyPanel extends JPanel {
 
     public LevelButton getLevelButton5() {
         return levelButton5;
+    }
+
+    public void updateLevel() {
+        int currentLevel = JDBC.showUpdate(teamName);
+        for (int i = 0; i < levelButtons.size(); i++) {
+            if (i < currentLevel){
+                levelButtons.get(i).setEnabled(true);
+                levelButtons.get(i).checkEnable();
+            }
+
+        }
     }
 
 

@@ -31,10 +31,13 @@
 
             signInPanel = new SignInPanel(windowWidth, windowHeight);
             this.add(signInPanel);
+            this.teamNameExist = signInPanel.getTeamName();
+
             signUpPanel = new SignUpPanel(windowWidth, windowHeight);
             this.add(signUpPanel);
             signUpPanel.setVisible(false);
-            lobbyPanel = new LobbyPanel(windowWidth, windowHeight);
+
+            lobbyPanel = new LobbyPanel(windowWidth, windowHeight, teamNameExist);
             this.add(lobbyPanel);
             lobbyPanel.setVisible(false);
 
@@ -59,16 +62,16 @@
                 if (this.signInPanel.hasEmptyField()) {
                     JOptionPane.showMessageDialog(null, "One or more of your fields are empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-//                    if (JDBC.validateLogin(teamName, teamPassword)) {
+                    if (JDBC.validateLogin(teamNameExist, teamPassword)) {
 //                        System.out.println("login success");
                     this.signInPanel.setVisible(false);
                     this.signInPanel.restartPanel();
                     this.lobbyPanel.setVisible(true);
 
-////                    }
-//                    else {
-//                        JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
-//                    }
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             });
             this.lobbyPanel.getExitButton().addActionListener(e -> {
@@ -90,7 +93,7 @@
 
                 if (this.signUpPanel.isVerifiedPassword()) {
                     if (!this.signUpPanel.hasEmptyField()) {
-                        if (JDBC.isNameExist(teamName)) {
+                        if (!JDBC.isNameExist(teamName)) {
                             JDBC.register(teamName, teamPassword);
                             this.signUpPanel.setVisible(false);
                             this.signInPanel.setVisible(true);
@@ -107,8 +110,8 @@
 
             this.lobbyPanel.getLevelButton1().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
-                String teamName = signInPanel.getTeamName();
-                this.levelOne = new LevelOne(windowWidth, windowHeight, teamName);
+                teamNameExist = signInPanel.getTeamName();
+                this.levelOne = new LevelOne(windowWidth, windowHeight, teamNameExist);
                 this.add(levelOne);
 
                 this.levelOne.addOptionSelectionListener(selectedOption -> {

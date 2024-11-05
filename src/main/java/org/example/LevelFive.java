@@ -320,7 +320,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
 
     public void gameOver() {
-
         if (isSuccess) {
 
 //            gifPanel = new GifPanel("src/main/resources/gif.gif", 500, 500);
@@ -346,7 +345,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 //            stage.setScene(gameOverScreen.getScene()); // קבע את ה-Scene של GameOverScreen
 //            stage.show(); // הצג את ה-Stage
 
-
 //            this.setVisible(false);
 
 //            passedLevel.startPlay();
@@ -356,8 +354,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
             showFailedDialog();
         }
-
-
     }
 
 
@@ -401,7 +397,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
                 laser1Move = true;
             }
         }
-
     }
 
 

@@ -1,4 +1,6 @@
 package org.example;
+import db.JDBC;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -27,9 +29,11 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     private boolean isSuccessPart1 = false;
     private boolean isSuccessPart2 = false;
     private boolean isSuccessPart3 = false;
+    private String teamName;
 
 
-    public LevelFour(int width, int height) {
+    public LevelFour(int width, int height, String teamName) {
+        this.teamName = teamName;
         super.windowWidth = width;
         super.windowHeight = height;
 
@@ -229,6 +233,8 @@ public class LevelFour extends AbstractLevel implements KeyListener {
             case 3 -> {
                 message = "Mission Complete";
                 this.options[1] = "Next Level";
+                JDBC.updateLevel(teamName, 5);
+
             }
         }
         counterOfLevel++;

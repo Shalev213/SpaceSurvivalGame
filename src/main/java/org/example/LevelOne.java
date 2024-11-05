@@ -1,5 +1,7 @@
 package org.example;
 
+import db.JDBC;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -47,6 +49,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private boolean isSuccess = counterOfFuelHits >= 5;
     private boolean isFailed = counterOfStoneHits >= 3;
     private ToolsOfLife toolsOfLife;
+    private String teamName;
 
 
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
@@ -55,6 +58,8 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
 
     public LevelOne(int width, int height, String teamName) {
+        this.teamName = teamName;
+
         // אתחול הרקעים קודם לקריאה לבנאי של המחלקה האבסטרקטית
         this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelOne.png");
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelOneMirror.png");
@@ -230,6 +235,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
             passedLevel.startPlay();
             missionComplete.startPlay();
             showSuccessDialog();
+            JDBC.updateLevel(this.teamName, 2);
         } else if (isFailed) {
             showFailedDialog();
         }

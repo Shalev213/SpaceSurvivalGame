@@ -53,13 +53,14 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private int laser1Y = 0;
     private int laser2X = 0;
     private int laser2Y = 0;
+    private String teamName;
 
 
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
 
 
     public LevelThree(int width, int height, String teamName) {
-
+        this.teamName = teamName;
         this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelThreeBackground.png");
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelThreeMirror.png");
         this.finalMoonImage = new ImageIcon("src/main/java/resources/final_moon.png");
