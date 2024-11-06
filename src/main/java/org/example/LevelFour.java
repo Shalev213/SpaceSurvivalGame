@@ -40,18 +40,24 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         // התנאים בשביל ההשמה של הרקעים לפי מספר השלב הנוכחי. וזה בעזרת counterOfLevel שהוא static
         if (counterOfLevel == 1){
             circuitBreaker = new CircuitBreaker("src/main/java/resources/CircuitBreaker1.png");
+            circuitBreaker.setCircuitBreaker2(false);
 
         } else if (counterOfLevel == 2) {
+
             circuitBreaker = new CircuitBreaker("src/main/java/resources/CircuitBreaker2.png");
+            circuitBreaker.setCircuitBreaker2(true);
 
             circuitBreaker.setxOfMoving1(circuitBreaker.getPanelWidth() - 50);
             circuitBreaker.setxOfMoving2(circuitBreaker.getPanelWidth() - 50);
+
 
             circuitBreaker.setyOfMoving1(100);
             circuitBreaker.setyOfMoving2(125);
 
         } else if (counterOfLevel == 3) {
+
             circuitBreaker = new CircuitBreaker("src/main/java/resources/CircuitBreaker3.png");
+            circuitBreaker.setCircuitBreaker2(false);
 
             circuitBreaker.setxOfMoving1(50);
             circuitBreaker.setxOfMoving2(50);
@@ -169,6 +175,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         if (circuitBreaker.isSuccess()){
             showSuccessDialog();
 //            counterOfLevel++;
+
         } else if (circuitBreaker.isFailed()) {
             showFailedDialog();
         }

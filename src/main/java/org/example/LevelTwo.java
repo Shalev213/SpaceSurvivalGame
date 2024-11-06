@@ -27,11 +27,10 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private FakePanel fakePanel;
     private Sound sceneSound;
     private Sound laughSound;
-    private String teamName;
 
 
     public LevelTwo(int width, int height, String teamName) {
-        this.teamName = teamName;
+//        this.teamName = teamName;
         // קריאה לבנאי של המחלקה האבסטרקטית אחרי אתחול הרקעים
         super.windowWidth = width;
         super.windowHeight = height;

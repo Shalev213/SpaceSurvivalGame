@@ -16,6 +16,9 @@
         private LevelThree levelThree;
         private LevelFour levelFour;
         private LevelFive levelFive;
+
+        private String teamNameExist;
+
 //        private GameOverScreen gameOverScreen;
 //        private Sounds sceneSound;
 
@@ -31,13 +34,13 @@
 
             signInPanel = new SignInPanel(windowWidth, windowHeight);
             this.add(signInPanel);
-            this.teamNameExist = signInPanel.getTeamName();
+//            this.teamNameExist = signInPanel.getTeamName();
 
             signUpPanel = new SignUpPanel(windowWidth, windowHeight);
             this.add(signUpPanel);
             signUpPanel.setVisible(false);
 
-            lobbyPanel = new LobbyPanel(windowWidth, windowHeight, teamNameExist);
+            lobbyPanel = new LobbyPanel(windowWidth, windowHeight);
             this.add(lobbyPanel);
             lobbyPanel.setVisible(false);
 
@@ -57,7 +60,8 @@
             UIManager.put("Button.font", new Font("Arial", Font.BOLD, 18));
 
             this.signInPanel.getLoginButton().addActionListener(e -> {
-                String teamName = signInPanel.getTeamName();
+                teamNameExist = signInPanel.getTeamName();
+                lobbyPanel.setTeamName(teamNameExist);
                 String teamPassword = signInPanel.getPassword();
                 if (this.signInPanel.hasEmptyField()) {
                     JOptionPane.showMessageDialog(null, "One or more of your fields are empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
@@ -66,7 +70,15 @@
 //                        System.out.println("login success");
                     this.signInPanel.setVisible(false);
                     this.signInPanel.restartPanel();
+//                    this.lobbyPanel = new LobbyPanel(windowWidth, windowHeight, teamNameExist);
+//                    this.add(lobbyPanel);
+                    this.lobbyPanel.updateLevel();
                     this.lobbyPanel.setVisible(true);
+
+//                        this.lobbyPanel.getExitButton().addActionListener(_ -> {
+//                            this.lobbyPanel.setVisible(false);
+//                            this.signInPanel.setVisible(true);
+//                        });
 
                     }
                     else {
@@ -90,6 +102,7 @@
             this.signUpPanel.getRegisterButton().addActionListener(e -> {
                 String teamName = signUpPanel.getTeamName();
                 String teamPassword = signUpPanel.getTeamPassword();
+//                JDBC.updateLevel(teamName, 1);
 
                 if (this.signUpPanel.isVerifiedPassword()) {
                     if (!this.signUpPanel.hasEmptyField()) {
@@ -110,7 +123,8 @@
 
             this.lobbyPanel.getLevelButton1().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
-                teamNameExist = signInPanel.getTeamName();
+//                teamNameExist = signInPanel.getTeamName();
+                System.out.println("its: " + teamNameExist);
                 this.levelOne = new LevelOne(windowWidth, windowHeight, teamNameExist);
                 this.add(levelOne);
 
@@ -149,7 +163,8 @@
 
             this.lobbyPanel.getLevelButton2().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
-                levelTwo = new LevelTwo(windowWidth, windowHeight);
+//                teamNameExist = signInPanel.getTeamName();
+                levelTwo = new LevelTwo(windowWidth, windowHeight, teamNameExist);
                 this.add(levelTwo);
 //                levelTwo.setGameCondition(true);
                 levelTwo.setVisible(true);
@@ -176,8 +191,8 @@
 
             this.lobbyPanel.getLevelButton3().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
-                String teamName = signInPanel.getTeamName();
-                this.levelThree = new LevelThree(windowWidth, windowHeight, teamName);
+
+                this.levelThree = new LevelThree(windowWidth, windowHeight, teamNameExist);
                 this.add(levelThree);
 
                 levelThree.addOptionSelectionListener(selectedOption -> {
@@ -216,8 +231,8 @@
             this.lobbyPanel.getLevelButton4().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
 
-
-                this.levelFour = new LevelFour(windowWidth, windowHeight);
+//                teamNameExist = signInPanel.getTeamName();
+                this.levelFour = new LevelFour(windowWidth, windowHeight, teamNameExist);
                 this.add(levelFour);
                 levelFour.setVisible(true);
 //                levelFour.setFocusable(true);

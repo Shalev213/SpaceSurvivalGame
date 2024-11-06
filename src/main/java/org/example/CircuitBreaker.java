@@ -46,7 +46,7 @@ public class CircuitBreaker extends JPanel implements KeyListener {
     private Sound electricSound;
     private Sound passedLevel;
     private Sound missionComplete;
-
+    private boolean isCircuitBreaker2;
 
 
     public CircuitBreaker(String currentLevel) {
@@ -260,12 +260,12 @@ public class CircuitBreaker extends JPanel implements KeyListener {
             currentColor2 = new Color(pixelColor2);
 
 
-            if (isColorCloseToGrey(currentColor1, tolerance) && (yOfMoving1 > this.panelHeight / 2 || xOfMoving1 > this.panelWidth / 2)){
+            if (isColorCloseToGrey(currentColor1, tolerance) && (yOfMoving1 > this.panelHeight / 2 || xOfMoving1 > this.panelWidth / 2 && !isCircuitBreaker2)){
                 success1 = true;
 //                isStop1 = true;
 
             }
-            if (isColorCloseToGrey(currentColor2, tolerance) && (yOfMoving2 > this.panelHeight / 2 || xOfMoving2 > this.panelWidth / 2)) {
+            if (isColorCloseToGrey(currentColor2, tolerance) && (yOfMoving2 > this.panelHeight / 2 || xOfMoving2 > this.panelWidth / 2 && !isCircuitBreaker2)) {
                 success2 = true;
             }
 
@@ -346,4 +346,9 @@ public class CircuitBreaker extends JPanel implements KeyListener {
     public void setyOfMoving2(int yOfMoving2) {
         this.yOfMoving2 = yOfMoving2;
     }
+
+    public void setCircuitBreaker2(boolean circuitBreaker2) {
+        isCircuitBreaker2 = circuitBreaker2;
+    }
+
 }

@@ -1,5 +1,7 @@
 package org.example;
 
+import db.JDBC;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -225,6 +227,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             }
             passedLevel.startPlay();
             missionComplete.startPlay();
+            JDBC.updateLevel(teamName, 4);
             showSuccessDialog();
         } else if (isFailed) {
             showFailedDialog();

@@ -234,8 +234,8 @@ public class LevelOne extends AbstractLevel implements KeyListener {
             }
             passedLevel.startPlay();
             missionComplete.startPlay();
-            showSuccessDialog();
             JDBC.updateLevel(this.teamName, 2);
+            showSuccessDialog();
         } else if (isFailed) {
             showFailedDialog();
         }
