@@ -40,9 +40,9 @@
             this.add(signUpPanel);
             signUpPanel.setVisible(false);
 
-            lobbyPanel = new LobbyPanel(windowWidth, windowHeight);
-            this.add(lobbyPanel);
-            lobbyPanel.setVisible(false);
+//            lobbyPanel = new LobbyPanel(windowWidth, windowHeight);
+//            this.add(lobbyPanel);
+//            lobbyPanel.setVisible(false);
 
 //            this.gameOverScreen = new GameOverScreen(windowWidth, windowHeight);
 
@@ -61,6 +61,10 @@
 
             this.signInPanel.getLoginButton().addActionListener(e -> {
                 teamNameExist = signInPanel.getTeamName();
+
+                this.lobbyPanel = new LobbyPanel(windowWidth, windowHeight);
+                this.add(lobbyPanel);
+                addLobbyPanelListeners();
                 lobbyPanel.setTeamName(teamNameExist);
                 String teamPassword = signInPanel.getPassword();
                 if (this.signInPanel.hasEmptyField()) {
@@ -86,10 +90,7 @@
                     }
                 }
             });
-            this.lobbyPanel.getExitButton().addActionListener(e -> {
-                this.lobbyPanel.setVisible(false);
-                this.signInPanel.setVisible(true);
-            });
+
             this.signUpPanel.getReturnButton().addActionListener(e -> {
                 this.signUpPanel.setVisible(false);
                 this.signInPanel.setVisible(true);
@@ -121,6 +122,14 @@
                 }
             });
 
+        }
+
+        private void addLobbyPanelListeners() {
+            this.lobbyPanel.getExitButton().addActionListener(e -> {
+                this.lobbyPanel.setVisible(false);
+                this.remove(lobbyPanel);
+                this.signInPanel.setVisible(true);
+            });
             this.lobbyPanel.getLevelButton1().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
 //                teamNameExist = signInPanel.getTeamName();
@@ -314,11 +323,11 @@
 //                        }
 
                     } else if (selectedOption == 1) {
-                            if (levelFive.isFailed()) {
+                        if (levelFive.isFailed()) {
 
 //                            this.levelFour.getSceneSound().stopPlay();
-                                this.remove(levelFive);
-                                this.lobbyPanel.getLevelButton5().doClick();
+                            this.remove(levelFive);
+                            this.lobbyPanel.getLevelButton5().doClick();
                         }
                     } else {
                         System.out.println("No option selected or window closed");
@@ -333,8 +342,6 @@
 
 
             });
-
-
         }
 
         public void showWindow () {
