@@ -40,20 +40,6 @@
             this.add(signUpPanel);
             signUpPanel.setVisible(false);
 
-//            lobbyPanel = new LobbyPanel(windowWidth, windowHeight);
-//            this.add(lobbyPanel);
-//            lobbyPanel.setVisible(false);
-
-//            this.gameOverScreen = new GameOverScreen(windowWidth, windowHeight);
-
-//            levelTwo = new LevelTwo(windowWidth, windowHeight);
-
-
-//            levelFour = new LevelFour(windowWidth, windowHeight);
-
-
-//            levelThree = new LevelThree(windowWidth, windowHeight);
-
             UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 20));
             UIManager.put("Button.background", Color.darkGray);
             UIManager.put("Button.foreground", Color.white);
@@ -74,16 +60,9 @@
 //                        System.out.println("login success");
                     this.signInPanel.setVisible(false);
                     this.signInPanel.restartPanel();
-//                    this.lobbyPanel = new LobbyPanel(windowWidth, windowHeight, teamNameExist);
-//                    this.add(lobbyPanel);
+
                     this.lobbyPanel.updateLevel();
                     this.lobbyPanel.setVisible(true);
-
-//                        this.lobbyPanel.getExitButton().addActionListener(_ -> {
-//                            this.lobbyPanel.setVisible(false);
-//                            this.signInPanel.setVisible(true);
-//                        });
-
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
@@ -103,7 +82,6 @@
             this.signUpPanel.getRegisterButton().addActionListener(e -> {
                 String teamName = signUpPanel.getTeamName();
                 String teamPassword = signUpPanel.getTeamPassword();
-//                JDBC.updateLevel(teamName, 1);
 
                 if (this.signUpPanel.isVerifiedPassword()) {
                     if (!this.signUpPanel.hasEmptyField()) {
@@ -125,11 +103,15 @@
         }
 
         private void addLobbyPanelListeners() {
-            this.lobbyPanel.getExitButton().addActionListener(e -> {
-                this.lobbyPanel.setVisible(false);
-                this.remove(lobbyPanel);
-                this.signInPanel.setVisible(true);
-            });
+            addExitLobbyListener();
+            addLevelOneListener();
+            addLevelTwoListener();
+            addLevelThreeListener();
+            addLevelFourListener();
+            addLevelFiveListener();
+        }
+
+        private void addLevelOneListener() {
             this.lobbyPanel.getLevelButton1().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
 //                teamNameExist = signInPanel.getTeamName();
@@ -168,8 +150,9 @@
                 levelOne.requestFocus();
                 levelOne.requestFocusInWindow();
             });
+        }
 
-
+        private void addLevelTwoListener() {
             this.lobbyPanel.getLevelButton2().addActionListener(e -> {
                 this.lobbyPanel.setVisible(false);
 //                teamNameExist = signInPanel.getTeamName();
@@ -196,9 +179,10 @@
                     this.lobbyPanel.getLevelButton3().checkEnable();
                 });
             });
+        }
 
-
-            this.lobbyPanel.getLevelButton3().addActionListener(e -> {
+        private void addLevelThreeListener() {
+            this.lobbyPanel.getLevelButton3().addActionListener(_ -> {
                 this.lobbyPanel.setVisible(false);
 
                 this.levelThree = new LevelThree(windowWidth, windowHeight, teamNameExist);
@@ -235,24 +219,13 @@
                 levelThree.requestFocus();
                 levelThree.requestFocusInWindow();
             });
+        }
 
-
-            this.lobbyPanel.getLevelButton4().addActionListener(e -> {
+        private void addLevelFourListener() {
+            this.lobbyPanel.getLevelButton4().addActionListener(_ -> {
                 this.lobbyPanel.setVisible(false);
-
-//                teamNameExist = signInPanel.getTeamName();
                 this.levelFour = new LevelFour(windowWidth, windowHeight, teamNameExist);
                 this.add(levelFour);
-                levelFour.setVisible(true);
-//                levelFour.setFocusable(true);
-//                levelFour.requestFocus();
-//                levelFour.requestFocusInWindow();
-
-//                this.lobbyPanel.setVisible(false);
-//                String teamName = signInPanel.getTeamName();
-//                this.levelThree = new LevelThree(windowWidth, windowHeight, teamName);
-//                this.add(levelThree);
-
 
                 levelFour.addOptionSelectionListener(selectedOption -> {
                     if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
@@ -289,43 +262,33 @@
                         System.out.println("No option selected or window closed");
                     }
                 });
-
                 levelFour.setVisible(true);
                 levelFour.setFocusable(true);
                 levelFour.requestFocus();
                 levelFour.requestFocusInWindow();
             });
+        }
 
-
+        private void addLevelFiveListener() {
             this.lobbyPanel.getLevelButton5().addActionListener(e -> {
-                System.out.println("LEVEL 5");
+//                System.out.println("LEVEL 5");
                 this.lobbyPanel.setVisible(false);
 
                 this.levelFive = new LevelFive(windowWidth, windowHeight);
                 levelFive.setVisible(true);
                 this.add(levelFive);
 
-
-
-//                GifPanel gifPanel = new GifPanel("src/main/java/resources/gif.gif", 500, 500);
                 this.levelFive.getGifPanel().stop();
                 this.add(this.levelFive.getGifPanel());
-
 
                 levelFive.addOptionSelectionListener(selectedOption -> {
                     if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
                         this.remove(levelFive);
                         lobbyPanel.setVisible(true);
 
-//                        if (levelFive.isSuccess()) {
-//                            this.add(gameOverScreen);
-////                            this.gameOverScreen.setVisible(true);
-//                        }
-
                     } else if (selectedOption == 1) {
                         if (levelFive.isFailed()) {
-
-//                            this.levelFour.getSceneSound().stopPlay();
+//                            this.levelFive.getSceneSound().stopPlay();
                             this.remove(levelFive);
                             this.lobbyPanel.getLevelButton5().doClick();
                         }
@@ -333,14 +296,18 @@
                         System.out.println("No option selected or window closed");
                     }
                 });
-
                 levelFive.setVisible(true);
                 levelFive.setFocusable(true);
                 levelFive.requestFocus();
                 levelFive.requestFocusInWindow();
+            });
+        }
 
-
-
+        private void addExitLobbyListener() {
+            this.lobbyPanel.getExitButton().addActionListener(_ -> {
+                this.lobbyPanel.setVisible(false);
+                this.remove(lobbyPanel);
+                this.signInPanel.setVisible(true);
             });
         }
 
@@ -355,9 +322,4 @@
         public int getHeight() {
             return windowHeight;
         }
-
-
-
-
-
     }

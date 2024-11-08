@@ -3,14 +3,12 @@ package db;
 import java.sql.*;
 
 public class JDBC {
-//    public static final String DB_URL = "jdbc:mysql://192.168.189.251:3306/login_schema";
     public static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/login_schema"; //localhost
     public static final String DB_USERNAME = "root";
     public static final String DB_PASSWORD = "1234";
     public static final String DB_LOGIN_TABLE_NAME = "LOGIN";
     public static final String DB_LEVELS_TABLE_NAME = "LEVELS";
     private static ResultSet resultSpecialSet;
-
 
 
     public static void register(String teamName, String password){
@@ -22,7 +20,6 @@ public class JDBC {
                          "INSERT INTO " + DB_LOGIN_TABLE_NAME + "(teamname, password)" +
                                  "VALUES(?, ?)"
                  );
-
                  insertUser.setString(1, teamName);
                  insertUser.setString(2, password);
 
@@ -32,38 +29,16 @@ public class JDBC {
                          "INSERT INTO " + DB_LEVELS_TABLE_NAME + "(teamname, current_level)" +
                                  "VALUES(?, ?)"
                  );
-
                  insertUser2.setString(1, teamName);
                  insertUser2.setInt(2, 1);
 
-
                  insertUser2.executeUpdate();
-
-
              }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-//    public static boolean isNameExist(String teamName){
-//        try {
-//            Connection connection = DriverManager.getConnection(DB_URL,DB_USERNAME,DB_PASSWORD);
-//            PreparedStatement checkUserExists = connection.prepareStatement(
-//                    "SELECT * FROM " + DB_LOGIN_TABLE_NAME +
-//                            " WHERE TEAMNAME = ?"
-//            );
-//            checkUserExists.setString(1, teamName);
-//
-//            ResultSet resultSet = checkUserExists.executeQuery();
-//
-//            if (!resultSet.isBeforeFirst()){
-//                return true;
-//            }
-//        }catch (SQLException e){
-//            throw new RuntimeException(e);        }
-//        return false;
-//    }
 
     public static boolean isNameExist(String teamName) {
         try {
@@ -79,7 +54,6 @@ public class JDBC {
             throw new RuntimeException(e);
         }
     }
-
 
 
     public static boolean validateLogin(String teamName, String password){
@@ -111,59 +85,22 @@ public class JDBC {
                     DB_USERNAME,
                     DB_PASSWORD
             );
-
             if (isNameExist(teamName)) {
-                PreparedStatement updateUsersTable = connection.prepareStatement(
-                        "UPDATE " + DB_LEVELS_TABLE_NAME + " SET current_level = ? WHERE teamName = ?");
+                int currentLevel = showUpdate(teamName);
+                if (currentLevel == level - 1){
+                    PreparedStatement updateUsersTable = connection.prepareStatement(
+                            "UPDATE " + DB_LEVELS_TABLE_NAME + " SET current_level = ? WHERE teamName = ?");
 
-                updateUsersTable.setString(2, teamName);
-                updateUsersTable.setInt(1, level);
+                    updateUsersTable.setString(2, teamName);
+                    updateUsersTable.setInt(1, level);
 
-                updateUsersTable.executeUpdate();
-
-
-
+                    updateUsersTable.executeUpdate();
+                }
             }
-
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-
-
-//    public static int showUpdate(String name) {
-//        int currentLevel = 1;
-//        try {
-//            Connection connection = DriverManager.getConnection(
-//                    DB_URL,
-//                    DB_USERNAME,
-//                    DB_PASSWORD
-//            );
-//
-//            PreparedStatement showTogether = connection.prepareStatement(
-//                    "SELECT login.teamname, levels.current_level " +
-//                            "FROM " + DB_LOGIN_TABLE_NAME + " login " +
-//                            "JOIN " + DB_LEVELS_TABLE_NAME + " levels " +
-//                            "ON login.teamname = levels.teamname " +
-//                            "WHERE login.teamname = ?"
-////                            "ORDER BY grades.date DESC, grades.time DESC LIMIT 1"
-//            );
-//            showTogether.setString(1, name);
-//
-//            resultSpecialSet = showTogether.executeQuery();
-//
-//            currentLevel = resultSpecialSet.getInt("current_level");
-//
-//
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return currentLevel;
-//    }
 
 
     public static int showUpdate(String teamName) {
@@ -174,7 +111,6 @@ public class JDBC {
                     DB_USERNAME,
                     DB_PASSWORD
             );
-
             PreparedStatement showTogether = connection.prepareStatement(
                     "SELECT login.teamname, levels.current_level " +
                             "FROM " + DB_LOGIN_TABLE_NAME + " login " +
@@ -192,12 +128,9 @@ public class JDBC {
             } else {
                 System.out.println("No results found for team teamName: " + teamName);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return currentLevel;
     }
-
-
 }
