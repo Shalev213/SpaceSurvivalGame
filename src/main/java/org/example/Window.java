@@ -16,6 +16,7 @@
         private LevelThree levelThree;
         private LevelFour levelFour;
         private LevelFive levelFive;
+        private Sound lobbyBackground;
 
         private String teamNameExist;
 
@@ -34,6 +35,11 @@
 
             signInPanel = new SignInPanel(windowWidth, windowHeight);
             this.add(signInPanel);
+            this.lobbyBackground = new Sound();
+            this.lobbyBackground.playSound("src/main/java/resources/background_sound.wav");
+
+            this.lobbyBackground.startBackgroundPlay();
+            this.lobbyBackground.loopPlay();
 //            this.teamNameExist = signInPanel.getTeamName();
 
             signUpPanel = new SignUpPanel(windowWidth, windowHeight);
@@ -46,6 +52,8 @@
             UIManager.put("Button.font", new Font("Arial", Font.BOLD, 18));
 
             this.signInPanel.getLoginButton().addActionListener(e -> {
+
+
                 teamNameExist = signInPanel.getTeamName();
 
                 this.lobbyPanel = new LobbyPanel(windowWidth, windowHeight);
@@ -113,9 +121,9 @@
 
         private void addLevelOneListener() {
             this.lobbyPanel.getLevelButton1().addActionListener(e -> {
+                this.lobbyBackground.stopPlay();
                 this.lobbyPanel.setVisible(false);
 //                teamNameExist = signInPanel.getTeamName();
-                System.out.println("its: " + teamNameExist);
                 this.levelOne = new LevelOne(windowWidth, windowHeight, teamNameExist);
                 this.add(levelOne);
 
@@ -124,6 +132,9 @@
                         this.levelOne.getSceneSound().stopPlay();
                         this.remove(levelOne);
                         lobbyPanel.setVisible(true);
+                        this.lobbyBackground.startPlay();
+                        this.lobbyBackground.startBackgroundPlay();
+                        this.lobbyBackground.loopPlay();
                         if (levelOne.isSuccess()) {
                             this.lobbyPanel.getLevelButton2().setEnabled(true);
                             this.lobbyPanel.getLevelButton2().checkEnable();//************
@@ -154,6 +165,7 @@
 
         private void addLevelTwoListener() {
             this.lobbyPanel.getLevelButton2().addActionListener(e -> {
+                this.lobbyBackground.stopPlay();
                 this.lobbyPanel.setVisible(false);
 //                teamNameExist = signInPanel.getTeamName();
                 levelTwo = new LevelTwo(windowWidth, windowHeight, teamNameExist);
@@ -174,6 +186,8 @@
                     this.levelTwo.getSceneSound().stopPlay();
                     this.remove(this.levelTwo);
                     this.lobbyPanel.setVisible(true);
+                    this.lobbyBackground.startBackgroundPlay();
+                    this.lobbyBackground.loopPlay();
 //                if (levelOne.isSuccess()){
                     this.lobbyPanel.getLevelButton3().setEnabled(true);
                     this.lobbyPanel.getLevelButton3().checkEnable();
@@ -183,6 +197,7 @@
 
         private void addLevelThreeListener() {
             this.lobbyPanel.getLevelButton3().addActionListener(_ -> {
+                this.lobbyBackground.stopPlay();
                 this.lobbyPanel.setVisible(false);
 
                 this.levelThree = new LevelThree(windowWidth, windowHeight, teamNameExist);
@@ -193,6 +208,8 @@
                         levelThree.getSceneSound().stopPlay();
                         this.remove(levelThree);
                         lobbyPanel.setVisible(true);
+                        this.lobbyBackground.startBackgroundPlay();
+                        this.lobbyBackground.loopPlay();
                         if (levelThree.isSuccess()) {
                             this.lobbyPanel.getLevelButton4().setEnabled(true);
                             this.lobbyPanel.getLevelButton4().checkEnable();//**********
@@ -223,6 +240,7 @@
 
         private void addLevelFourListener() {
             this.lobbyPanel.getLevelButton4().addActionListener(_ -> {
+                this.lobbyBackground.stopPlay();
                 this.lobbyPanel.setVisible(false);
                 this.levelFour = new LevelFour(windowWidth, windowHeight, teamNameExist);
                 this.add(levelFour);
@@ -232,6 +250,8 @@
 //                        levelFour.getSceneSound().stopPlay();
                         this.remove(levelFour);
                         lobbyPanel.setVisible(true);
+                        this.lobbyBackground.startBackgroundPlay();
+                        this.lobbyBackground.loopPlay();
                         if (levelFour.isSuccess()) {
                             this.lobbyPanel.getLevelButton5().setEnabled(true);
                             this.lobbyPanel.getLevelButton5().checkEnable();//**********
@@ -272,6 +292,7 @@
         private void addLevelFiveListener() {
             this.lobbyPanel.getLevelButton5().addActionListener(e -> {
 //                System.out.println("LEVEL 5");
+                this.lobbyBackground.stopPlay();
                 this.lobbyPanel.setVisible(false);
 
                 this.levelFive = new LevelFive(windowWidth, windowHeight);
@@ -285,6 +306,8 @@
                     if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
                         this.remove(levelFive);
                         lobbyPanel.setVisible(true);
+                        this.lobbyBackground.startBackgroundPlay();
+                        this.lobbyBackground.loopPlay();
 
                     } else if (selectedOption == 1) {
                         if (levelFive.isFailed()) {
@@ -294,6 +317,7 @@
                         }
                     } else {
                         System.out.println("No option selected or window closed");
+
                     }
                 });
                 levelFive.setVisible(true);

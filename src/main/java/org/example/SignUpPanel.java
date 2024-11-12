@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 public class SignUpPanel extends JPanel {
     private final JButton returnButton;
-    private JTextField nicknamePlayer1;
-    private JTextField nicknamePlayer2;
+//    private JTextField nicknamePlayer1;
+//    private JTextField nicknamePlayer2;
     private JTextField teamName;
     private JPasswordField teamPassword;
     private JPasswordField teamPasswordVerification;
@@ -21,8 +21,11 @@ public class SignUpPanel extends JPanel {
     private int height;
     private final ImageIcon signUpBackground;
     private int heightTextFields = 65;
-    private int space = 20;
+    private int space = 40;
     private int labelWidth = 200;
+    private int fieldWidth = 450;
+
+
 
     public SignUpPanel(int width, int height) {
         this.signUpBackground = new ImageIcon("src/main/java/resources/signUpBackground.png");
@@ -35,42 +38,13 @@ public class SignUpPanel extends JPanel {
 
         this.welcomeLabel = new JLabel("Sign up: ");
         this.welcomeLabel.setFont(new Font("Arial", Font.ITALIC , 50));
-        this.welcomeLabel.setBounds((width - labelWidth) / 2, 50, labelWidth, 70);
+        this.welcomeLabel.setBounds((width - labelWidth) / 2, 140, labelWidth, 70);
         this.welcomeLabel.setForeground(Color.white);
-
-
         this.add(welcomeLabel);
-
-        this.nicknamePlayer1 = new JTextField();
-//        this.nicknamePlayer1.requestFocus();
-        this.nicknamePlayer1.setFont(new Font("Arial", Font.ITALIC, 25));
-        this.nicknamePlayer1.setBounds((width - 600) / 2, welcomeLabel.getY() + heightTextFields + space, 600,heightTextFields);
-        this.nicknamePlayer1.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(null, "Nickname of player 1:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
-                BorderFactory.createEmptyBorder(5, 5, 5,5)
-        ));
-        this.nicknamePlayer1.addActionListener(e -> {
-            nicknamePlayer2.requestFocus();
-        });
-
-        this.add(nicknamePlayer1);
-
-        this.nicknamePlayer2 = new JTextField();
-        this.nicknamePlayer2.setFont(new Font("Arial", Font.ITALIC, 25));
-        this.nicknamePlayer2.setBounds((width - 600) / 2, nicknamePlayer1.getY() + heightTextFields + space, 600,heightTextFields);
-        this.nicknamePlayer2.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(null, "Nickname of player 1:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
-                BorderFactory.createEmptyBorder(5, 5, 5,5)
-        ));
-        this.nicknamePlayer2.addActionListener(e -> {
-            teamName.requestFocus();
-        });
-
-        this.add(nicknamePlayer2);
 
         this.teamName = new JTextField();
         this.teamName.setFont(new Font("Arial", Font.ITALIC, 25));
-        this.teamName.setBounds((width - 600) / 2, nicknamePlayer2.getY() + heightTextFields + space, 600,heightTextFields);
+        this.teamName.setBounds((width - fieldWidth) / 2, welcomeLabel.getY() + heightTextFields + space, fieldWidth,heightTextFields);
         this.teamName.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(null, "Team name:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
                 BorderFactory.createEmptyBorder(5, 5, 5,5)
@@ -83,7 +57,7 @@ public class SignUpPanel extends JPanel {
 
         this.teamPassword = new JPasswordField();
         this.teamPassword.setFont(new Font("Arial", Font.ITALIC, 25));
-        this.teamPassword.setBounds((width - 600) / 2, teamName.getY() + heightTextFields + space, 600,heightTextFields);
+        this.teamPassword.setBounds((width - fieldWidth) / 2, teamName.getY() + heightTextFields + space, fieldWidth, heightTextFields);
         this.teamPassword.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(null, "Team password:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
                 BorderFactory.createEmptyBorder(5, 5, 5,5)
@@ -95,7 +69,7 @@ public class SignUpPanel extends JPanel {
         this.add(teamPassword);
         this.showPassword1CheckBox = new JCheckBox("Show");
         this.showPassword1CheckBox.setBounds(teamPassword.getX() - 70, teamPassword.getY() + 20, 60, 25);
-        this.showPassword1CheckBox.setBackground(Color.BLACK);
+        this.showPassword1CheckBox.setBackground(new Color(0, 0, 60));
         this.showPassword1CheckBox.setForeground(Color.WHITE);
         this.showPassword1CheckBox.setFocusPainted(false);
         this.showPassword1CheckBox.addActionListener(e -> {
@@ -109,7 +83,7 @@ public class SignUpPanel extends JPanel {
 
         this.teamPasswordVerification = new JPasswordField();
         this.teamPasswordVerification.setFont(new Font("Arial", Font.ITALIC, 25));
-        this.teamPasswordVerification.setBounds((width - 600) / 2, teamPassword.getY() + heightTextFields + space, 600,heightTextFields);
+        this.teamPasswordVerification.setBounds((width - fieldWidth) / 2, teamPassword.getY() + heightTextFields + space, fieldWidth,heightTextFields);
         this.teamPasswordVerification.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(null, "Re-enter team password:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
                 BorderFactory.createEmptyBorder(5, 5, 5,5)
@@ -122,7 +96,7 @@ public class SignUpPanel extends JPanel {
 
         this.showPassword2CheckBox = new JCheckBox("Show");
         this.showPassword2CheckBox.setBounds(teamPasswordVerification.getX() - 70, teamPasswordVerification.getY() + 20, 60, 25);
-        this.showPassword2CheckBox.setBackground(Color.BLACK);
+        this.showPassword2CheckBox.setBackground(new Color(0, 0, 60));
         this.showPassword2CheckBox.setForeground(Color.WHITE);
         this.showPassword2CheckBox.setFocusPainted(false);
         this.showPassword2CheckBox.addActionListener(e -> {
@@ -179,10 +153,12 @@ public class SignUpPanel extends JPanel {
         return Arrays.equals(this.teamPassword.getPassword(), this.teamPasswordVerification.getPassword());
     }
     public boolean hasEmptyField() {
-        return nicknamePlayer1.getText().isEmpty() || nicknamePlayer2.getText().isEmpty() || teamName.getText().isEmpty() || teamPassword.getText().isEmpty() || teamPasswordVerification.getText().isEmpty();
+        return
+//                nicknamePlayer1.getText().isEmpty() || nicknamePlayer2.getText().isEmpty()||
+                teamName.getText().isEmpty() || teamPassword.getText().isEmpty() || teamPasswordVerification.getText().isEmpty();
     }
-    public void restartPanel() {
-        this.nicknamePlayer1.setText(null);
+    public void resetPanel() {
+//        this.nicknamePlayer1.setText(null);
         this.teamName.setText(null);
         this.teamPassword.setText(null);
         this.showPassword1CheckBox.setSelected(false);

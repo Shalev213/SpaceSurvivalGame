@@ -58,30 +58,20 @@ public class LobbyPanel extends JPanel {
 
         this.levelButton1 = new LevelButton(this.levelButtonsX, this.levelButtonsY);
         this.levelButton1.setEnabled(true);
-//        checkEnable(this.levelButton1);
         this.levelButton1.checkEnable();
         this.add(levelButton1);
 
         this.levelButton2 = new LevelButton(this.levelButtonsX + this.levelButton1.getWidth() + this.space, this.levelButtonsY);
-        this.levelButton2.setEnabled(false);
-//        checkEnable(this.levelButton1);
-        this.levelButton2.checkEnable();
-
         this.add(levelButton2);
 
         this.levelButton3 = new LevelButton(this.levelButton2.getX() + this.levelButton2.getWidth() + this.space, this.levelButtonsY);
-        this.levelButton3.setEnabled(false);//***
-
-        this.levelButton3.checkEnable();
         this.add(levelButton3);
 
         this.levelButton4 = new LevelButton(this.levelButton3.getX() + this.levelButton3.getWidth() + this.space, this.levelButtonsY);
-        this.levelButton4.setEnabled(false);
-        this.levelButton4.checkEnable();
         this.add(levelButton4);
 
         this.levelButton5 = new LevelButton(this.levelButton4.getX() + this.levelButton4.getWidth() + this.space, this.levelButtonsY);
-        this.levelButton5.setEnabled(false);
+        this.levelButton5.setEnabled(true);
         this.levelButton5.checkEnable();
         this.add(levelButton5);
 

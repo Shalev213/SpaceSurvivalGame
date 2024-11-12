@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class SignInPanel extends JPanel {
     private final JButton signUpButton;
-    private final JTextField nickname;
     private final ImageIcon signInBackground;
     private JTextField teamName;
     private JPasswordField teamPassword;
@@ -17,7 +16,8 @@ public class SignInPanel extends JPanel {
     private int width;
     private int height;
     private int labelWidth = 190;
-
+    private int space = 40;
+    private int fieldWidth = 450;
 
 
     public SignInPanel(int width, int height) {
@@ -36,22 +36,22 @@ public class SignInPanel extends JPanel {
 
         this.add(welcomeLabel);
 
-        this.nickname = new JTextField();
-        this.nickname.setFont(new Font("Arial", Font.ITALIC, 25));
-        this.nickname.setBounds((width - 600) / 2, welcomeLabel.getY() + 100, 600,70);
-        this.nickname.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(null, "Your nickname:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
-                BorderFactory.createEmptyBorder(5, 5, 5,5)
-        ));
-        this.nickname.addActionListener(e -> {
-            teamName.requestFocus();
-        });
-
-        this.add(nickname);
+//        this.nickname = new JTextField();
+//        this.nickname.setFont(new Font("Arial", Font.ITALIC, 25));
+//        this.nickname.setBounds((width - 600) / 2, welcomeLabel.getY() + 100, 600,70);
+//        this.nickname.setBorder(BorderFactory.createCompoundBorder(
+//                BorderFactory.createTitledBorder(null, "Your nickname:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
+//                BorderFactory.createEmptyBorder(5, 5, 5,5)
+//        ));
+//        this.nickname.addActionListener(e -> {
+//            teamName.requestFocus();
+//        });
+//
+//        this.add(nickname);
 
         this.teamName = new JTextField();
         this.teamName.setFont(new Font("Arial", Font.ITALIC, 25));
-        this.teamName.setBounds((width - 600) / 2, nickname.getY() + 100, 600,70);
+        this.teamName.setBounds((width - fieldWidth) / 2, welcomeLabel.getY() + welcomeLabel.getHeight() + space, fieldWidth,70);
         this.teamName.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(null, "Team name:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
                 BorderFactory.createEmptyBorder(5, 5, 5,5)
@@ -64,7 +64,7 @@ public class SignInPanel extends JPanel {
 
         this.teamPassword = new JPasswordField();
         this.teamPassword.setFont(new Font("Arial", Font.ITALIC, 25));
-        this.teamPassword.setBounds((width - 600) / 2, teamName.getY() + 100, 600,70);
+        this.teamPassword.setBounds((width - fieldWidth) / 2, teamName.getY() + teamName.getHeight() + space, fieldWidth, 70);
         this.teamPassword.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(null, "Team password:", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.RIGHT),
                 BorderFactory.createEmptyBorder(5, 5, 5,5)
@@ -77,11 +77,13 @@ public class SignInPanel extends JPanel {
 
         this.showPasswordCheckBox = new JCheckBox("Show Password");
         this.showPasswordCheckBox.setFont(new Font("Arial", Font.BOLD, 14));
-        this.showPasswordCheckBox.setBounds((width - 600) / 2, teamPassword.getY() + 80, 140, 25);
+        this.showPasswordCheckBox.setBounds((width - fieldWidth) / 2, teamPassword.getY() + teamPassword.getHeight() + space, 140, 25);
         this.showPasswordCheckBox.setForeground(Color.white);
-        this.showPasswordCheckBox.setBackground(new Color(0,0,0));
         this.showPasswordCheckBox.setFocusPainted(false);
-        this.showPasswordCheckBox.addActionListener(e -> {
+        this.showPasswordCheckBox.setBackground(new Color(0, 0, 60));
+
+
+        this.showPasswordCheckBox.addActionListener(_ -> {
             if (showPasswordCheckBox.isSelected()) {
                 teamPassword.setEchoChar((char) 0);
             } else {
@@ -123,10 +125,12 @@ public class SignInPanel extends JPanel {
     }
 
     public boolean hasEmptyField() {
-        return this.nickname.getText().isEmpty() || this.teamName.getText().isEmpty() || this.teamPassword.getText().isEmpty();
+        return
+//                this.nickname.getText().isEmpty() ||
+                        this.teamName.getText().isEmpty() || this.teamPassword.getText().isEmpty();
     }
     public void restartPanel() {
-        this.nickname.setText(null);
+//        this.nickname.setText(null);
         this.teamName.setText(null);
         this.teamPassword.setText(null);
         this.showPasswordCheckBox.setSelected(false);

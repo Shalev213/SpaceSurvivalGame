@@ -71,7 +71,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
     public LevelFive(int width, int height){
 //        videoBackground = new VideoBackground();
-        gifPanel = new GifPanel("src/main/java/resources/FinalGifWatermark.gif", this.windowWidth, this.windowHeight);
+        gifPanel = new GifPanel("src/main/java/resources/final_video.gif", this.windowWidth, this.windowHeight);
 
         this.background = new ImageIcon("src/main/java/resources/backgroundLevelFive.png");
 
@@ -321,7 +321,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
     public void gameOver() {
         if (isSuccess) {
-
+//            this.background = new ImageIcon("src/main/java/resources/backgroundLevelFive.png");
 //            gifPanel = new GifPanel("src/main/resources/gif.gif", 500, 500);
             this.setVisible(false);
             this.gifPanel.start();
