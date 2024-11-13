@@ -47,5 +47,22 @@ public class Sound {
 
     public void stopPlay() {
         this.clip.close();
+
     }
+
+    public void stopPPlay() {
+        this.clip.stop();
+
+    }
+
+
+    public void restartSound() {
+        if (!clip.isOpen()) {
+            playSound("src/main/java/resources/background_sound.wav");
+        }
+        startPlay();
+        loopPlay();
+    }
+
+
 }

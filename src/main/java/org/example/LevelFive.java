@@ -66,18 +66,26 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     private boolean isSuccess = false;
     private boolean isFailed = false;
     private VideoBackground videoBackground;
-    private GifPanel gifPanel;
+//    private GifPanel gifPanel;
+    private FinalPanel finalPanel;
+    private Sound backgroundMusic;
 
 
     public LevelFive(int width, int height){
 //        videoBackground = new VideoBackground();
-        gifPanel = new GifPanel("src/main/java/resources/final_video.gif", this.windowWidth, this.windowHeight);
+//        gifPanel = new GifPanel("src/main/java/resources/final_video.gif", 500, 300);
 
         this.background = new ImageIcon("src/main/java/resources/backgroundLevelFive.png");
+        this.finalPanel = new FinalPanel(width, height);
 
         super.windowWidth = width;
         super.windowHeight = height;
         super.gameCondition = !isSuccess && !isFailed;
+
+
+        this.backgroundMusic = new Sound();
+        this.backgroundMusic.playSound("src/main/java/resources/levelFiveMusic.wav");
+
 
         this.astronaut1 = new Astronaut();
         this.astronaut1.setX(this.windowWidth / 2 + 10);
@@ -162,6 +170,9 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         this.alienLaser = new Laser("src/main/java/resources/VerticalYellowLaser.png");
         this.alienLaser.setX(laserAlienX);
         this.alienLaser.setY(laserAlienY);
+
+
+
 
 
 //        this.gameOverScreen = new GameOverScreen();
@@ -269,6 +280,9 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
     public void gameScene() {
 
+        this.backgroundMusic.startBackgroundPlay();
+        this.backgroundMusic.loopPlay();
+
 
         if (downPressed && this.astronaut1.getY() <= (windowHeight - 1.5 * astronaut1.getHeight())) {
             astronaut1.upDownMove(1);
@@ -323,14 +337,19 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         if (isSuccess) {
 //            this.background = new ImageIcon("src/main/java/resources/backgroundLevelFive.png");
 //            gifPanel = new GifPanel("src/main/resources/gif.gif", 500, 500);
+
+//            this.removeAll();
             this.setVisible(false);
-            this.gifPanel.start();
+            this.backgroundMusic.stopPlay();
+            this.finalPanel.setVisible(true);
+
+            this.finalPanel.start();
             try {
                 Thread.sleep(28200);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            this.gifPanel.stop();
+            this.finalPanel.stop();
 //            this.add(gifPanel);
 //            this.setVisible(false);
 //            this.add(this.gameOverScreen);
@@ -620,7 +639,11 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         return isFailed;
     }
 
-    public GifPanel getGifPanel() {
-        return gifPanel;
+//    public GifPanel getGifPanel() {
+//        return gifPanel;
+//    }
+
+    public FinalPanel getFinalPanel() {
+        return finalPanel;
     }
 }
