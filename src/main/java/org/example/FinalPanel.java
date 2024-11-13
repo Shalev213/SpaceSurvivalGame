@@ -10,7 +10,6 @@ public class FinalPanel extends JPanel {
     private JLabel gifLabel;
 
 
-
     public FinalPanel(int width, int height){
         this.lobbyBackground = new ImageIcon("src/main/java/resources/final_background.png");
         this.setSize(width, height);
