@@ -32,6 +32,7 @@ public class FinalPanel extends JPanel {
 
 //        this.gifIcon.paintIcon(null,graphics, 300 , 90);
     }
+
     // הפעלת האנימציה
     public void start() {
         this.setVisible(true);
