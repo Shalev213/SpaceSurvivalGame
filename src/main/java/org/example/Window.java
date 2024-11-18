@@ -35,10 +35,12 @@
 
             signInPanel = new SignInPanel(windowWidth, windowHeight);
             this.add(signInPanel);
+
             this.lobbyBackground = new Sound();
             this.lobbyBackground.playSound("src/main/java/resources/background_sound.wav");
-
-            this.lobbyBackground.restartSound();
+            this.lobbyBackground.startBackgroundPlay();
+            this.lobbyBackground.loopPlay();
+//            this.lobbyBackground.restartSound();
 
             signUpPanel = new SignUpPanel(windowWidth, windowHeight);
             this.add(signUpPanel);
@@ -84,6 +86,7 @@
                 this.signInPanel.setVisible(false);
                 this.signInPanel.restartPanel();
                 this.signUpPanel.setVisible(true);
+                this.signUpPanel.resetPanel();
             });
             this.signUpPanel.getRegisterButton().addActionListener(e -> {
                 String teamName = signUpPanel.getTeamName();
@@ -242,7 +245,7 @@
 
                 levelFour.addOptionSelectionListener(selectedOption -> {
                     if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
-//                        levelFour.getSceneSound().stopPlay();
+//                        this.levelFour.getSceneSound().stopPlay();
                         this.remove(levelFour);
                         lobbyPanel.setVisible(true);
                         this.lobbyBackground.startBackgroundPlay();
@@ -286,7 +289,6 @@
 
         private void addLevelFiveListener() {
             this.lobbyPanel.getLevelButton5().addActionListener(e -> {
-//                System.out.println("LEVEL 5");
                 this.lobbyBackground.stopPlay();
                 this.lobbyPanel.setVisible(false);
 
@@ -307,7 +309,7 @@
 
                     } else if (selectedOption == 1) {
                         if (levelFive.isFailed()) {
-//                            this.levelFive.getSceneSound().stopPlay();
+                            this.levelFive.getSceneSound().stopPlay();
                             this.remove(levelFive);
                             this.lobbyPanel.getLevelButton5().doClick();
                         }

@@ -5,12 +5,15 @@ import java.awt.*;
 
 public class FinalPanel extends JPanel {
     private final ImageIcon lobbyBackground;
-//    private GifPanel gifPanel;
     private ImageIcon gifIcon;
     private JLabel gifLabel;
+    private JButton lobbyButton;
+    private int width;
+    private int height;
 
 
     public FinalPanel(int width, int height){
+
         this.lobbyBackground = new ImageIcon("src/main/java/resources/final_background.png");
         this.setSize(width, height);
         this.setLayout(null);
@@ -21,6 +24,11 @@ public class FinalPanel extends JPanel {
         this.add(gifLabel);
 //        this.add(gifIcon);
 
+        this.lobbyButton = new JButton("Lobby");
+        this.lobbyButton.setBounds(width/3, height/4, 485, 305);
+        this.lobbyButton.setVisible(false);
+
+
     }
 
     public void paintComponent(Graphics graphics) {
@@ -28,8 +36,6 @@ public class FinalPanel extends JPanel {
         if (lobbyBackground != null){
             this.lobbyBackground.paintIcon(null, graphics, 0, 0);
         }
-
-//        this.gifIcon.paintIcon(null,graphics, 300 , 90);
     }
 
     // הפעלת האנימציה
@@ -41,7 +47,12 @@ public class FinalPanel extends JPanel {
     // עצירת האנימציה
     public void stop() {
         gifLabel.setVisible(false);
-        this.setVisible(false);
+
+//        this.setVisible(false);
+        this.add(lobbyButton);
+    }
+    public void showLobbyButton() {
+        this.lobbyButton.setVisible(true);
     }
 }
 

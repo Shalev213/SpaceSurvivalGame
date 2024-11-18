@@ -158,11 +158,13 @@ public class SignUpPanel extends JPanel {
                 teamName.getText().isEmpty() || teamPassword.getText().isEmpty() || teamPasswordVerification.getText().isEmpty();
     }
     public void resetPanel() {
-//        this.nicknamePlayer1.setText(null);
         this.teamName.setText(null);
         this.teamPassword.setText(null);
         this.showPassword1CheckBox.setSelected(false);
         this.teamPassword.setEchoChar('\u2022');
+        this.teamPasswordVerification.setText(null);
+        this.showPassword2CheckBox.setSelected(false);
+        this.teamPasswordVerification.setEchoChar('\u2022');
 
     }
 
