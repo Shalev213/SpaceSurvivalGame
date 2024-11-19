@@ -373,7 +373,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 //            missionComplete.startPlay();
 //            showSuccessDialog();
         } else if (isFailed) {
-
             showFailedDialog();
         }
     }
@@ -653,4 +652,8 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     public Sound getSceneSound() {
         return sceneSound;
     }
+
+//    public JButton getLobbyButton(){
+//        return finalPanel.getLobbyButton();
+//    }
 }

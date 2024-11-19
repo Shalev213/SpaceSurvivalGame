@@ -10,6 +10,9 @@ public class FinalPanel extends JPanel {
     private JButton lobbyButton;
     private int width;
     private int height;
+    private int lobbyButtonWidth;
+    private int lobbyButtonHeight;
+
 
 
     public FinalPanel(int width, int height){
@@ -22,10 +25,12 @@ public class FinalPanel extends JPanel {
         gifLabel = new JLabel(gifIcon);
         gifLabel.setBounds(317,91,485,305);
         this.add(gifLabel);
-//        this.add(gifIcon);
 
-        this.lobbyButton = new JButton("Lobby");
-        this.lobbyButton.setBounds(width/3, height/4, 485, 305);
+        this.lobbyButton = new JButton("Back to lobby");
+        this.lobbyButton.setBounds(320, 85, 480, 315);
+        this.lobbyButton.setFont(new Font("Georgia", Font.BOLD, 60));
+        this.lobbyButton.setFocusPainted(false);
+        this.lobbyButton.setOpaque(true);
         this.lobbyButton.setVisible(false);
 
 
@@ -53,6 +58,10 @@ public class FinalPanel extends JPanel {
     }
     public void showLobbyButton() {
         this.lobbyButton.setVisible(true);
+    }
+
+    public JButton getLobbyButton() {
+        return lobbyButton;
     }
 }
 

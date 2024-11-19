@@ -303,6 +303,7 @@
 
                 levelFive.addOptionSelectionListener(selectedOption -> {
                     if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
+                        this.levelFive.getSceneSound().stopPlay();
                         this.remove(levelFive);
                         lobbyPanel.setVisible(true);
                         this.lobbyBackground.restartSound();
@@ -322,8 +323,23 @@
                 levelFive.setFocusable(true);
                 levelFive.requestFocus();
                 levelFive.requestFocusInWindow();
+
+                levelFive.getFinalPanel().getLobbyButton().addActionListener(event -> {
+                    levelFive.setVisible(false);
+                    lobbyPanel.setVisible(true);
+                    this.lobbyBackground.restartSound();
+
+                    levelFive.getFinalPanel().getLobbyButton().setVisible(false);
+
+
+                });
             });
+
+
+
         }
+
+
 
         private void addExitLobbyListener() {
             this.lobbyPanel.getExitButton().addActionListener(_ -> {
