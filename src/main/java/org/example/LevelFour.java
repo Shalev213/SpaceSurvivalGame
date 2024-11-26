@@ -19,6 +19,8 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     private int xOfAstronaut;
     private final JButton circuitButton;
     private final JButton fakeButton;
+    private int xOfFakePanel;
+    private int yOfFakePanel;
     private int xOfCircuit;
     private int yOfCircuit;
     private static int counterOfLevel = 1;
@@ -30,12 +32,21 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     private boolean isSuccessPart2 = false;
     private boolean isSuccessPart3 = false;
     private String teamName;
+    private FakePanel fakePanel;
+    private Sound laughSound;
 
 
     public LevelFour(int width, int height, String teamName) {
         this.teamName = teamName;
         super.windowWidth = width;
         super.windowHeight = height;
+
+        this.fakePanel = new FakePanel();
+        this.xOfFakePanel = (this.windowWidth - this.fakePanel.getWidth()) / 2;
+        this.yOfFakePanel = (this.windowHeight - this.fakePanel.getHeight()) / 2;
+        this.fakePanel.setBounds(this.xOfFakePanel, this.yOfFakePanel, this.fakePanel.getWidth(), this.fakePanel.getHeight());
+        this.add(this.fakePanel);
+//        this.setComponentZOrder(fakePanel, 0);
 
         // התנאים בשביל ההשמה של הרקעים לפי מספר השלב הנוכחי. וזה בעזרת counterOfLevel שהוא static
         if (counterOfLevel == 1){
@@ -97,12 +108,24 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         this.fakeButton.setFocusable(false);
         this.fakeButton.setForeground(new Color(142, 109, 4, 224));
 
+        this.laughSound = new Sound();
+        this.laughSound.playSound("src/main/java/resources/evil-laughter.wav");
 
         this.fakeButton.addActionListener(e -> {
-            System.out.println("hahahaha you clicked on: fakeRiddleButton");
-
+            this.laughSound.startPlay();
+            this.fakeButton.setEnabled(false);
+            this.fakePanel.setVisible(true);
+            this.fakePanel.setFocusable(true);
+            this.fakePanel.requestFocus();
+            this.fakePanel.requestFocusInWindow();
         });
         this.add(fakeButton);
+
+        this.fakePanel.getExitButton().addActionListener(e -> {
+            this.fakePanel.setVisible(false);
+            this.fakeButton.setEnabled(true);
+
+        });
 
 
         this.circuitButton = new JButton("click here");
@@ -230,15 +253,15 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         String message = "";
         switch (counterOfLevel){
             case 1 -> {
-                message = "Part one Complete";
+                message = "Part one complete";
                 this.options[1] = "Next Part";
             }
             case 2 -> {
-                message = "Part two Complete";
+                message = "Part two complete";
                 this.options[1] = "Next Part";
             }
             case 3 -> {
-                message = "Mission Complete";
+                message = "Mission complete";
                 this.options[1] = "Next Level";
                 JDBC.updateLevel(teamName, 5);
 
@@ -265,13 +288,13 @@ public class LevelFour extends AbstractLevel implements KeyListener {
 //        this.options[3] = "Lobby";
         switch (counterOfLevel){
             case 1 -> {
-                message = "Part one Failed";
+                message = "Part one failed";
             }
             case 2 -> {
-                message = "Part two Failed";
+                message = "Part two failed";
             }
             case 3 -> {
-                message = "Part three Failed";
+                message = "Part three failed";
             }
         }
 

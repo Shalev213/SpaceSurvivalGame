@@ -24,8 +24,8 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private int xOfRiddlePanel;
     private int yOfRiddlePanel;
     private MainRiddlePanel mainRiddlePanel;
-    private FakePanel fakePanel;
     private Sound sceneSound;
+    private FakePanel fakePanel;
     private Sound laughSound;
 
 
@@ -93,6 +93,9 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.setComponentZOrder(fakePanel, 0);
 
 
+        this.laughSound = new Sound();
+        this.laughSound.playSound("src/main/java/resources/evil-laughter.wav");
+
         this.fakeRiddleButton.addActionListener(e -> {
             this.laughSound.startPlay();
             System.out.println("hahahaha you clicked on: fakeRiddleButton");
@@ -112,9 +115,6 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
 
         this.sceneSound = new Sound();
         this.sceneSound.playSound("src/main/java/resources/spaceship-alarm.wav");
-
-        this.laughSound = new Sound();
-        this.laughSound.playSound("src/main/java/resources/evil-laughter.wav");
 
         this.mainRiddlePanel.getButtonsPanel().getCheckButton().addActionListener(e -> {
             if (mainRiddlePanel.getButtonsPanel().isSuccess()){
