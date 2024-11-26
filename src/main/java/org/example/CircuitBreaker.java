@@ -208,6 +208,7 @@ public class CircuitBreaker extends JPanel implements KeyListener {
             gameCondition = false;
         }
     }
+
     private boolean checkCollision() {
         int tolerance = 15;
 
