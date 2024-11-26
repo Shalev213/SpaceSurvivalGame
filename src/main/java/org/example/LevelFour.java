@@ -197,7 +197,6 @@ public class LevelFour extends AbstractLevel implements KeyListener {
 
         if (circuitBreaker.isSuccess()){
             showSuccessDialog();
-//            counterOfLevel++;
 
         } else if (circuitBreaker.isFailed()) {
             showFailedDialog();

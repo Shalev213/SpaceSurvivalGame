@@ -260,7 +260,7 @@ public class CircuitBreaker extends JPanel implements KeyListener {
             currentColor2 = new Color(pixelColor2);
 
 
-            if (isColorCloseToGrey(currentColor1, tolerance) && (yOfMoving1 > this.panelHeight / 2 || xOfMoving1 > this.panelWidth / 2 && !isCircuitBreaker2)){
+            if (isColorCloseToGrey(currentColor1, tolerance) && (yOfMoving1 > this.panelHeight / 2 || xOfMoving1 > this.panelWidth / 2 && !isCircuitBreaker2)){ // לתקן את הקוד
                 success1 = true;
 //                isStop1 = true;
 
