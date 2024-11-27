@@ -30,7 +30,10 @@ public class FinalPanel extends JPanel {
         this.lobbyButton.setBounds(320, 85, 480, 315);
         this.lobbyButton.setFont(new Font("Georgia", Font.BOLD, 60));
         this.lobbyButton.setFocusPainted(false);
-        this.lobbyButton.setOpaque(true);
+        this.lobbyButton.setBackground(new Color(43, 45, 48));
+        this.lobbyButton.setForeground(Color.white);
+
+//        this.lobbyButton.setOpaque(true);
         this.lobbyButton.setVisible(false);
 
 

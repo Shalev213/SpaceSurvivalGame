@@ -210,7 +210,7 @@ public class CircuitBreaker extends JPanel implements KeyListener {
     }
 
     private boolean checkCollision() {
-        int tolerance = 15;
+        int tolerance = 25;
 
         if (xOfMoving1 >= 0 && yOfMoving1 >= 0 && xOfMoving1 < this.panelWidth && yOfMoving1 < this.panelHeight) {
             pixelColor1 = backgroundImage.getRGB(xOfMoving1, yOfMoving1);

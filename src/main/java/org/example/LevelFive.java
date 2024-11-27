@@ -353,25 +353,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
             }
             this.finalPanel.stop();
             this.finalPanel.showLobbyButton();
-//            this.add(gifPanel);
-//            this.setVisible(false);
-//            this.add(this.gameOverScreen);
-////            this.gameOverScreen.setVisible(true);
-//
-//            if (gameOverScreen == null) {
-//                gameOverScreen = new GameOverScreen();
-//            }
-//
-//            // קבל את ה-Stage הנוכחי
-//            Stage stage = (Stage) this.getScene().getWindow(); // ודא שהשיטה נמצאת בקונטקסט של Node
-//            stage.setScene(gameOverScreen.getScene()); // קבע את ה-Scene של GameOverScreen
-//            stage.show(); // הצג את ה-Stage
-
-//            this.setVisible(false);
-
-//            passedLevel.startPlay();
-//            missionComplete.startPlay();
-//            showSuccessDialog();
         } else if (isFailed) {
             showFailedDialog();
         }

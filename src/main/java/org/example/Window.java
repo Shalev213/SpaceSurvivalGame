@@ -324,14 +324,12 @@
                 levelFive.requestFocus();
                 levelFive.requestFocusInWindow();
 
-                levelFive.getFinalPanel().getLobbyButton().addActionListener(event -> {
+                levelFive.getFinalPanel().getLobbyButton().addActionListener(_ -> {
                     levelFive.setVisible(false);
                     lobbyPanel.setVisible(true);
                     this.lobbyBackground.restartSound();
 
                     levelFive.getFinalPanel().getLobbyButton().setVisible(false);
-
-
                 });
             });
 
