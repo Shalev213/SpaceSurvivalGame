@@ -385,7 +385,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
                 stoneIndex = (byte) i;
                 if (counterOfStoneHits == 3){
                     explosion.startPlay();
-                    System.out.println("game over - lose");
+//                    System.out.println("game over - lose");
                 }
             }
         }

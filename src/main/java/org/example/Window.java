@@ -248,7 +248,7 @@
 //                        this.levelFour.getSceneSound().stopPlay();
                         this.remove(levelFour);
                         lobbyPanel.setVisible(true);
-                        this.lobbyBackground.startBackgroundPlay();
+//                        this.lobbyBackground.startBackgroundPlay();
                         this.lobbyBackground.loopPlay();
                         if (levelFour.isSuccess()) {
                             this.lobbyPanel.getLevelButton5().setEnabled(true);
