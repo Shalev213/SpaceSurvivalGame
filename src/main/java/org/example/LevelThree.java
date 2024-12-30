@@ -1,6 +1,7 @@
 package org.example;
 
 import db.JDBC;
+import opencv.OpenCVProcessor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,12 +57,16 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private int laser2X = 0;
     private int laser2Y = 0;
     private String teamName;
-
-
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
+    private Robot robot;
 
 
     public LevelThree(int width, int height, String teamName) {
+        try {
+            this.robot = new Robot();
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
+        }
         this.teamName = teamName;
         this.spaceBackgroundOne = new ImageIcon("src/main/java/resources/LevelThreeBackground.png");
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelThreeMirror.png");
@@ -103,12 +108,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.alienSpaceship3.start();
 
 
-
         alienSpaceships = new ArrayList<>();
         alienSpaceships.add(alienSpaceship1);
         alienSpaceships.add(alienSpaceship2);
         alienSpaceships.add(alienSpaceship3);
-
 
 
         this.laser1 = new Laser("src/main/java/resources/YellowLaser.png");
@@ -119,7 +122,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.laser2 = new Laser("src/main/java/resources/YellowLaser.png");
         this.laser2.setX(laser2X);
         this.laser2.setY(laser2Y);
-
 
 
         this.sceneSound = new Sound();
@@ -142,7 +144,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
         this.missionComplete = new Sound();
         this.missionComplete.playSound("src/main/java/resources/mission_completed.wav");
-
 
 
         this.setFocusable(true);
@@ -197,13 +198,12 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         }
 
 
-        if (this.laser1.getX() == this.spaceship1.getX() + 65 && enterPressed){
+        if (this.laser1.getX() == this.spaceship1.getX() + 65 && enterPressed) {
             this.laserShot1.startPlay();
         }
-        if (this.laser2.getX() == this.spaceship2.getX() + 65 && spacePressed){
+        if (this.laser2.getX() == this.spaceship2.getX() + 65 && spacePressed) {
             this.laserShot2.startPlay();
         }
-
 
 
         moveLaser();
@@ -214,8 +214,8 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
     @Override
     public void gameOver() {
-        if (isSuccess){
-            while (finalMoonX > 0){
+        if (isSuccess) {
+            while (finalMoonX > 0) {
                 repaint();
                 finalMoonX -= 2;
                 try {
@@ -234,8 +234,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         }
 
     }
-
-
 
 
     public void showSuccessDialog() {
@@ -273,10 +271,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     }
 
 
-
-
-
-
     public interface OptionSelectionListener {
         void onOptionSelected(int selectedOption);
     } // פעולה להוספת מאזין לרשימה
@@ -305,6 +299,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         alienSpaceship1.paintAlienSpaceship(graphics);
         alienSpaceship2.paintAlienSpaceship(graphics);
         alienSpaceship3.paintAlienSpaceship(graphics);
+        updatePlayerOne();
 //        alienSpaceship4.paintAlienSpaceship(graphics);
 //        alienSpaceship5.paintAlienSpaceship(graphics);
 
@@ -349,8 +344,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_ENTER -> enterPressed = false;
 
 
-
-
         }
     }
 
@@ -367,7 +360,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             }
         }
     }
-
 
 
     public void checkCollision() {
@@ -389,7 +381,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
                 alienIndex = (byte) i;
                 laser2Colision = true;
                 counterOfAlienHits++;
-            } else if (this.alienSpaceships.get(i).getX() < 0){
+            } else if (this.alienSpaceships.get(i).getX() < 0) {
                 hasMisses = true;
                 alienIndex = (byte) i;
                 counterOfMisses++;
@@ -397,7 +389,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             }
         }
 
-        if (alienHasCollision){
+        if (alienHasCollision) {
             alienSpaceships.get(alienIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
             alienSpaceships.get(alienIndex).setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight() - 30);
             alienHasCollision = false;
@@ -419,13 +411,13 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             laser2Colision = false;
         }
 
-        if (hasMisses){
+        if (hasMisses) {
             alienSpaceships.get(alienIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
             alienSpaceships.get(alienIndex).setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight());
             hasMisses = false;
         }
 
-        if (counterOfMisses == 3){
+        if (counterOfMisses == 3) {
             explosion.startPlay();
         }
     }
@@ -483,10 +475,25 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         laser2.setY(laser2Y);
     }
 
+    private void updatePlayerOne() {
+        int greenPosition = OpenCVProcessor.getMarkerPosition();
 
-
-
-
+        switch (greenPosition) {
+            case 0 -> {
+                robot.keyPress(KeyEvent.VK_UP); // לחיצה על החץ למעלה
+                robot.keyRelease(KeyEvent.VK_DOWN); // שחרור החץ למטה
+            }
+            case 2 -> {
+                robot.keyPress(KeyEvent.VK_DOWN); // לחיצה על החץ למטה
+                robot.keyRelease(KeyEvent.VK_UP); // שחרור החץ למעלה
+            }
+//                default -> {
+//                    // הפעולה שתתבצע במקרה שאף אחד מהמקרים האחרים לא מתקיים
+//                    robot.keyRelease(KeyEvent.VK_UP);
+//                    robot.keyRelease(KeyEvent.VK_DOWN);
+//                }
+        }
+    }
 
 
     public boolean isSuccess() {
