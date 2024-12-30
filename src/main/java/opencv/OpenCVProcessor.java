@@ -9,6 +9,7 @@ import org.opencv.videoio.Videoio;
 public class OpenCVProcessor {
     private static VideoCapture camera;
     private static int screenWidth;
+    private static Point lastKnownPosition = new Point(-1, -1); // שמירת מיקום אחרון
 
     // בלוק אתחול סטטי
     static {
@@ -40,60 +41,54 @@ public class OpenCVProcessor {
                 return -1;
             }
 
-            // עיבוד רק אזור עניין (ROI) קטן יותר, מיותר לעבד את כל התמונה
-            Rect roi = new Rect(frameMat.width() / 4, frameMat.height() / 4, frameMat.width() / 2, frameMat.height() / 2);
+            // עיבוד רק אזור עניין (ROI) דינמי
+            Rect roi = getDynamicROI(frameMat);
             Mat croppedFrame = new Mat(frameMat, roi);
 
-            // הקטנת רזולוציה (רק את האזור החיוני)
-            // אפשר להקטין יותר אם נרצה לשפר ביצועים עוד יותר
+            // הקטנת רזולוציה
             Imgproc.resize(croppedFrame, croppedFrame, new Size(croppedFrame.width() / 2, croppedFrame.height() / 2));
 
             // המרת צבעים למרחב HSV
             Imgproc.cvtColor(croppedFrame, hsv, Imgproc.COLOR_BGR2HSV);
 
             // הגדרת טווח הצבע הירוק
-            Scalar lowerGreen = new Scalar(35, 100, 100);  // מינימום צבע ירוק ב-HSV
-            Scalar upperGreen = new Scalar(85, 255, 255);  // מקסימום צבע ירוק ב-HSV
+            Scalar lowerGreen = new Scalar(35, 100, 100);
+            Scalar upperGreen = new Scalar(85, 255, 255);
             Core.inRange(hsv, lowerGreen, upperGreen, mask);
 
-            // חיפוש קונטורים מהיר (ללא שימוש ב-Moments או ב-Bounding Box)
+            // חיפוש קונטורים וחישוב מהיר של הגדול ביותר
             java.util.List<MatOfPoint> contours = new java.util.ArrayList<>();
             Imgproc.findContours(mask, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
-            if (!contours.isEmpty()) {
-                // חיפוש הקונטור הגדול ביותר
-                MatOfPoint largestContour = contours.get(0);
-                double maxArea = Imgproc.contourArea(largestContour);
-                int centerX = -1;
+            MatOfPoint largestContour = null;
+            double maxArea = 0;
+            int centerX = -1;
 
-                // נבצע חישוב מהיר של מרכז הקונטור הראשון (כדי לחסוך זמן)
-                for (MatOfPoint contour : contours) {
-                    double area = Imgproc.contourArea(contour);
-                    if (area > maxArea) {
-                        maxArea = area;
-                        largestContour = contour;
-                    }
+            for (MatOfPoint contour : contours) {
+                double area = Imgproc.contourArea(contour);
+                if (area > maxArea) {
+                    maxArea = area;
+                    largestContour = contour;
                 }
+            }
 
-                // אם נמצא קונטור עם שטח מספיק
-                if (largestContour != null) {
-                    // קבלת קואורדינטות של מרכז הקונטור
-                    Moments moments = Imgproc.moments(largestContour);
-                    if (moments.get_m00() != 0) {
-                        centerX = (int) (moments.get_m10() / moments.get_m00());
-                    }
+            // חישוב מרכז הקונטור הגדול ביותר אם נמצא
+            if (largestContour != null && maxArea > 500) { // שטח מינימלי לסינון רעשים
+                Moments moments = Imgproc.moments(largestContour);
+                if (moments.get_m00() != 0) {
+                    centerX = (int) (moments.get_m10() / moments.get_m00());
+                    lastKnownPosition = new Point(centerX, moments.get_m01() / moments.get_m00());
+                }
+            }
 
-                    // אם נמצא מיקום
-                    if (centerX != -1) {
-                        // חישוב המיקום היחסי במסך
-                        if (centerX < croppedFrame.width() / 3) {
-                            return 0; // שמאל
-                        } else if (centerX < 2 * croppedFrame.width() / 3) {
-                            return 1; // אמצע
-                        } else {
-                            return 2; // ימין
-                        }
-                    }
+            // חישוב מיקום יחסי במסך
+            if (centerX != -1) {
+                if (centerX < croppedFrame.width() / 3) {
+                    return 0; // שמאל
+                } else if (centerX < 2 * croppedFrame.width() / 3) {
+                    return 1; // אמצע
+                } else {
+                    return 2; // ימין
                 }
             }
 
@@ -105,9 +100,19 @@ public class OpenCVProcessor {
         }
     }
 
-
-
-
+    private static Rect getDynamicROI(Mat frame) {
+        if (lastKnownPosition.x != -1) {
+            int roiSize = 100; // גודל ROI
+            int x = Math.max(0, (int) lastKnownPosition.x - roiSize / 2);
+            int y = Math.max(0, (int) lastKnownPosition.y - roiSize / 2);
+            int width = Math.min(roiSize, frame.width() - x);
+            int height = Math.min(roiSize, frame.height() - y);
+            return new Rect(x, y, width, height);
+        } else {
+            // חזרה ל-ROI המרכזי
+            return new Rect(frame.width() / 4, frame.height() / 4, frame.width() / 2, frame.height() / 2);
+        }
+    }
 
     public static void release() {
         if (camera != null) {

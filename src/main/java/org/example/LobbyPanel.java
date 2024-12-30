@@ -17,7 +17,7 @@ public class LobbyPanel extends JPanel {
     private LevelButton levelButton3;
     private LevelButton levelButton4;
     private LevelButton levelButton5;
-//    private int levelButtonsX = 60;
+    //    private int levelButtonsX = 60;
 //    private int levelButtonsY = 200;
 //    private int space = 30;
     private int titleWidth = 430; // נסה לשנות את הערך כדי להתאים למיקום בתמונה
@@ -26,7 +26,6 @@ public class LobbyPanel extends JPanel {
     private int space = 43;// המרווח בין הכפתורים
     private List<LevelButton> levelButtons;
     private String teamName;
-
 
 
     public LobbyPanel(int width, int height) {
@@ -38,14 +37,14 @@ public class LobbyPanel extends JPanel {
 
         this.title = new JLabel("<html>CHOOSE<br>YOUR LEVEL:</html>");
         this.title.setForeground(new Color(31, 191, 230));
-        this.title.setFont(new Font("Arial", Font.BOLD , 60));
+        this.title.setFont(new Font("Arial", Font.BOLD, 60));
         this.title.setBounds((width - this.titleWidth) / 10, 100, this.titleWidth, 150);
 
         this.add(title);
 
         this.exitButton = new JButton("EXIT");
         this.exitButton.setFont(new Font("Arial", Font.BOLD, 25));
-        this.exitButton.setBounds((width / 2) - 45,655,90,55);
+        this.exitButton.setBounds((width / 2) - 45, 655, 90, 55);
         this.exitButton.setForeground(new Color(31, 191, 230));
         this.exitButton.setFocusPainted(false);
         this.exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -53,7 +52,6 @@ public class LobbyPanel extends JPanel {
         this.exitButton.setBorder(BorderFactory.createLineBorder(new Color(31, 191, 230), 10));  // גבול בעובי 2 פיקסלים
 
         this.add(exitButton);
-
 
 
         this.levelButton1 = new LevelButton(this.levelButtonsX, this.levelButtonsY);
@@ -87,7 +85,7 @@ public class LobbyPanel extends JPanel {
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        if (lobbyBackground != null){
+        if (lobbyBackground != null) {
             this.lobbyBackground.paintIcon(null, graphics, 0, 0);
         }
     }
