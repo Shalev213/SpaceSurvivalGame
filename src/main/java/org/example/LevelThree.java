@@ -457,7 +457,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
         if (laser2Move) {
             laser2.fire(true);
-//            laserShot1.startPlay();
             if (laser2.getX() > windowWidth) {
                 resetLaser2();
                 laser2Move = false;
