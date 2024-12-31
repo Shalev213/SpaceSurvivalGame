@@ -7,15 +7,16 @@ import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.Videoio;
 
 public class OpenCVProcessor {
-    private static final Scalar LOWER_GREEN = new Scalar(30, 120, 30);  // ערכים יותר מדויקים לירוק
-    private static final Scalar UPPER_GREEN = new Scalar(90, 255, 90);  // טווח מצומצם יותר
+    private static final Scalar LOWER_GREEN = new Scalar(30, 120, 30);  // ערכים מדויקים לירוק
+    private static final Scalar UPPER_GREEN = new Scalar(90, 255, 90);
+    private static final Scalar LOWER_ORANGE = new Scalar(5, 100, 100);  // טווח תחתון לכתום
+    private static final Scalar UPPER_ORANGE = new Scalar(15, 255, 255); // טווח עליון לכתום
 
-    private static final int ROI_SCALE_FACTOR = 2;
     private static VideoCapture camera;
-    private static int screenHeight;
 
     // חסימת יצירת מופעים של המחלקה
-    private OpenCVProcessor() {}
+    private OpenCVProcessor() {
+    }
 
     static {
         initializeCamera();
@@ -26,60 +27,51 @@ public class OpenCVProcessor {
         if (!camera.isOpened()) {
             throw new RuntimeException("Failed to open camera!");
         }
-
-        Mat frameMat = new Mat();
-        try {
-            if (camera.read(frameMat)) {
-                screenHeight = frameMat.height();
-            } else {
-                throw new RuntimeException("Failed to read initial frame from camera!");
-            }
-        } finally {
-            frameMat.release();
-        }
     }
 
-    public static int getMarkerPosition() {
+    public static int getMarkerPosition(int indexPlayer) {
         Mat frameMat = new Mat();
         Mat mask = new Mat();
-        Mat croppedFrame = new Mat();
 
         try {
+            // קריאת פריים מהמצלמה
             if (!camera.read(frameMat)) {
                 return -1;
             }
 
-            Rect roi = calculateROI(frameMat);
-            croppedFrame = new Mat(frameMat, roi);
-            resizeFrame(croppedFrame);
-            createMask(croppedFrame, mask);
+            // הקטנת התמונה
+            resizeFrame(frameMat);
 
-            return calculateMarkerPosition(mask, croppedFrame.height());
+            // יצירת מסכה עבור השחקן
+            createMask(frameMat, mask, indexPlayer);
+
+            // חישוב מיקום הסמן
+            return calculateMarkerPosition(mask, frameMat.height());
         } finally {
-            releaseResources(frameMat, mask, croppedFrame);
+            releaseResources(frameMat, mask);
         }
     }
 
-    private static Rect calculateROI(Mat frameMat) {
-        int x = frameMat.width() / 4;
-        int y = frameMat.height() / 4;
-        int width = frameMat.width() / 2;
-        int height = frameMat.height() / 2;
-        return new Rect(x, y, width, height);
-    }
-
     private static void resizeFrame(Mat frame) {
-        Imgproc.resize(frame, frame, new Size(frame.width() / ROI_SCALE_FACTOR, frame.height() / ROI_SCALE_FACTOR));
+        // הקטנת התמונה לחיסכון בעיבוד
+        Imgproc.resize(frame, frame, new Size(frame.width() / 4, frame.height() / 4));
     }
 
-    private static void createMask(Mat frame, Mat mask) {
-        // כברירת מחדל, OpenCV משתמש ב-BGR ולכן אין צורך להמיר ל-RGB
-        Core.inRange(frame, LOWER_GREEN, UPPER_GREEN, mask);
+    private static void createMask(Mat frame, Mat mask, int indexPlayer) {
+        Mat hsvFrame = new Mat();
+        Imgproc.cvtColor(frame, hsvFrame, Imgproc.COLOR_BGR2HSV); // המרה ל-HSV
+
+        // יצירת מסכה על פי צבע השחקן
+        switch (indexPlayer) {
+            case 1 -> Core.inRange(hsvFrame, LOWER_GREEN, UPPER_GREEN, mask);
+            case 2 -> Core.inRange(hsvFrame, LOWER_ORANGE, UPPER_ORANGE, mask); // שינוי לאורנג'
+        }
+        hsvFrame.release(); // שחרור משאבים
     }
 
     private static int calculateMarkerPosition(Mat mask, int frameHeight) {
         java.util.List<MatOfPoint> contours = new java.util.ArrayList<>();
-        Imgproc.findContours(mask, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(mask, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 
         if (!contours.isEmpty()) {
             MatOfPoint largestContour = findLargestContour(contours);
@@ -106,13 +98,7 @@ public class OpenCVProcessor {
         Moments moments = Imgproc.moments(contour);
         if (moments.get_m00() != 0) {
             int centerY = (int) (moments.get_m01() / moments.get_m00());
-//            if (centerY < frameHeight / 3) {
-//                return 0; // חלק עליון
-//            } else if (centerY < 2 * frameHeight / 3) {
-//                return 1; // אמצע
-//            } else {
-//                return 2; // חלק תחתון
-//            }
+
             if (centerY < frameHeight / 2) {
                 return 0; // חלק עליון
             } else {

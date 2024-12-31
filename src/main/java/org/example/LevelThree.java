@@ -299,9 +299,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         alienSpaceship1.paintAlienSpaceship(graphics);
         alienSpaceship2.paintAlienSpaceship(graphics);
         alienSpaceship3.paintAlienSpaceship(graphics);
-        updatePlayerOne();
 //        alienSpaceship4.paintAlienSpaceship(graphics);
 //        alienSpaceship5.paintAlienSpaceship(graphics);
+        updatePlayerOne();
+        updatePlayerTwo();
 
     }
 
@@ -342,8 +343,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_D -> dPressed = false;
             case KeyEvent.VK_SPACE -> spacePressed = false;
             case KeyEvent.VK_ENTER -> enterPressed = false;
-
-
         }
     }
 
@@ -436,19 +435,11 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             this.laser2.setX(laser2X);
             this.laser2.setY(laser2Y);
         }
-
-//        if (this.laser1.getX() == this.spaceship1.getX() + 65 && enterPressed){
-//            laserShot1.startPlay();
-//        }
-//        if (this.laser2.getX() == this.spaceship2.getX() + 65 && spacePressed){
-//            this.laserShot2.startPlay();
-//        }
     }
 
     public void moveLaser() {
         if (laser1Move) {
             laser1.fire(true);
-//            laserShot1.startPlay();
             if (laser1.getX() > windowWidth) {
                 resetLaser1();
                 laser1Move = false;
@@ -475,25 +466,34 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     }
 
     private void updatePlayerOne() {
-        int greenPosition = OpenCVProcessor.getMarkerPosition();
+        int greenPosition = OpenCVProcessor.getMarkerPosition(1);
 
         switch (greenPosition) {
             case 0 -> {
-                robot.keyPress(KeyEvent.VK_UP); // לחיצה על החץ למעלה
-                robot.keyRelease(KeyEvent.VK_DOWN); // שחרור החץ למטה
+                robot.keyPress(KeyEvent.VK_UP);
+                robot.keyRelease(KeyEvent.VK_DOWN);
             }
             case 2 -> {
-                robot.keyPress(KeyEvent.VK_DOWN); // לחיצה על החץ למטה
-                robot.keyRelease(KeyEvent.VK_UP); // שחרור החץ למעלה
+                robot.keyPress(KeyEvent.VK_DOWN);
+                robot.keyRelease(KeyEvent.VK_UP);
             }
-//                default -> {
-//                    // הפעולה שתתבצע במקרה שאף אחד מהמקרים האחרים לא מתקיים
-//                    robot.keyRelease(KeyEvent.VK_UP);
-//                    robot.keyRelease(KeyEvent.VK_DOWN);
-//                }
         }
     }
 
+    private void updatePlayerTwo() {
+        int yellowPosition = OpenCVProcessor.getMarkerPosition(2);
+
+        switch (yellowPosition) {
+            case 0 -> {
+                robot.keyPress(KeyEvent.VK_W);
+                robot.keyRelease(KeyEvent.VK_S);
+            }
+            case 2 -> {
+                robot.keyPress(KeyEvent.VK_S);
+                robot.keyRelease(KeyEvent.VK_W);
+            }
+        }
+    }
 
     public boolean isSuccess() {
         return isSuccess;
