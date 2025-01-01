@@ -73,7 +73,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelThreeMirror.png");
         this.finalMoonImage = new ImageIcon("src/main/java/resources/final_moon.png");
 
-
+        super.millis = 5;
         super.windowWidth = width;
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
@@ -216,6 +216,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     @Override
     public void gameOver() {
         if (isSuccess) {
+//            OpenCVProcessor.release();
             while (finalMoonX > 0) {
                 repaint();
                 finalMoonX -= 2;

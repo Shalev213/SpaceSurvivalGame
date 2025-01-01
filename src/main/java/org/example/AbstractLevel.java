@@ -12,6 +12,8 @@ public abstract class AbstractLevel extends JPanel {
     protected int xOfBackgroundOne = 0;
     protected int xOfBackgroundTwo;
     protected boolean gameCondition = true;
+    protected int millis = 7;
+    protected double backgroundSpeed = 1;
 
     public AbstractLevel() {
         this.setSize(this.windowWidth, this.windowHeight);
@@ -27,7 +29,7 @@ public abstract class AbstractLevel extends JPanel {
                 repaint();
 
                 try {
-                    Thread.sleep(7);
+                    Thread.sleep(millis);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -36,8 +38,8 @@ public abstract class AbstractLevel extends JPanel {
         }).start();
     }
     public void moveBackgrounds() {
-        this.xOfBackgroundOne -= 1;
-        this.xOfBackgroundTwo -= 1;
+        this.xOfBackgroundOne -= backgroundSpeed;
+        this.xOfBackgroundTwo -= backgroundSpeed;
     }
     public void backgroundLoop() {
         moveBackgrounds();
