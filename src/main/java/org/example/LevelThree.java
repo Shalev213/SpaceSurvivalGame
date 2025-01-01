@@ -62,6 +62,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
     public LevelThree(int width, int height, String teamName) {
+        setDoubleBuffered(true);
         try {
             this.robot = new Robot();
         } catch (AWTException e) {
@@ -466,7 +467,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     }
 
     private void updatePlayerOne() {
-        int greenPosition = OpenCVProcessor.getMarkerPosition(1);
+        int greenPosition = OpenCVProcessor.getMarkerPosition("green", true);
 
         switch (greenPosition) {
             case 0 -> {
@@ -480,8 +481,8 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         }
     }
 
-    private void updatePlayerTwo() {
-        int yellowPosition = OpenCVProcessor.getMarkerPosition(2);
+    private void updatePlayerTwo() { // שחקן שמאלי (צהוב במקום כתום)
+        int yellowPosition = OpenCVProcessor.getMarkerPosition("yellow", false);
 
         switch (yellowPosition) {
             case 0 -> {
@@ -494,6 +495,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             }
         }
     }
+
 
     public boolean isSuccess() {
         return isSuccess;

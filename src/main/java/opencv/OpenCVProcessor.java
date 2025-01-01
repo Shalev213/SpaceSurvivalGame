@@ -7,16 +7,15 @@ import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.Videoio;
 
 public class OpenCVProcessor {
-    private static final Scalar LOWER_GREEN = new Scalar(30, 120, 30);  // ערכים מדויקים לירוק
+    private static final Scalar LOWER_GREEN = new Scalar(30, 120, 30);
     private static final Scalar UPPER_GREEN = new Scalar(90, 255, 90);
-    private static final Scalar LOWER_ORANGE = new Scalar(5, 100, 100);  // טווח תחתון לכתום
-    private static final Scalar UPPER_ORANGE = new Scalar(15, 255, 255); // טווח עליון לכתום
+    private static final Scalar LOWER_YELLOW = new Scalar(20, 100, 100);
+    private static final Scalar UPPER_YELLOW = new Scalar(30, 255, 255);
 
+    private static final int ROI_SCALE_FACTOR = 2;
     private static VideoCapture camera;
-
-    // חסימת יצירת מופעים של המחלקה
-    private OpenCVProcessor() {
-    }
+    private static Mat previousFrameMat = null;
+    private static int screenHeight;
 
     static {
         initializeCamera();
@@ -27,51 +26,83 @@ public class OpenCVProcessor {
         if (!camera.isOpened()) {
             throw new RuntimeException("Failed to open camera!");
         }
+
+        Mat frameMat = new Mat();
+        try {
+            if (camera.read(frameMat)) {
+                screenHeight = frameMat.height();
+            } else {
+                throw new RuntimeException("Failed to read initial frame from camera!");
+            }
+        } finally {
+            frameMat.release();
+        }
     }
 
-    public static int getMarkerPosition(int indexPlayer) {
+    public static int getMarkerPosition(String color, boolean isRight) {
         Mat frameMat = new Mat();
         Mat mask = new Mat();
+        Mat croppedFrame = new Mat();
+        Mat diffFrame = new Mat();
 
         try {
-            // קריאת פריים מהמצלמה
             if (!camera.read(frameMat)) {
                 return -1;
             }
 
-            // הקטנת התמונה
-            resizeFrame(frameMat);
+            if (previousFrameMat != null) {
+                // חישוב ההבדל בין התמונות
+                Core.absdiff(previousFrameMat, frameMat, diffFrame);
 
-            // יצירת מסכה עבור השחקן
-            createMask(frameMat, mask, indexPlayer);
+                // המרת ההבדל למסיכה בינארית (רק השינויים)
+                Imgproc.cvtColor(diffFrame, diffFrame, Imgproc.COLOR_BGR2GRAY);
+                Imgproc.threshold(diffFrame, diffFrame, 30, 255, Imgproc.THRESH_BINARY);
+            }
 
-            // חישוב מיקום הסמן
-            return calculateMarkerPosition(mask, frameMat.height());
+            // אם לא הייתה תמונה קודמת, תמשיך כפי שהיה
+            if (previousFrameMat == null || Core.countNonZero(diffFrame) > 0) {
+                Rect roi = calculateROI(frameMat, isRight);
+                croppedFrame = new Mat(frameMat, roi);
+                resizeFrame(croppedFrame);
+
+                if (color.equalsIgnoreCase("green")) {
+                    createMask(croppedFrame, mask, LOWER_GREEN, UPPER_GREEN);
+                } else if (color.equalsIgnoreCase("yellow")) {
+                    createMask(croppedFrame, mask, LOWER_YELLOW, UPPER_YELLOW);
+                } else {
+                    return -1;
+                }
+
+                previousFrameMat = frameMat.clone(); // שמירת התמונה הקודמת
+
+                return calculateMarkerPosition(mask, croppedFrame.height());
+            }
         } finally {
-            releaseResources(frameMat, mask);
+            releaseResources(frameMat, mask, croppedFrame, diffFrame);
         }
+        return -1;
+    }
+
+
+    private static Rect calculateROI(Mat frameMat, boolean isRight) {
+        int width = frameMat.width() / 2;
+        int height = frameMat.height();
+        int x = isRight ? 0 : width;
+        int y = 0;
+        return new Rect(x, y, width, height);
     }
 
     private static void resizeFrame(Mat frame) {
-        // הקטנת התמונה לחיסכון בעיבוד
-        Imgproc.resize(frame, frame, new Size(frame.width() / 4, frame.height() / 4));
+        Imgproc.resize(frame, frame, new Size(frame.width() / ROI_SCALE_FACTOR, frame.height() / ROI_SCALE_FACTOR));
     }
 
-    private static void createMask(Mat frame, Mat mask, int indexPlayer) {
-        Mat hsvFrame = new Mat();
-        Imgproc.cvtColor(frame, hsvFrame, Imgproc.COLOR_BGR2HSV); // המרה ל-HSV
-
-        // יצירת מסכה על פי צבע השחקן
-        switch (indexPlayer) {
-            case 1 -> Core.inRange(hsvFrame, LOWER_GREEN, UPPER_GREEN, mask);
-            case 2 -> Core.inRange(hsvFrame, LOWER_ORANGE, UPPER_ORANGE, mask); // שינוי לאורנג'
-        }
-        hsvFrame.release(); // שחרור משאבים
+    private static void createMask(Mat frame, Mat mask, Scalar lower, Scalar upper) {
+        Core.inRange(frame, lower, upper, mask);
     }
 
     private static int calculateMarkerPosition(Mat mask, int frameHeight) {
         java.util.List<MatOfPoint> contours = new java.util.ArrayList<>();
-        Imgproc.findContours(mask, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(mask, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
         if (!contours.isEmpty()) {
             MatOfPoint largestContour = findLargestContour(contours);
@@ -98,12 +129,7 @@ public class OpenCVProcessor {
         Moments moments = Imgproc.moments(contour);
         if (moments.get_m00() != 0) {
             int centerY = (int) (moments.get_m01() / moments.get_m00());
-
-            if (centerY < frameHeight / 2) {
-                return 0; // חלק עליון
-            } else {
-                return 2; // חלק תחתון
-            }
+            return (centerY < frameHeight / 2) ? 0 : 2;
         }
         return -1;
     }
