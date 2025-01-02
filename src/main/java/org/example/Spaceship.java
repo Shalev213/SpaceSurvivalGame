@@ -9,8 +9,8 @@ public class Spaceship {
 
     private final short width = 150;
     private final short height = 70;
-    private int y = 0;
-    private int x = 40;
+    private double y = 0;
+    private double x = 40;
 
 
     public Spaceship(String imagePath){
@@ -18,7 +18,7 @@ public class Spaceship {
     }
 
     public void paintSpaceship(Graphics graphics){
-        graphics.drawImage(this.spaceship,this.x, this.y, this.width, this.height, null);
+        graphics.drawImage(this.spaceship, (int) this.x, (int) this.y, this.width, this.height, null);
 
     }
 
@@ -37,7 +37,7 @@ public class Spaceship {
     public short getHeight() {
         return height;
     }
-    public void upDownMove(int dy) {
+    public void upDownMove(double dy) {
         this.y += dy;
     }
 
@@ -50,6 +50,6 @@ public class Spaceship {
     }
 
     public Rectangle rectangle() {
-        return new Rectangle(this.x, this.y + 8 , this.width - 5 , this.height - 16);
+        return new Rectangle((int) this.x, (int) (this.y + 8), this.width - 5 , this.height - 16);
     }
 }

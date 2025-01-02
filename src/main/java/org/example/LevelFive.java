@@ -251,7 +251,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         super.paintComponent(graphics);
 
         if (this.background != null) {
-            this.background.paintIcon(null, graphics, xOfBackgroundOne, 0);
+            this.background.paintIcon(null, graphics, (int)xOfBackgroundOne, 0);
         }
         alienSpaceship.paintAlienSpaceship(graphics);
 //        alienSpaceship2.paintAlienSpaceship(graphics);
@@ -570,7 +570,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     public void moveLaser() {
 //        boolean isRightShoot1 = astronaut1.isWalkingToRight();
         if (laser1Move) {
-            laser1.fire(isRightShoot1);
+            laser1.fire(isRightShoot1, 8);
             if (laser1.getX() > windowWidth || laser1.getX() + laser1.getWidth() < 0) {
                 resetLaser1();
             }
@@ -578,7 +578,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
 //        boolean isRightShoot2 = astronaut2.isWalkingToRight();
         if (laser2Move) {
-            laser2.fire(isRightShoot2);
+            laser2.fire(isRightShoot2, 8);
             if (laser2.getX() > windowWidth || laser2.getX() + laser2.getWidth() < 0) {
                 resetLaser2();
             }

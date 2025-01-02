@@ -22,11 +22,12 @@ public class Laser {
         graphics.drawImage(this.laser,  this.x,  this.y , width, height,null);
     }
 
-    public void fire(Boolean isShootToRight) {
+    public void fire(Boolean isShootToRight,int speed) {
         if (isShootToRight) {
-            this.x += 8;
-        }else {
-            this.x -= 8;
+            this.x += speed;
+        }
+        else {
+            this.x -= speed;
         }
     }
 

@@ -62,7 +62,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
     public LevelThree(int width, int height, String teamName) {
-        setDoubleBuffered(true);
+//        setDoubleBuffered(true);
         try {
             this.robot = new Robot();
         } catch (AWTException e) {
@@ -73,7 +73,8 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         this.spaceBackgroundTwo = new ImageIcon("src/main/java/resources/LevelThreeMirror.png");
         this.finalMoonImage = new ImageIcon("src/main/java/resources/final_moon.png");
 
-        super.millis = 5;
+        super.millis = 1;
+        super.backgroundSpeed = 0.08;
         super.windowWidth = width;
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
@@ -95,17 +96,17 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
         this.alienSpaceship1 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
         this.alienSpaceship1.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship1.setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight() - 30);
+        this.alienSpaceship1.setRandomY(0, this.windowHeight - this.alienSpaceship1.getHeight() - 50);
         this.alienSpaceship1.start();
 
         this.alienSpaceship2 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
         this.alienSpaceship2.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship2.setRandomY(0, this.windowHeight - this.alienSpaceship2.getHeight() - 30);
+        this.alienSpaceship2.setRandomY(0, this.windowHeight - this.alienSpaceship2.getHeight() - 50);
         this.alienSpaceship2.start();
 
         this.alienSpaceship3 = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
         this.alienSpaceship3.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship3.setRandomY(0, this.windowHeight - this.alienSpaceship3.getHeight() - 30);
+        this.alienSpaceship3.setRandomY(0, this.windowHeight - this.alienSpaceship3.getHeight() - 50);
         this.alienSpaceship3.start();
 
 
@@ -172,31 +173,31 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
         if (downPressed && this.spaceship1.getY() <= (windowHeight - 1.5 * spaceship1.getHeight())) {
-            spaceship1.upDownMove(1);
+            spaceship1.upDownMove(0.2);
         }
         if (upPressed && this.spaceship1.getY() >= 0) {
-            spaceship1.upDownMove(-1);
+            spaceship1.upDownMove(-0.2);
         }
-        if (rightPressed && this.spaceship1.getX() <= (this.windowWidth - 1.2 * spaceship1.getWidth())) {
-            spaceship1.leftRightMove(1);
-        }
-        if (leftPressed && this.spaceship1.getX() >= 0) {
-            spaceship1.leftRightMove(-2);
-        }
+//        if (rightPressed && this.spaceship1.getX() <= (this.windowWidth - 1.2 * spaceship1.getWidth())) {
+//            spaceship1.leftRightMove(1);
+//        }
+//        if (leftPressed && this.spaceship1.getX() >= 0) {
+//            spaceship1.leftRightMove(-2);
+//        }
 
         // חללית 2 - תנועה אנכית ואופקית
         if (sPressed && this.spaceship2.getY() <= (windowHeight - 1.75 * spaceship2.getHeight())) {
-            spaceship2.upDownMove(1);
+            spaceship2.upDownMove(0.2);
         }
         if (wPressed && this.spaceship2.getY() >= 0) {
-            spaceship2.upDownMove(-1);
+            spaceship2.upDownMove(-0.2);
         }
-        if (dPressed && this.spaceship2.getX() <= (this.windowWidth - 1.2 * spaceship2.getWidth())) {
-            spaceship2.leftRightMove(1);
-        }
-        if (aPressed && this.spaceship2.getX() >= 0) {
-            spaceship2.leftRightMove(-2);
-        }
+//        if (dPressed && this.spaceship2.getX() <= (this.windowWidth - 1.2 * spaceship2.getWidth())) {
+//            spaceship2.leftRightMove(1);
+//        }
+//        if (aPressed && this.spaceship2.getX() >= 0) {
+//            spaceship2.leftRightMove(-2);
+//        }
 
 
         if (this.laser1.getX() == this.spaceship1.getX() + 65 && enterPressed) {
@@ -216,7 +217,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     @Override
     public void gameOver() {
         if (isSuccess) {
-//            OpenCVProcessor.release();
             while (finalMoonX > 0) {
                 repaint();
                 finalMoonX -= 2;
@@ -225,12 +225,12 @@ public class LevelThree extends AbstractLevel implements KeyListener {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-
             }
             passedLevel.startPlay();
             missionComplete.startPlay();
             JDBC.updateLevel(teamName, 4);
             showSuccessDialog();
+            OpenCVProcessor.release();
         } else if (isFailed) {
             showFailedDialog();
         }
@@ -256,7 +256,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
     public void showFailedDialog() {
         this.options[1] = "Play again";
-//        this.options[3] = "Lobby";
 
         this.selectedOption = JOptionPane.showOptionDialog(null,
                 "Mission Failed",
@@ -337,12 +336,12 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_DOWN -> downPressed = false;
             case KeyEvent.VK_UP -> upPressed = false;
-            case KeyEvent.VK_RIGHT -> rightPressed = false;
-            case KeyEvent.VK_LEFT -> leftPressed = false;
+//            case KeyEvent.VK_RIGHT -> rightPressed = false;
+//            case KeyEvent.VK_LEFT -> leftPressed = false;
             case KeyEvent.VK_W -> wPressed = false;
             case KeyEvent.VK_S -> sPressed = false;
-            case KeyEvent.VK_A -> aPressed = false;
-            case KeyEvent.VK_D -> dPressed = false;
+//            case KeyEvent.VK_A -> aPressed = false;
+//            case KeyEvent.VK_D -> dPressed = false;
             case KeyEvent.VK_SPACE -> spacePressed = false;
             case KeyEvent.VK_ENTER -> enterPressed = false;
         }
@@ -441,7 +440,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
     public void moveLaser() {
         if (laser1Move) {
-            laser1.fire(true);
+            laser1.fire(true, 2);
             if (laser1.getX() > windowWidth) {
                 resetLaser1();
                 laser1Move = false;
@@ -449,7 +448,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         }
 
         if (laser2Move) {
-            laser2.fire(true);
+            laser2.fire(true, 2);
             if (laser2.getX() > windowWidth) {
                 resetLaser2();
                 laser2Move = false;

@@ -40,6 +40,9 @@ public class OpenCVProcessor {
     }
 
     public static int getMarkerPosition(String color, boolean isRight) {
+        if (camera == null || !camera.isOpened()) {
+            initializeCamera();
+        }
         Mat frameMat = new Mat();
         Mat mask = new Mat();
         Mat croppedFrame = new Mat();

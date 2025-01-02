@@ -9,11 +9,11 @@ public abstract class AbstractLevel extends JPanel {
     protected int windowHeight = 750;
     protected ImageIcon spaceBackgroundOne;
     protected ImageIcon spaceBackgroundTwo;
-    protected int xOfBackgroundOne = 0;
-    protected int xOfBackgroundTwo;
+    protected double xOfBackgroundOne = 0;
+    protected double xOfBackgroundTwo;
     protected boolean gameCondition = true;
     protected int millis = 7;
-    protected double backgroundSpeed = 1;
+    protected double backgroundSpeed = 1.0;
 
     public AbstractLevel() {
         this.setSize(this.windowWidth, this.windowHeight);
@@ -56,8 +56,8 @@ public abstract class AbstractLevel extends JPanel {
         super.paintComponent(graphics);
 
         if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
-            this.spaceBackgroundOne.paintIcon(null, graphics, xOfBackgroundOne, 0);
-            this.spaceBackgroundTwo.paintIcon(null, graphics, xOfBackgroundTwo, 0);
+            this.spaceBackgroundOne.paintIcon(null, graphics,(int) xOfBackgroundOne, 0);
+            this.spaceBackgroundTwo.paintIcon(null, graphics,(int) xOfBackgroundTwo, 0);
         }
     }
 
