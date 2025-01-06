@@ -9,8 +9,8 @@ import org.opencv.videoio.Videoio;
 public class OpenCVProcessor {
     private static final Scalar LOWER_GREEN = new Scalar(30, 120, 30);
     private static final Scalar UPPER_GREEN = new Scalar(90, 255, 90);
-    private static final Scalar LOWER_YELLOW = new Scalar(20, 100, 100);
-    private static final Scalar UPPER_YELLOW = new Scalar(30, 255, 255);
+    private static final Scalar LOWER_BLUE = new Scalar(90, 100, 100);
+    private static final Scalar UPPER_BLUE = new Scalar(130, 255, 255);
 
     private static final int ROI_SCALE_FACTOR = 2;
     private static VideoCapture camera;
@@ -54,15 +54,11 @@ public class OpenCVProcessor {
             }
 
             if (previousFrameMat != null) {
-                // חישוב ההבדל בין התמונות
                 Core.absdiff(previousFrameMat, frameMat, diffFrame);
-
-                // המרת ההבדל למסיכה בינארית (רק השינויים)
                 Imgproc.cvtColor(diffFrame, diffFrame, Imgproc.COLOR_BGR2GRAY);
                 Imgproc.threshold(diffFrame, diffFrame, 30, 255, Imgproc.THRESH_BINARY);
             }
 
-            // אם לא הייתה תמונה קודמת, תמשיך כפי שהיה
             if (previousFrameMat == null || Core.countNonZero(diffFrame) > 0) {
                 Rect roi = calculateROI(frameMat, isRight);
                 croppedFrame = new Mat(frameMat, roi);
@@ -70,13 +66,13 @@ public class OpenCVProcessor {
 
                 if (color.equalsIgnoreCase("green")) {
                     createMask(croppedFrame, mask, LOWER_GREEN, UPPER_GREEN);
-                } else if (color.equalsIgnoreCase("yellow")) {
-                    createMask(croppedFrame, mask, LOWER_YELLOW, UPPER_YELLOW);
+                } else if (color.equalsIgnoreCase("blue")) {
+                    createMask(croppedFrame, mask, LOWER_BLUE, UPPER_BLUE);
                 } else {
                     return -1;
                 }
 
-                previousFrameMat = frameMat.clone(); // שמירת התמונה הקודמת
+                previousFrameMat = frameMat.clone();
 
                 return calculateMarkerPosition(mask, croppedFrame.height());
             }
@@ -85,7 +81,6 @@ public class OpenCVProcessor {
         }
         return -1;
     }
-
 
     private static Rect calculateROI(Mat frameMat, boolean isRight) {
         int width = frameMat.width() / 2;

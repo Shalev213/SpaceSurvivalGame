@@ -173,10 +173,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
         if (downPressed && this.spaceship1.getY() <= (windowHeight - 1.5 * spaceship1.getHeight())) {
-            spaceship1.upDownMove(0.2);
+            spaceship1.upDownMove(0.25);
         }
         if (upPressed && this.spaceship1.getY() >= 0) {
-            spaceship1.upDownMove(-0.2);
+            spaceship1.upDownMove(-0.25);
         }
 //        if (rightPressed && this.spaceship1.getX() <= (this.windowWidth - 1.2 * spaceship1.getWidth())) {
 //            spaceship1.leftRightMove(1);
@@ -187,10 +187,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
         // חללית 2 - תנועה אנכית ואופקית
         if (sPressed && this.spaceship2.getY() <= (windowHeight - 1.75 * spaceship2.getHeight())) {
-            spaceship2.upDownMove(0.2);
+            spaceship2.upDownMove(0.25);
         }
         if (wPressed && this.spaceship2.getY() >= 0) {
-            spaceship2.upDownMove(-0.2);
+            spaceship2.upDownMove(-0.25);
         }
 //        if (dPressed && this.spaceship2.getX() <= (this.windowWidth - 1.2 * spaceship2.getWidth())) {
 //            spaceship2.leftRightMove(1);
@@ -482,7 +482,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     }
 
     private void updatePlayerTwo() { // שחקן שמאלי (צהוב במקום כתום)
-        int yellowPosition = OpenCVProcessor.getMarkerPosition("yellow", false);
+        int yellowPosition = OpenCVProcessor.getMarkerPosition("green", false);
 
         switch (yellowPosition) {
             case 0 -> {
