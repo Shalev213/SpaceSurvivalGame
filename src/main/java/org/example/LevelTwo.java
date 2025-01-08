@@ -35,6 +35,8 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         super.windowWidth = width;
         super.windowHeight = height;
 
+        super.levelInstructions = new LevelInstructions( super.windowWidth, super.windowHeight,"Level 2" , " ", "src/main/java/resources/level1instructions.png" , 100 , windowHeight - 100);
+
         this.astronaut = new FlyingAstronaut();
         this.astronaut.setY(((windowHeight - this.astronaut.getHeight()) / 2) + 60);
         this.xOfAstronaut = (int) ((windowWidth - this.astronaut.getWidth()) / 2);

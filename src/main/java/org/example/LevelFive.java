@@ -84,6 +84,8 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
         super.gameCondition = !isSuccess && !isFailed;
 
+        super.levelInstructions = new LevelInstructions( super.windowWidth, super.windowHeight,"Level 5" , " ", "src/main/java/resources/level1instructions.png" , 100 , windowHeight - 100);
+
 
         this.sceneSound = new Sound();
         this.sceneSound.playSound("src/main/java/resources/levelFiveMusic.wav");

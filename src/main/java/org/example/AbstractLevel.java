@@ -14,15 +14,30 @@ public abstract class AbstractLevel extends JPanel {
     protected boolean gameCondition = true;
     protected int millis = 7;
     protected double backgroundSpeed = 1.0;
+    protected LevelInstructions levelInstructions;
 
     public AbstractLevel() {
         this.setSize(this.windowWidth, this.windowHeight);
         this.setLayout(null);
         this.setVisible(true);
+
     }
+
+
 
     public void mainGameLoop() {
         new Thread(() -> {
+
+
+            while (!levelInstructions.isClicked()){
+                setVisible(false);
+                levelInstructions.setVisible(true);
+                levelInstructions.setFocusable(true);
+                this.add(levelInstructions);
+            }
+            this.remove(levelInstructions);
+            setVisible(true);
+
             while (gameCondition) {
 //                backgroundLoop();
                 gameScene();
@@ -54,6 +69,8 @@ public abstract class AbstractLevel extends JPanel {
     @Override
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
+
+//        levelInstructions.paintInstructions(graphics);
 
         if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
             this.spaceBackgroundOne.paintIcon(null, graphics,(int) xOfBackgroundOne, 0);
