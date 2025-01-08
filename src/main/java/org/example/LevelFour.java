@@ -43,7 +43,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
 
 
-        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 4", " ", "src/main/java/resources/level1instructions.png", 100, windowHeight - 100);
+        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 4", " ", "src/main/java/resources/level2instructions.png", 100, windowHeight - 100);
 
         this.fakePanel = new FakePanel();
         this.xOfFakePanel = (this.windowWidth - this.fakePanel.getWidth()) / 2;
