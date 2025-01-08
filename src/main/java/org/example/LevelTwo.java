@@ -35,7 +35,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         super.windowWidth = width;
         super.windowHeight = height;
 
-        super.levelInstructions = new LevelInstructions( super.windowWidth, super.windowHeight,"Level 2" , " ", "src/main/java/resources/level1instructions.png" , 100 , windowHeight - 100);
+        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 2", " ", "src/main/java/resources/level1instructions.png", 100, windowHeight - 100);
 
         this.astronaut = new FlyingAstronaut();
         this.astronaut.setY(((windowHeight - this.astronaut.getHeight()) / 2) + 60);
@@ -119,13 +119,13 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.sceneSound.playSound("src/main/java/resources/spaceship-alarm.wav");
 
         this.mainRiddlePanel.getButtonsPanel().getCheckButton().addActionListener(e -> {
-            if (mainRiddlePanel.getButtonsPanel().isSuccess()){
+            if (mainRiddlePanel.getButtonsPanel().isSuccess()) {
                 JDBC.updateLevel(teamName, 3);
                 mainRiddlePanel.getButtonsPanel().success();
                 this.sceneSound.stopPlay();
 
-            }else {
-               this.mainRiddlePanel.getButtonsPanel().failure();
+            } else {
+                this.mainRiddlePanel.getButtonsPanel().failure();
             }
         });
 
@@ -142,8 +142,8 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         super.paintComponent(graphics);
         if (spaceshipBackground != null) {
             this.spaceshipBackground.paintIcon(null, graphics, xOfBackground, 0);
-            this.riddleButton.setBounds(xOfBackground + 1320,140,28,45);
-            this.fakeRiddleButton.setBounds(xOfBackground + (spaceshipBackground.getIconWidth() - this.fakeButtonWidth) / 2,260,this.fakeButtonWidth,45);
+            this.riddleButton.setBounds(xOfBackground + 1320, 140, 28, 45);
+            this.fakeRiddleButton.setBounds(xOfBackground + (spaceshipBackground.getIconWidth() - this.fakeButtonWidth) / 2, 260, this.fakeButtonWidth, 45);
         }
         astronaut.paintAstronaut(graphics);
     }
@@ -158,14 +158,14 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         this.sceneSound.startBackgroundPlay();
         this.sceneSound.loopPlay();
 
-        if (rightPressed && (this.xOfBackground + this.getBackgroundWidth()) > this.windowWidth && !(xOfAstronaut > this.astronaut.getX()) ) {
+        if (rightPressed && (this.xOfBackground + this.getBackgroundWidth()) > this.windowWidth && !(xOfAstronaut > this.astronaut.getX())) {
             takeBackgroundLeft();
         } else if (rightPressed && (this.astronaut.getX() + this.astronaut.getWidth()) < this.windowWidth) {
             this.astronaut.leftRightMove(1);
         }
         if (leftPressed && this.xOfBackground < 0 && !(xOfAstronaut < this.astronaut.getX())) {
             takeBackgroundRight();
-        }else if (leftPressed && this.astronaut.getX() > 0) {
+        } else if (leftPressed && this.astronaut.getX() > 0) {
             this.astronaut.leftRightMove(-1);
         }
         repaint();
@@ -175,9 +175,11 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     public void gameOver() {
         this.sceneSound.stopPlay();
     }
+
     public void takeBackgroundRight() {
         this.xOfBackground += 1;
     }
+
     public void takeBackgroundLeft() {
         this.xOfBackground -= 1;
     }
@@ -208,12 +210,15 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_LEFT -> this.leftPressed = false;
         }
     }
+
     public JButton getNextLevelButton() {
         return this.mainRiddlePanel.getButtonsPanel().getNextLevelButton();
     }
+
     public JButton getLobbyButton() {
         return this.mainRiddlePanel.getButtonsPanel().getLobbyButton();
     }
+
     public Sound getSceneSound() {
         return sceneSound;
     }

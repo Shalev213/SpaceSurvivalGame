@@ -24,12 +24,11 @@ public abstract class AbstractLevel extends JPanel {
     }
 
 
-
     public void mainGameLoop() {
         new Thread(() -> {
 
 
-            while (!levelInstructions.isClicked()){
+            while (!levelInstructions.isClicked()) {
                 setVisible(false);
                 levelInstructions.setVisible(true);
                 levelInstructions.setFocusable(true);
@@ -52,10 +51,12 @@ public abstract class AbstractLevel extends JPanel {
             gameOver();
         }).start();
     }
+
     public void moveBackgrounds() {
         this.xOfBackgroundOne -= backgroundSpeed;
         this.xOfBackgroundTwo -= backgroundSpeed;
     }
+
     public void backgroundLoop() {
         moveBackgrounds();
         if (xOfBackgroundOne <= -(getBackgroundWidth())) {
@@ -73,18 +74,17 @@ public abstract class AbstractLevel extends JPanel {
 //        levelInstructions.paintInstructions(graphics);
 
         if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
-            this.spaceBackgroundOne.paintIcon(null, graphics,(int) xOfBackgroundOne, 0);
-            this.spaceBackgroundTwo.paintIcon(null, graphics,(int) xOfBackgroundTwo, 0);
+            this.spaceBackgroundOne.paintIcon(null, graphics, (int) xOfBackgroundOne, 0);
+            this.spaceBackgroundTwo.paintIcon(null, graphics, (int) xOfBackgroundTwo, 0);
         }
     }
 
     public abstract int getBackgroundWidth();
 
     public abstract void gameScene();
+
     public abstract void gameOver();
 //    public abstract  void paintComponent();
-
-
 
 
 }

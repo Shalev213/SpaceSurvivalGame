@@ -1,4 +1,5 @@
 package org.example;
+
 import db.JDBC;
 
 import javax.swing.*;
@@ -42,7 +43,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
 
 
-        super.levelInstructions = new LevelInstructions( super.windowWidth, super.windowHeight,"Level 4" , " ", "src/main/java/resources/level1instructions.png" , 100 , windowHeight - 100);
+        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 4", " ", "src/main/java/resources/level1instructions.png", 100, windowHeight - 100);
 
         this.fakePanel = new FakePanel();
         this.xOfFakePanel = (this.windowWidth - this.fakePanel.getWidth()) / 2;
@@ -52,7 +53,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
 //        this.setComponentZOrder(fakePanel, 0);
 
         // התנאים בשביל ההשמה של הרקעים לפי מספר השלב הנוכחי. וזה בעזרת counterOfLevel שהוא static
-        if (counterOfLevel == 1){
+        if (counterOfLevel == 1) {
             circuitBreaker = new CircuitBreaker("src/main/java/resources/CircuitBreaker1.png");
             circuitBreaker.setCircuitBreaker2(false);
 
@@ -150,9 +151,6 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         this.add(circuitButton);
 
 
-
-
-
         this.setFocusable(true);
         this.requestFocus();
         this.addKeyListener(this);
@@ -166,8 +164,8 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         super.paintComponent(graphics);
         if (spaceshipBackground != null) {
             this.spaceshipBackground.paintIcon(null, graphics, xOfBackground, 0);
-            this.fakeButton.setBounds(xOfBackground + 1320,140,28,45);
-            this.circuitButton.setBounds(xOfBackground + (spaceshipBackground.getIconWidth() - this.fakeButtonWidth) / 2,260,this.fakeButtonWidth,45);
+            this.fakeButton.setBounds(xOfBackground + 1320, 140, 28, 45);
+            this.circuitButton.setBounds(xOfBackground + (spaceshipBackground.getIconWidth() - this.fakeButtonWidth) / 2, 260, this.fakeButtonWidth, 45);
         }
         astronaut.paintAstronaut(graphics);
 
@@ -175,17 +173,16 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     }
 
 
-
     @Override
     public void gameScene() {
-        if (rightPressed && (this.xOfBackground + this.getBackgroundWidth()) > this.windowWidth && !(xOfAstronaut > this.astronaut.getX()) ) {
+        if (rightPressed && (this.xOfBackground + this.getBackgroundWidth()) > this.windowWidth && !(xOfAstronaut > this.astronaut.getX())) {
             takeBackgroundLeft();
         } else if (rightPressed && (this.astronaut.getX() + this.astronaut.getWidth()) < this.windowWidth) {
             this.astronaut.leftRightMove(1);
         }
         if (leftPressed && this.xOfBackground < 0 && !(xOfAstronaut < this.astronaut.getX())) {
             takeBackgroundRight();
-        }else if (leftPressed && this.astronaut.getX() > 0) {
+        } else if (leftPressed && this.astronaut.getX() > 0) {
             this.astronaut.leftRightMove(-1);
         }
 
@@ -198,7 +195,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     @Override
     public void gameOver() {
 
-        if (circuitBreaker.isSuccess()){
+        if (circuitBreaker.isSuccess()) {
             showSuccessDialog();
 
         } else if (circuitBreaker.isFailed()) {
@@ -246,6 +243,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     public void takeBackgroundRight() {
         this.xOfBackground += 1;
     }
+
     public void takeBackgroundLeft() {
         this.xOfBackground -= 1;
     }
@@ -253,7 +251,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
 
     public void showSuccessDialog() {
         String message = "";
-        switch (counterOfLevel){
+        switch (counterOfLevel) {
             case 1 -> {
                 message = "Part one complete";
                 this.options[1] = "Next Part";
@@ -288,7 +286,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
         this.options[1] = "Try again";
         String message = "";
 //        this.options[3] = "Lobby";
-        switch (counterOfLevel){
+        switch (counterOfLevel) {
             case 1 -> {
                 message = "Part one failed";
             }
@@ -328,7 +326,6 @@ public class LevelFour extends AbstractLevel implements KeyListener {
             listener.onOptionSelected(selectedOption); // מפעיל את המאזין
         }
     }
-
 
 
     public boolean isSuccess() {

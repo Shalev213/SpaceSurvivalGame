@@ -13,11 +13,11 @@ public class Spaceship {
     private double x = 40;
 
 
-    public Spaceship(String imagePath){
+    public Spaceship(String imagePath) {
         this.spaceship = new ImageIcon(imagePath).getImage();
     }
 
-    public void paintSpaceship(Graphics graphics){
+    public void paintSpaceship(Graphics graphics) {
         graphics.drawImage(this.spaceship, (int) this.x, (int) this.y, this.width, this.height, null);
 
     }
@@ -37,6 +37,7 @@ public class Spaceship {
     public short getHeight() {
         return height;
     }
+
     public void upDownMove(double dy) {
         this.y += dy;
     }
@@ -50,6 +51,6 @@ public class Spaceship {
     }
 
     public Rectangle rectangle() {
-        return new Rectangle((int) this.x, (int) (this.y + 8), this.width - 5 , this.height - 16);
+        return new Rectangle((int) this.x, (int) (this.y + 8), this.width - 5, this.height - 16);
     }
 }

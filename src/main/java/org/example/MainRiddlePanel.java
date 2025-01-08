@@ -11,7 +11,6 @@ public class MainRiddlePanel extends JPanel {
     private int y = 0;
 
 
-
     public MainRiddlePanel() {
         this.buttonsPanel = new ButtonsPanel();
         this.buttonsPanel.setVisible(true);

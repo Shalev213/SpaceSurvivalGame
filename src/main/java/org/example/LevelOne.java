@@ -52,10 +52,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private String teamName;
 
 
-
     private List<OptionSelectionListener> listeners = new ArrayList<>(); // רשימת מאזינים
-
-
 
 
     public LevelOne(int width, int height, String teamName) {
@@ -71,7 +68,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
-        super.levelInstructions = new LevelInstructions( super.windowWidth, super.windowHeight,"Level 1" , " ", "src/main/java/resources/level1instructions.png" , 100 , windowHeight - 100);
+        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 1", " ", "src/main/java/resources/level1instructions.png", 100, windowHeight - 100);
 
 
         this.options = new Object[]{"Lobby", ""};
@@ -160,8 +157,6 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         this.toolsOfLife = new ToolsOfLife();
 
 
-
-
         this.setFocusable(true);
         this.requestFocus();
         this.addKeyListener(this);
@@ -175,7 +170,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     }
 
 
-        @Override
+    @Override
     public void gameScene() {
         backgroundLoop();
         this.sceneSound.startBackgroundPlay();
@@ -185,9 +180,9 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         this.isSuccess = counterOfFuelHits >= 5;
         this.isFailed = counterOfStoneHits >= 3;
         super.gameCondition = !isFailed && !isSuccess;
-        
 
-            // חללית 1 - תנועה אנכית ואופקית
+
+        // חללית 1 - תנועה אנכית ואופקית
         if (downPressed && this.spaceship1.getY() <= (windowHeight - 1.5 * spaceship1.getHeight())) {
             spaceship1.upDownMove(1);
         }
@@ -216,7 +211,6 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         }
 
 
-
         hideTools();
         stonesLoop();   //חזרה של האבנים
         checkCollision();  // בדיקת פגיעה בין האבנים לחלליות
@@ -225,8 +219,8 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
     @Override
     public void gameOver() {
-        if (isSuccess){
-            while (finalMoonX > 0){
+        if (isSuccess) {
+            while (finalMoonX > 0) {
                 repaint();
                 finalMoonX -= 2;
                 try {
@@ -245,8 +239,6 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         }
 
     }
-
-
 
 
     public void showSuccessDialog() {
@@ -283,8 +275,6 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         // מפעיל את כל המאזינים עם התוצאה שנבחרה
         notifyListeners(selectedOption);
     }
-
-
 
 
     public interface OptionSelectionListener {
@@ -366,7 +356,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     }
 
     public void fuelLoop() {
-        if (fuel.getX() < -fuel.getWidth()){
+        if (fuel.getX() < -fuel.getWidth()) {
             this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
             this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
 
@@ -375,7 +365,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
 
 
     public void checkCollision() {
-        if (this.fuel.rectangle().intersects(this.spaceship1.rectangle()) || this.fuel.rectangle().intersects(this.spaceship2.rectangle())){
+        if (this.fuel.rectangle().intersects(this.spaceship1.rectangle()) || this.fuel.rectangle().intersects(this.spaceship2.rectangle())) {
             fuelSound.startPlay();
             System.out.println(" fuel crash");
             fuelHasCollision = true;
@@ -387,19 +377,19 @@ public class LevelOne extends AbstractLevel implements KeyListener {
                 counterOfStoneHits++;
                 stoneHasCollision = true;
                 stoneIndex = (byte) i;
-                if (counterOfStoneHits == 3){
+                if (counterOfStoneHits == 3) {
                     explosion.startPlay();
 //                    System.out.println("game over - lose");
                 }
             }
         }
-        if (stoneHasCollision){
+        if (stoneHasCollision) {
             stones.get(stoneIndex).setRandomX(this.windowWidth, this.windowWidth + 600);
             stones.get(stoneIndex).setRandomY(0, this.windowHeight - this.stone2.getHeight());
             stoneHasCollision = false;
 
         }
-        if (fuelHasCollision){
+        if (fuelHasCollision) {
             this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
             this.fuel.setRandomY(0, this.windowHeight - this.fuel.getHeight());
             System.out.println("Fuel hits: " + counterOfFuelHits);
@@ -419,9 +409,9 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         return isFailed;
     }
 
-    public void hideTools(){
+    public void hideTools() {
 
-        if (counterOfStoneHits >= 1){
+        if (counterOfStoneHits >= 1) {
             toolsOfLife.hideHeart3();
         }
         if (counterOfStoneHits >= 2) {
