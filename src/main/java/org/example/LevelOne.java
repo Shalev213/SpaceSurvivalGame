@@ -68,7 +68,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
-        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 1", " ", "src/main/java/resources/level1instructions.png", 200, windowHeight - 100);
+        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 1", " ", "src/main/java/resources/level1instructions.png", 200, windowHeight - 200);
 
 
         this.options = new Object[]{"Lobby", ""};
