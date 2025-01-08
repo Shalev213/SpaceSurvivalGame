@@ -68,7 +68,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
-        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 1", " ", "src/main/java/resources/level1instructions.png", 100, windowHeight - 100);
+        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 1", " ", "src/main/java/resources/level1instructions.png", 200, windowHeight - 100);
 
 
         this.options = new Object[]{"Lobby", ""};
@@ -197,7 +197,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         }
 
         // חללית 2 - תנועה אנכית ואופקית
-        if (sPressed && this.spaceship2.getY() <= (windowHeight - 1.75 * spaceship2.getHeight())) {
+        if (sPressed && this.spaceship2.getY() <= (windowHeight - 1.5 * spaceship2.getHeight())) {
             spaceship2.upDownMove(1);
         }
         if (wPressed && this.spaceship2.getY() >= 0) {

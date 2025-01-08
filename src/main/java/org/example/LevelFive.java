@@ -527,7 +527,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
             this.isFailed = true;
         }
 
-        if (counterOfAlienHits >= 2) {
+        if (counterOfAlienHits >= 25) {
             super.gameCondition = false;
             this.isSuccess = true;
         }

@@ -189,7 +189,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 //        }
 
         // חללית 2 - תנועה אנכית ואופקית
-        if (sPressed && this.spaceship2.getY() <= (windowHeight - 1.75 * spaceship2.getHeight())) {
+        if (sPressed && this.spaceship2.getY() <= (windowHeight - 1.5 * spaceship2.getHeight())) {
             spaceship2.upDownMove(0.25);
         }
         if (wPressed && this.spaceship2.getY() >= 0) {

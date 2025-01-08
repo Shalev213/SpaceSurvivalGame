@@ -28,12 +28,12 @@ public abstract class AbstractLevel extends JPanel {
         new Thread(() -> {
 
 
-            while (!levelInstructions.isClicked()) {
-                setVisible(false);
-                levelInstructions.setVisible(true);
-                levelInstructions.setFocusable(true);
-                this.add(levelInstructions);
-            }
+//            while (!levelInstructions.isClicked()) {
+////                setVisible(false);
+//                levelInstructions.setVisible(true);
+//                levelInstructions.setFocusable(true);
+//                this.add(levelInstructions);
+//            }
             this.remove(levelInstructions);
             setVisible(true);
 
@@ -71,7 +71,7 @@ public abstract class AbstractLevel extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-//        levelInstructions.paintInstructions(graphics);
+        levelInstructions.paintInstructions(graphics);
 
         if (spaceBackgroundOne != null && spaceBackgroundTwo != null) {
             this.spaceBackgroundOne.paintIcon(null, graphics, (int) xOfBackgroundOne, 0);
