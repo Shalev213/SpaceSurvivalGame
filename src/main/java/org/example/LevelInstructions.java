@@ -16,7 +16,7 @@ public class LevelInstructions extends JPanel {
     public LevelInstructions(int windowWidth, int windowHeight, String title, String textBody, String path, int imageX, int imageY) {
         this.setSize(windowWidth, windowHeight);
         this.setLayout(null);
-
+        this.setBackground(new Color(0x1010CA));
         this.title = new JLabel(title);
         this.title.setForeground(new Color(31, 191, 230));
         this.title.setFont(new Font("Arial", Font.BOLD, 60));
@@ -37,8 +37,11 @@ public class LevelInstructions extends JPanel {
         this.startGameButton = new JButton("Start");
         this.startGameButton.setFont(new Font("Arial", Font.BOLD, 25));
         this.startGameButton.setBounds(imageX + 200, imageY + 100, imageX / 2, 50);
+
         this.startGameButton.addActionListener(e -> {
             isClicked = true;
+            System.out.println("button clicked");
+//            remove(this);
             setVisible(false);
         });
         this.add(this.startGameButton);
@@ -53,4 +56,5 @@ public class LevelInstructions extends JPanel {
     public boolean isClicked() {
         return isClicked;
     }
+
 }

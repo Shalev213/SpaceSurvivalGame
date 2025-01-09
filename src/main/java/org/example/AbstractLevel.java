@@ -28,13 +28,13 @@ public abstract class AbstractLevel extends JPanel {
         new Thread(() -> {
 
 
-//            while (!levelInstructions.isClicked()) {
-////                setVisible(false);
-//                levelInstructions.setVisible(true);
-//                levelInstructions.setFocusable(true);
-//                this.add(levelInstructions);
-//            }
-            this.remove(levelInstructions);
+            while (!levelInstructions.isClicked()) {
+//                setVisible(false);
+                levelInstructions.setVisible(true);
+                levelInstructions.setFocusable(true);
+                this.add(levelInstructions);
+            }
+            this.remove(levelInstructions );
             setVisible(true);
 
             while (gameCondition) {
