@@ -56,5 +56,8 @@ public class LevelInstructions extends JPanel {
     public boolean isClicked() {
         return isClicked;
     }
+    public void reset() {
+        isClicked = false;
+    }
 
 }

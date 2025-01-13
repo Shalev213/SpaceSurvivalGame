@@ -68,7 +68,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         super.windowHeight = height;
         super.xOfBackgroundTwo = this.spaceBackgroundOne.getIconWidth();
 
-        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 1", " ", "src/main/java/resources/level1instructions.png", 200, windowHeight - 200);
+//        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 1", " ", "src/main/java/resources/level1instructions.png", 200, windowHeight - 200);
 
 
         this.options = new Object[]{"Lobby", ""};
@@ -161,6 +161,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         this.requestFocus();
         this.addKeyListener(this);
         this.requestFocusInWindow();
+
         mainGameLoop();
     }
 
@@ -271,6 +272,11 @@ public class LevelOne extends AbstractLevel implements KeyListener {
                 null,
                 options,
                 options[0]);
+
+//        if (selectedOption == 1) {  // אם נבחר "Play again"
+//            levelInstructions.reset();
+//            remove(levelInstructions);
+//        }
 
         // מפעיל את כל המאזינים עם התוצאה שנבחרה
         notifyListeners(selectedOption);

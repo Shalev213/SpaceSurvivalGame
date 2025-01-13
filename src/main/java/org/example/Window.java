@@ -119,12 +119,13 @@ public class Window extends JFrame {
     }
 
     private void addLevelOneListener() {
-        this.lobbyPanel.getLevelButton1().addActionListener(e -> {
+        this.lobbyPanel.getLevelButton1().addActionListener(_ -> {
             this.lobbyBackground.stopPlay();
             this.lobbyPanel.setVisible(false);
 //                teamNameExist = signInPanel.getTeamName();
             this.levelOne = new LevelOne(windowWidth, windowHeight, teamNameExist);
             this.add(levelOne);
+
 
             this.levelOne.addOptionSelectionListener(selectedOption -> {
                 if (selectedOption == 0 || selectedOption == JOptionPane.CLOSED_OPTION) {
