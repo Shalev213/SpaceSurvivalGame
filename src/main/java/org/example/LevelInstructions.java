@@ -11,6 +11,7 @@ public class LevelInstructions extends JPanel {
     private int imageY;
     private JButton startGameButton;
     private boolean isClicked = false;
+    private InstructionsButton instructionsButton;
 
 
     public LevelInstructions(int windowWidth, int windowHeight, String title, String textBody, String path, int imageX, int imageY) {

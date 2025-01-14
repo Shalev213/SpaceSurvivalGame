@@ -26,6 +26,7 @@ public class LobbyPanel extends JPanel {
     private int space = 43;// המרווח בין הכפתורים
     private List<LevelButton> levelButtons;
     private String teamName;
+    private InstructionsButton instructionsButton;
 
 
     public LobbyPanel(int width, int height) {
@@ -53,6 +54,9 @@ public class LobbyPanel extends JPanel {
 
         this.add(exitButton);
 
+
+        this.instructionsButton = new InstructionsButton(100 , width - 100);
+        this.add(instructionsButton);
 
         this.levelButton1 = new LevelButton(this.levelButtonsX, this.levelButtonsY);
         this.levelButton1.setEnabled(true);
