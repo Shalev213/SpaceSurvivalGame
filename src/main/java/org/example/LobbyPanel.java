@@ -17,9 +17,9 @@ public class LobbyPanel extends JPanel {
     private LevelButton levelButton3;
     private LevelButton levelButton4;
     private LevelButton levelButton5;
-    //    private int levelButtonsX = 60;
-//    private int levelButtonsY = 200;
-//    private int space = 30;
+    //private int levelButtonsX = 60;
+    //private int levelButtonsY = 200;
+    //private int space = 30;
     private int titleWidth = 430; // נסה לשנות את הערך כדי להתאים למיקום בתמונה
     private int levelButtonsX = 67; // נסה לשנות את הערך כדי להתאים למיקום בתמונה
     private int levelButtonsY = 520; // מיקום הקרוב יותר לתחתית התמונה
@@ -55,7 +55,7 @@ public class LobbyPanel extends JPanel {
         this.add(exitButton);
 
 
-        this.instructionsButton = new InstructionsButton(100 , width - 100);
+        this.instructionsButton = new InstructionsButton(120 , width - 270);
         this.add(instructionsButton);
 
         this.levelButton1 = new LevelButton(this.levelButtonsX, this.levelButtonsY);
@@ -92,6 +92,8 @@ public class LobbyPanel extends JPanel {
         if (lobbyBackground != null) {
             this.lobbyBackground.paintIcon(null, graphics, 0, 0);
         }
+
+        this.instructionsButton.paintAstronaut();
     }
 
     public JButton getExitButton() {
