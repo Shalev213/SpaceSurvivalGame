@@ -3,7 +3,7 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 
-public class InstructionsButton {
+public class InstructionsButton extends JButton{
 
     private String astronautToRightPath = "src/main/java/resources/astronautWithWeaponToRight.png";
     private String astronautToLeftPath = "src/main/java/resources/astronautWithWeaponToLeft.png";
@@ -14,11 +14,13 @@ public class InstructionsButton {
     private final int height = 155;
     private int y;
     private int x = 40;
+    private int leftXLimit;
+    private int rightXLimit;
     private boolean isWalkingToRight = false;
 
 
 
-    public InstructionsButton() {
+    public InstructionsButton(int leftXLimit, int rightXLimit) {
 
         this.astronautToRightImage = new ImageIcon(astronautToRightPath).getImage();
         this.astronautToLeftImage = new ImageIcon(astronautToLeftPath).getImage();
