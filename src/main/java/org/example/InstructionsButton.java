@@ -110,4 +110,6 @@ public class InstructionsButton extends JButton{
     public boolean isMove() {
         return isMove;
     }
+
+
 }
