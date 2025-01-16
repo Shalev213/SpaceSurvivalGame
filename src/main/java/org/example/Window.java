@@ -17,6 +17,7 @@ public class Window extends JFrame {
     private LevelFour levelFour;
     private LevelFive levelFive;
     private Sound lobbyBackground;
+    private LevelInstructions levelInstructions;
 
     private String teamNameExist;
 
@@ -57,6 +58,8 @@ public class Window extends JFrame {
 
             this.lobbyPanel = new LobbyPanel(windowWidth, windowHeight);
             this.add(lobbyPanel);
+
+
             addLobbyPanelListeners();
             lobbyPanel.setTeamName(teamNameExist);
             String teamPassword = signInPanel.getPassword();
@@ -70,6 +73,21 @@ public class Window extends JFrame {
 
                     this.lobbyPanel.updateLevel();
                     this.lobbyPanel.setVisible(true);
+
+
+
+                    this.lobbyPanel.getInstructionsButton().addActionListener(e1 -> {
+                        int currentLevel = JDBC.showUpdate(teamNameExist);
+                        this.levelInstructions = new LevelInstructions(currentLevel, this.windowWidth, this.windowHeight);
+//                        this.levelInstructions.setVisible(false);
+
+                        this.add(levelInstructions);
+
+                        this.lobbyPanel.setVisible(false);
+                        this.levelInstructions.setVisible(true);
+
+
+                    });
                 } else {
                     JOptionPane.showMessageDialog(null, "Your team name or password are not exist, \nplease correct them or create a new team", "Error", JOptionPane.ERROR_MESSAGE);
                 }

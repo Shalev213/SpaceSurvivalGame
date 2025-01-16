@@ -29,14 +29,14 @@ public class LevelInstructions extends JPanel {
 
         this.title = new JLabel("Level " + this.currentLevel + " - Instructions");
         this.title.setForeground(new Color(31, 191, 230));
-        this.title.setFont(new Font("Arial", Font.BOLD, 60));
-        this.title.setBounds(250, 100, 350, 150);
+        this.title.setFont(new Font("Arial", Font.BOLD, 45));
+        this.title.setBounds(275, 60, 600, 100);
         this.add(this.title);
 
         this.bodyLabel = new JLabel();
         this.bodyLabel.setText(strBody);
         this.bodyLabel.setForeground(new Color(31, 191, 230));
-        this.bodyLabel.setFont(new Font("Arial", Font.BOLD, 60));
+        this.bodyLabel.setFont(new Font("Arial", Font.BOLD, 45));
         this.bodyLabel.setBounds(10, 200, 550, 800);
         this.add(this.bodyLabel);
 
@@ -58,10 +58,11 @@ public class LevelInstructions extends JPanel {
     }
 
 
-    public void paintInstructions(Graphics graphics) {
-        super.paint(graphics);
+    public void paintComponent(Graphics graphics) {
+//        super.paint(graphics);
         if (this.screenshot != null) {
-            this.screenshot.paintIcon(null, graphics, this.imageX, this.imageY);
+            graphics.drawImage(this.screenshot.getImage(), this.imageX, this.imageY, 550, 375, null);
+//            this.screenshot.paintIcon(null, graphics, this.imageX, this.imageY);
         }
     }
 

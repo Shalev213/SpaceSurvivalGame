@@ -27,7 +27,7 @@ public class LobbyPanel extends JPanel {
     private List<LevelButton> levelButtons;
     private String teamName;
     private InstructionsButton instructionsButton;
-    private LevelInstructions levelInstructions;
+//    private LevelInstructions levelInstructions;
     private int windowWidth;
     private int windowHeight;
     private boolean isPaintLobby = false;
@@ -91,7 +91,7 @@ public class LobbyPanel extends JPanel {
         this.instructionsButton = new InstructionsButton(120, width - 270);
         this.instructionsButton.addActionListener(_ -> {
 //            this.levelInstructions.setVisible(true);
-            isPaintLobby = true;
+//            isPaintLobby = true;
 //            this.add(levelInstructions);
         });
         this.add(instructionsButton);
@@ -105,9 +105,6 @@ public class LobbyPanel extends JPanel {
         }
 
         this.instructionsButton.paintAstronaut();
-        if (isPaintLobby) {
-            this.levelInstructions.paintInstructions(graphics);
-        }
     }
 
     public JButton getExitButton() {
@@ -141,12 +138,16 @@ public class LobbyPanel extends JPanel {
             levelButtons.get(i).checkEnable();
         }
 
-        this.levelInstructions = new LevelInstructions(currentLevel, this.windowWidth, this.windowHeight);
-        this.levelInstructions.setVisible(false);
-        this.remove(this.levelInstructions);
+//        this.levelInstructions = new LevelInstructions(currentLevel, this.windowWidth, this.windowHeight);
+//        this.levelInstructions.setVisible(false);
+//        this.remove(this.levelInstructions);
     }
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public InstructionsButton getInstructionsButton() {
+        return instructionsButton;
     }
 }
