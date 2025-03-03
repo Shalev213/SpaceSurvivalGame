@@ -23,7 +23,8 @@ public class LevelInstructions extends JPanel {
     private int titleHeight = 60;
     private int xBody;
     private int bodyWidth = 800;
-    private int space = 90;
+    private int space = 50;
+    private JButton lobbyButton;
 
 
 //    private InstructionsButton instructionsButton;
@@ -52,15 +53,23 @@ public class LevelInstructions extends JPanel {
 
         this.bodyLabel = new JLabel();
         this.bodyLabel.setText(strBody);
-        this.bodyLabel.setForeground(new Color(31, 191, 230));
+        this.bodyLabel.setForeground(new Color(255, 255, 255));
         this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
-        this.bodyLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        this.bodyLabel.setBounds(this.xBody, this.yTitle + this.space, this.bodyWidth, 190);
+        this.bodyLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        this.bodyLabel.setBounds(this.xBody, this.yTitle + this.space, this.bodyWidth, 235);
         this.add(this.bodyLabel);
 
         this.screenshot = new ImageIcon(path);
         this.imageX = (windowWidth - imageWidth) / 2;
         this.imageY = 320;
+
+        this.lobbyButton = new JButton("Back to lobby");
+        this.lobbyButton.setBounds(25, windowHeight - 100, 200, 60);
+        this.lobbyButton.setFont(new Font("Arial", Font.BOLD, 20));
+//        this.lobbyButton.setFocusPainted(false);
+//        this.lobbyButton.setBackground(new Color(43, 45, 48));
+//        this.lobbyButton.setForeground(Color.white);
+        this.add(this.lobbyButton);
 
 //        this.startGameButton = new JButton("Start");
 //        this.startGameButton.setFont(new Font("Arial", Font.BOLD, 25));
@@ -98,11 +107,21 @@ public class LevelInstructions extends JPanel {
         switch (currentLevel) {
             case 1 -> {
                 path = "src/main/java/resources/level1instructions.png";
-                strBody = "111111111111111111111111";
+                strBody = "<html>In this level, two players must work together to collect five fuel " +
+                        "tanks while avoiding incoming meteors. Player 1 controls his spaceship using " +
+                        "the Arrow Keys (Left, Right, Up, Down), while Player 2 moves using WASD (W - Up," +
+                        "A - Left, S - Down, D - Right). The team has a total of three lives—hitting  " +
+                        "meteors three times results in failure. To complete the level, players must successfully " +
+                        "collect all five fuel tanks while coordinating their movements to avoid collisions. Good luck! </html>";
             }
             case 2 -> {
                 path = "src/main/java/resources/level2instructions.png";
-                strBody = "22222222222222222222222222";
+                strBody = "<html>In this level, players must find a hidden malfunction within the <br>" +
+                        "spaceship’s system by clicking on the correct component. <br>" +
+                        "Only Player 1 can move the astronaut left and right using the Arrow <br>" +
+                        "Keys to navigate inside the spaceship. Once the malfunction is found, <br>" +
+                        "the players must solve a riddle to progress to the next level. <br>" +
+                        "Stay sharp and work together to uncover the issue! </html>";
             }
             case 3 -> {
                 path = "src/main/java/resources/level3instructions.png";
@@ -125,6 +144,10 @@ public class LevelInstructions extends JPanel {
 
     public void reset() {
         isClicked = false;
+    }
+
+    public JButton getLobbyButton() {
+        return lobbyButton;
     }
 
 }

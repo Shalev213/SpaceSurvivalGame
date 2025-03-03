@@ -86,6 +86,11 @@ public class Window extends JFrame {
                         this.lobbyPanel.setVisible(false);
                         this.levelInstructions.setVisible(true);
 
+                        this.levelInstructions.getLobbyButton().addActionListener(e2 -> {
+                            this.levelInstructions.setVisible(false);
+                            this.lobbyPanel.setVisible(true);
+                        });
+
 
                     });
                 } else {
@@ -240,6 +245,8 @@ public class Window extends JFrame {
                         this.levelThree.getSceneSound().stopPlay();
                         this.remove(levelThree);
                         this.lobbyPanel.getLevelButton3().doClick();
+
+
                     }
                 } else {
                     System.out.println("No option selected or window closed");
