@@ -1,6 +1,7 @@
 package org.example;
 
 import db.JDBC;
+import opencv.OpenCVProcessor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,7 +68,6 @@ public class Window extends JFrame {
                 JOptionPane.showMessageDialog(null, "One or more of your fields are empty, \nplease fill in these fields", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (JDBC.validateLogin(teamNameExist, teamPassword)) {
-//                        System.out.println("login success");
                     this.signInPanel.setVisible(false);
                     this.signInPanel.restartPanel();
 
@@ -172,8 +172,6 @@ public class Window extends JFrame {
                         this.remove(levelOne);
                         this.lobbyPanel.getLevelButton1().doClick();
                     }
-                } else {
-                    System.out.println("No option selected or window closed");
                 }
             });
 
@@ -229,6 +227,7 @@ public class Window extends JFrame {
                     levelThree.getSceneSound().stopPlay();
                     this.remove(levelThree);
                     lobbyPanel.setVisible(true);
+                    OpenCVProcessor.release();
                     this.lobbyBackground.restartSound();
                     if (levelThree.isSuccess()) {
                         this.lobbyPanel.getLevelButton4().setEnabled(true);
@@ -248,8 +247,6 @@ public class Window extends JFrame {
 
 
                     }
-                } else {
-                    System.out.println("No option selected or window closed");
                 }
             });
 
@@ -282,7 +279,6 @@ public class Window extends JFrame {
                     if (levelFour.isSuccess()) {
 
                         if (levelFour.getLevelCounter() <= 3) {
-                            System.out.println(levelFour.getLevelCounter());
                             this.remove(levelFour);
                             this.lobbyPanel.getLevelButton4().doClick();
                             this.levelFour.getCircuitButton().doClick();
@@ -300,8 +296,6 @@ public class Window extends JFrame {
                         this.lobbyPanel.getLevelButton4().doClick();
                         this.levelFour.getCircuitButton().doClick();
                     }
-                } else {
-                    System.out.println("No option selected or window closed");
                 }
             });
             levelFour.setVisible(true);
@@ -338,9 +332,6 @@ public class Window extends JFrame {
                         this.remove(levelFive);
                         this.lobbyPanel.getLevelButton5().doClick();
                     }
-                } else {
-                    System.out.println("No option selected or window closed");
-
                 }
             });
             levelFive.setVisible(true);
@@ -354,6 +345,10 @@ public class Window extends JFrame {
                 this.lobbyBackground.restartSound();
 
                 levelFive.getFinalPanel().getLobbyButton().setVisible(false);
+                levelFive.remove(levelFive.getFinalPanel());
+                this.remove(levelFive.getFinalPanel());
+                this.remove(levelFive);
+
             });
         });
 

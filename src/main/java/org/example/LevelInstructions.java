@@ -39,7 +39,6 @@ public class LevelInstructions extends JPanel {
         this.setVisible(false);
         this.setBackground(new Color(0x1010CA));
 
-        setPanelByLevel();
 
         this.xTitle = (windowWidth - titleWidth) / 2;
 
@@ -52,11 +51,12 @@ public class LevelInstructions extends JPanel {
         this.xBody = (windowWidth - this.bodyWidth) / 2;
 
         this.bodyLabel = new JLabel();
-        this.bodyLabel.setText(strBody);
         this.bodyLabel.setForeground(new Color(255, 255, 255));
         this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
         this.bodyLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         this.bodyLabel.setBounds(this.xBody, this.yTitle + this.space, this.bodyWidth, 235);
+        setPanelByLevel();
+        this.bodyLabel.setText(strBody);
         this.add(this.bodyLabel);
 
         this.screenshot = new ImageIcon(path);
@@ -87,7 +87,7 @@ public class LevelInstructions extends JPanel {
 
     public void paintComponent(Graphics graphics) {
 //        super.paint(graphics);
-        if (this.background != null){
+        if (this.background != null) {
             this.background.paintIcon(null, graphics, 0, 0);
         }
         if (this.screenshot != null) {
@@ -124,8 +124,19 @@ public class LevelInstructions extends JPanel {
                         "Stay sharp and work together to uncover the issue! </html>";
             }
             case 3 -> {
+                this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 20));
                 path = "src/main/java/resources/level3instructions.png";
-                strBody = "3333333333333333333333333333";
+                strBody = "<html>In this level, players control their spaceships similarly to Level 1," +
+                        "but they can only move up and down. Player 1 pilots the red spaceship using " +
+                        "the Arrow Keys, while Player 2 pilots the yellow spaceship using W and S. " +
+                        "Additionally, movement can be controlled by holding a green object in front " +
+                        "of the camera—Player 1 moves up or down if the object is detected on the right" +
+                        "side of the screen, while Player 2 moves up or down if it's detected on the left" +
+                        "side. Players must shoot and destroy 15 alien spaceships before they get past—Player" +
+                        "1 shoots with ENTER, and Player 2 shoots with SPACEBAR. The team has three lives," +
+                        "which are lost if a player crashes into an alien spaceship or if an alien spaceship gets past them." +
+                        "Stay focused and take down the enemies!";
+
             }
             case 4 -> {
                 path = "src/main/java/resources/level2instructions.png";

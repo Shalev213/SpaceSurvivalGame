@@ -233,12 +233,12 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             missionComplete.startPlay();
             JDBC.updateLevel(teamName, 4);
             showSuccessDialog();
-//            OpenCVProcessor.release();
+            OpenCVProcessor.release();
         } else if (isFailed) {
 //            OpenCVProcessor.release();
             showFailedDialog();
         }
-        OpenCVProcessor.release();
+//        OpenCVProcessor.release();
 
 
 
@@ -311,6 +311,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 //        alienSpaceship5.paintAlienSpaceship(graphics);
         updatePlayerOne();
         updatePlayerTwo();
+
     }
 
     @Override
@@ -374,7 +375,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
             if (this.alienSpaceships.get(i).rectangle().intersects(this.spaceship1.rectangle()) || this.alienSpaceships.get(i).rectangle().intersects(this.spaceship2.rectangle())) {
                 crashing.startPlay();
                 counterOfMisses++;
-                System.out.println("Miss: " + counterOfMisses);
                 alienHasCollision = true;
                 alienIndex = (byte) i;
             } else if (this.alienSpaceships.get(i).rectangle().intersects(this.laser1.rectangle())) {
@@ -391,7 +391,6 @@ public class LevelThree extends AbstractLevel implements KeyListener {
                 hasMisses = true;
                 alienIndex = (byte) i;
                 counterOfMisses++;
-//                System.out.println("Miss: " + counterOfMisses);
             }
         }
 
