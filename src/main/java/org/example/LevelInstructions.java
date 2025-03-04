@@ -135,12 +135,19 @@ public class LevelInstructions extends JPanel {
                         "side. Players must shoot and destroy 15 alien spaceships before they get past—Player" +
                         "1 shoots with ENTER, and Player 2 shoots with SPACEBAR. The team has three lives," +
                         "which are lost if a player crashes into an alien spaceship or if an alien spaceship gets past them." +
-                        "Stay focused and take down the enemies!";
+                        "Stay focused and take down the enemies!</html>";
 
             }
             case 4 -> {
+                this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 22));
                 path = "src/main/java/resources/level2instructions.png";
-                strBody = "4444444444444444444444444444";
+                strBody = "<html>In this level, just like in Level 2, only Player 1 can move the astronaut" +
+                        "left and right inside the spaceship using the Arrow Keys to find the hidden malfunction " +
+                        "in the system. Once the players identify the issue, they must work together to complete three" +
+                        "progressively difficult Circuit Breaker challenges—puzzle-based tasks where they need to restore" +
+                        "power by correctly reconnecting disrupted circuits in the spaceship’s electrical system." +
+                        "Only after successfully overcoming all three challenges will they be able to advance to the next level." +
+                        "<br>Stay sharp and work as a team! ";
             }
             case 5 -> {
                 path = "src/main/java/resources/level5instructions.png";
