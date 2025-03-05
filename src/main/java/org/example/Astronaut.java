@@ -84,7 +84,7 @@ public class Astronaut {
 //        this.astronautToRightPath = astronautToRightPath;
 //    }
 
-        public Rectangle rectangle() {
+    public Rectangle rectangle() {
         return new Rectangle(this.x, this.y + 8 , this.width - 5 , this.height - 16);
     }
 

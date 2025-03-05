@@ -64,7 +64,7 @@ public class LevelInstructions extends JPanel {
         this.imageY = 320;
 
         this.lobbyButton = new JButton("Back to lobby");
-        this.lobbyButton.setBounds(25, windowHeight - 100, 200, 60);
+        this.lobbyButton.setBounds(25, windowHeight - 120, 200, 60);
         this.lobbyButton.setFont(new Font("Arial", Font.BOLD, 20));
 //        this.lobbyButton.setFocusPainted(false);
 //        this.lobbyButton.setBackground(new Color(43, 45, 48));
@@ -150,8 +150,16 @@ public class LevelInstructions extends JPanel {
                         "<br>Stay sharp and work as a team! ";
             }
             case 5 -> {
+                this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 21));
                 path = "src/main/java/resources/level5instructions.png";
-                strBody = "Messi the goat of level 5";
+                strBody = "<html>In this level, the two astronauts have landed on the planet they aim to conquer." +
+                        "They can move left and right—each player using their respective keys—and shoot lasers " +
+                        "(just like in Level 3) to eliminate the aliens. Additionally, an alien spaceship hovers " +
+                        "in the sky, randomly firing lasers at the players." +
+                        "To complete the level, the players must eliminate 30 aliens without getting hit even once." +
+                        "A failure occurs if an astronaut is hit by an alien or by a laser from the alien spaceship." +
+                        "Each player has exactly 15 laser shots, meaning they must work together strategically to succeed." +
+                        "<br>Coordination and precision are key to victory! ";
             }
         }
     }

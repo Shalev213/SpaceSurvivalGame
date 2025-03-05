@@ -32,7 +32,11 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     private boolean spacePressed = false;
     private boolean enterPressed = false;
     private Laser laser1;
+    private int laser1Counter = 15;
+    private int laser2Counter = 15;
+    private LaserStack laserStack1;
     private Laser laser2;
+    private LaserStack laserStack2;
     private int laser1X = 0;
     private int laser1Y = 0;
     private int laser2X = 0;
@@ -86,6 +90,17 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
 //        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 5", " ", "src/main/java/resources/level5instructions.png", 100, windowHeight - 200);
 
+        this.laserStack2 = new LaserStack();
+        this.add(this.laserStack2.laserCount());
+
+        this.laserStack1 = new LaserStack();
+        this.laserStack1.setX(windowWidth - laserStack1.getLogoWidth() - 25);
+        this.laserStack1.laserCount().setBounds(this.laserStack1.getXOfLogo() - this.laserStack1.getWidthOfLabel() , this.laserStack1.getyOfLogo(), this.laserStack1.getWidthOfLabel(), this.laserStack1.getHeightOfLabel());
+        this.add(this.laserStack1.laserCount());
+
+
+
+
         this.sceneSound = new Sound();
         this.sceneSound.playSound("src/main/java/resources/levelFiveMusic.wav");
 
@@ -104,7 +119,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
         this.alienSpaceship = new AlienSpaceship("src/main/java/resources/AlienSpaceship1.png");
         this.alienSpaceship.setRandomX(this.windowWidth, this.windowWidth * 2);
-        this.alienSpaceship.setRandomY(0, this.windowHeight / 4 - this.alienSpaceship.getHeight());
+        this.alienSpaceship.setRandomY(90, this.windowHeight / 4 - this.alienSpaceship.getHeight());
         this.alienSpaceship.start();
         this.alienSpaceship.randomFirePoint(50, windowWidth - 100);
 //        this.alienSpaceship2 = new AlienSpaceship("src/main/java/resources/AlienSpaceship2.png");
@@ -221,10 +236,9 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
     }
 
-
-    public interface OptionSelectionListener {
-        void onOptionSelected(int selectedOption);
-    }
+//    public interface OptionSelectionListener {
+//        void onOptionSelected(int selectedOption);
+//    }
 
 
     public void addOptionSelectionListener(LevelThree.OptionSelectionListener listener) {
@@ -245,6 +259,10 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         if (this.background != null) {
             this.background.paintIcon(null, graphics, (int) xOfBackgroundOne, 0);
         }
+
+        laserStack1.paintBullet(graphics);
+        laserStack2.paintBullet(graphics);
+
         alienSpaceship.paintAlienSpaceship(graphics);
 //        alienSpaceship2.paintAlienSpaceship(graphics);
 
@@ -262,6 +280,8 @@ public class LevelFive extends AbstractLevel implements KeyListener {
 
         astronaut1.paintAstronaut(graphics);
         astronaut2.paintAstronaut(graphics);
+
+
 
     }
 
@@ -305,10 +325,10 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         }
 
 
-        if (this.laser1.getX() == this.astronaut1.getX() + 20 && enterPressed) {
+        if (this.laser1.getX() == this.astronaut1.getX() + 20 && enterPressed && laser1Counter > 0) {
             this.laserShot1.startPlay();
         }
-        if (this.laser2.getX() == this.astronaut2.getX() + 20 && spacePressed) {
+        if (this.laser2.getX() == this.astronaut2.getX() + 20 && spacePressed && laser2Counter > 0) {
             this.laserShot2.startPlay();
         }
 
@@ -350,8 +370,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_DOWN -> downPressed = true;
-            case KeyEvent.VK_UP -> upPressed = true;
             case KeyEvent.VK_RIGHT -> {
                 rightPressed = true;
                 this.astronaut1.setWalkingToRight(true);
@@ -360,8 +378,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
                 leftPressed = true;
                 this.astronaut1.setWalkingToRight(false);
             }
-            case KeyEvent.VK_W -> wPressed = true;
-            case KeyEvent.VK_S -> sPressed = true;
             case KeyEvent.VK_D -> {
                 dPressed = true;
                 this.astronaut2.setWalkingToRight(true);
@@ -372,6 +388,10 @@ public class LevelFive extends AbstractLevel implements KeyListener {
             }
             case KeyEvent.VK_SPACE -> {
 //                laserShot2.startPlay();
+                System.out.println("laser 2 left: " + laser2Counter);
+                if (laser2Counter > 0) {
+                    laserStack2.laserCount().setText(String.valueOf(laser2Counter - 1));
+                }
                 if (!laser2Move) { // ירי ראשוני בלבד
                     isRightShoot2 = astronaut2.isWalkingToRight();
                 }
@@ -380,6 +400,10 @@ public class LevelFive extends AbstractLevel implements KeyListener {
             }
             case KeyEvent.VK_ENTER -> {
 //                laserShot1.startPlay();
+                System.out.println("laser 1 left: " + laser1Counter);
+                if (laser1Counter > 0){
+                    laserStack1.laserCount().setText(String.valueOf(laser1Counter - 1));
+                }
                 if (!laser1Move) { // ירי ראשוני בלבד
                     isRightShoot1 = astronaut1.isWalkingToRight();
                 }
@@ -393,8 +417,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     public void keyReleased(KeyEvent e) {
 
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_DOWN -> downPressed = false;
-            case KeyEvent.VK_UP -> upPressed = false;
             case KeyEvent.VK_RIGHT -> {
                 rightPressed = false;
                 if (leftPressed) {
@@ -407,8 +429,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
                     astronaut1.setWalkingToRight(true);
                 }
             }
-            case KeyEvent.VK_W -> wPressed = false;
-            case KeyEvent.VK_S -> sPressed = false;
             case KeyEvent.VK_D -> {
                 dPressed = false;
                 if (aPressed) {
@@ -443,7 +463,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     public void alienSpaceshipLoop() {
         if (alienSpaceship.getX() < -alienSpaceship.getWidth()) {
             alienSpaceship.setRandomX(this.windowWidth, this.windowWidth + 600);
-            alienSpaceship.setRandomY(0, this.windowHeight / 2 - this.alienSpaceship.getHeight() - 30);
+            alienSpaceship.setRandomY(90, this.windowHeight / 2 - this.alienSpaceship.getHeight() - 30);
         }
     }
 
@@ -527,7 +547,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
             this.isFailed = true;
         }
 
-        if (counterOfAlienHits >= 25) {
+        if (counterOfAlienHits >= 30) {
             super.gameCondition = false;
             this.isSuccess = true;
         }
@@ -556,13 +576,12 @@ public class LevelFive extends AbstractLevel implements KeyListener {
             this.alienLaser.setY(laserAlienY);
 
         }
-
-
     }
 
     public void moveLaser() {
 //        boolean isRightShoot1 = astronaut1.isWalkingToRight();
-        if (laser1Move) {
+
+        if (laser1Move && laser1Counter > 0) {
             laser1.fire(isRightShoot1, 8);
             if (laser1.getX() > windowWidth || laser1.getX() + laser1.getWidth() < 0) {
                 resetLaser1();
@@ -570,7 +589,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         }
 
 //        boolean isRightShoot2 = astronaut2.isWalkingToRight();
-        if (laser2Move) {
+        if (laser2Move && laser2Counter > 0) {
             laser2.fire(isRightShoot2, 8);
             if (laser2.getX() > windowWidth || laser2.getX() + laser2.getWidth() < 0) {
                 resetLaser2();
@@ -587,13 +606,14 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     }
 
     public void resetLaser1() {
-
+        laser1Counter--;
         laser1.setX(laser1X);
         laser1.setY(laser1Y);
         laser1Move = false;
     }
 
     public void resetLaser2() {
+        laser2Counter--;
         laser2.setX(laser2X);
         laser2.setY(laser2Y);
         laser2Move = false;
