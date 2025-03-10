@@ -14,6 +14,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
     private Spaceship spaceship1;
     private Spaceship spaceship2;
     private Fuel fuel;
+    private EmptyFuels emptyFuels;
     private Stone stone1;
     private Stone stone2;
     private Stone stone3;
@@ -77,6 +78,9 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         this.spaceship1.setY(200);
         this.spaceship2 = new Spaceship("src/main/java/resources/Spaceship2.png");
         this.spaceship2.setY(500);
+
+        this.emptyFuels = new EmptyFuels();
+
 
         this.fuel = new Fuel();
         this.fuel.setRandomX(this.windowWidth, this.windowWidth * 2);
@@ -305,6 +309,7 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         finalMoonImage.paintIcon(null, graphics, finalMoonX, windowHeight - finalMoonImage.getIconHeight());
         spaceship1.paintSpaceship(graphics);
         spaceship2.paintSpaceship(graphics);
+        emptyFuels.paintEmptyFuels(graphics);
         fuel.paintFuel(graphics);
         stone1.paintStone(graphics);
         stone2.paintStone(graphics);
@@ -315,6 +320,8 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         stone7.paintStone(graphics);
         stone8.paintStone(graphics);
         toolsOfLife.paintTools(graphics);
+
+
 
     }
 
@@ -425,6 +432,12 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         }
         if (counterOfStoneHits >= 3) {
             toolsOfLife.hideHeart1();
+        }
+    }
+
+    public void showFuel(){
+        if (counterOfFuelHits >= 1){
+
         }
     }
 }

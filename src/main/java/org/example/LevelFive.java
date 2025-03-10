@@ -72,33 +72,35 @@ public class LevelFive extends AbstractLevel implements KeyListener {
     private Sound sceneSound;
     private FinalPanel finalPanel;
     private Sound finalVideoMusic;
+    private JLabel hitsCounter;
 
 
     public LevelFive(int width, int height) {
 //        videoBackground = new VideoBackground();
 //        gifPanel = new GifPanel("src/main/java/resources/final_video.gif", 500, 300);
-
         this.background = new ImageIcon("src/main/java/resources/backgroundLevelFive.png");
         this.finalPanel = new FinalPanel(width, height);
 
         this.finalVideoMusic = new Sound();
-
 
         super.windowWidth = width;
         super.windowHeight = height;
         super.gameCondition = !isSuccess && !isFailed;
 
 //        super.levelInstructions = new LevelInstructions(super.windowWidth, super.windowHeight, "Level 5", " ", "src/main/java/resources/level5instructions.png", 100, windowHeight - 200);
+        this.hitsCounter = new JLabel("Hits: " + this.counterOfAlienHits);
+        this.hitsCounter.setBounds(windowWidth / 2 - 70, 20, 200, 50);
+        this.hitsCounter.setFont(new Font("Arial", Font.BOLD, 30));
+        this.hitsCounter.setForeground(Color.white);
+        this.add(this.hitsCounter);
 
         this.laserStack2 = new LaserStack();
         this.add(this.laserStack2.laserCount());
 
         this.laserStack1 = new LaserStack();
         this.laserStack1.setX(windowWidth - laserStack1.getLogoWidth() - 25);
-        this.laserStack1.laserCount().setBounds(this.laserStack1.getXOfLogo() - this.laserStack1.getWidthOfLabel() , this.laserStack1.getyOfLogo(), this.laserStack1.getWidthOfLabel(), this.laserStack1.getHeightOfLabel());
+        this.laserStack1.laserCount().setBounds(this.laserStack1.getXOfLogo() - this.laserStack1.getWidthOfLabel(), this.laserStack1.getyOfLogo(), this.laserStack1.getWidthOfLabel(), this.laserStack1.getHeightOfLabel());
         this.add(this.laserStack1.laserCount());
-
-
 
 
         this.sceneSound = new Sound();
@@ -282,7 +284,6 @@ public class LevelFive extends AbstractLevel implements KeyListener {
         astronaut2.paintAstronaut(graphics);
 
 
-
     }
 
 
@@ -401,7 +402,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
             case KeyEvent.VK_ENTER -> {
 //                laserShot1.startPlay();
                 System.out.println("laser 1 left: " + laser1Counter);
-                if (laser1Counter > 0){
+                if (laser1Counter > 0) {
                     laserStack1.laserCount().setText(String.valueOf(laser1Counter - 1));
                 }
                 if (!laser1Move) { // ירי ראשוני בלבד
@@ -492,6 +493,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
                 alienIndex = (byte) i;
                 laser1Colision = true;
                 counterOfAlienHits++;
+                this.hitsCounter.setText("Hits: " + this.counterOfAlienHits);
                 System.out.println("hits: " + counterOfAlienHits);
 
 
@@ -500,6 +502,7 @@ public class LevelFive extends AbstractLevel implements KeyListener {
                 alienIndex = (byte) i;
                 laser2Colision = true;
                 counterOfAlienHits++;
+                this.hitsCounter.setText("Hits: " + this.counterOfAlienHits);
                 System.out.println("hits: " + counterOfAlienHits);
 
 
