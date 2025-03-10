@@ -23,7 +23,7 @@ public class EmptyFuels {
     private final short height = 65;
     private String imageEmptyPath = "src/main/java/resources/emptyFuel.png";
     private String imageFullPath = "src/main/java/resources/Fuel.png";
-    private final short x = (short) (windowWidth - 300);
+    private final short x = (short) (windowWidth/2);
     private final byte y = 10;
     private final byte space = 10;
     private int counter;
@@ -56,19 +56,19 @@ public class EmptyFuels {
     }
 
     public void paintFullFuel(Graphics graphics, int num) {
-        if (num<=1) {
+        if (num>=1) {
             graphics.drawImage(this.fuelFullImage1, this.x, this.y, this.width, this.height, null);
         }
-        if (num<=2) {
+        if (num>=2) {
             graphics.drawImage(this.fuelFullImage2, this.x + this.width + this.space, this.y, this.width, this.height, null);
         }
-        if (num<=3) {
+        if (num>=3) {
             graphics.drawImage(this.fuelFullImage3, this.x + 2 * (this.width + this.space), this.y, this.width, this.height, null);
         }
-        if (num<=4) {
+        if (num>=4) {
             graphics.drawImage(this.fuelFullImage4, this.x + 3 * (this.width + this.space), this.y, this.width, this.height, null);
         }
-        if (num<=5) {
+        if (num>=5) {
             graphics.drawImage(this.fuelFullImage5, this.x + 4 * (this.width + this.space), this.y, this.width, this.height, null);
         }
     }

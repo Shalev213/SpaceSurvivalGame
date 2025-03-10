@@ -321,19 +321,19 @@ public class LevelOne extends AbstractLevel implements KeyListener {
         stone8.paintStone(graphics);
         toolsOfLife.paintTools(graphics);
 
-        if (counterOfFuelHits <= 1) {
+        if (counterOfFuelHits == 1) {
             emptyFuels.paintFullFuel(graphics, 1);
         }
-        if (counterOfFuelHits <= 2) {
+        if (counterOfFuelHits == 2) {
             emptyFuels.paintFullFuel(graphics, 2);
         }
-        if (counterOfFuelHits <= 3) {
+        if (counterOfFuelHits == 3 ) {
             emptyFuels.paintFullFuel(graphics, 3);
         }
-        if (counterOfFuelHits <= 4) {
+        if (counterOfFuelHits == 4) {
             emptyFuels.paintFullFuel(graphics, 4);
         }
-        if (counterOfFuelHits <= 5){
+        if (counterOfFuelHits == 5){
             emptyFuels.paintFullFuel(graphics, 5);
         }
 
