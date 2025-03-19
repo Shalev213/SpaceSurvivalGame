@@ -7,10 +7,9 @@ import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.Videoio;
 
 public class OpenCVProcessor {
-    private static final Scalar LOWER_GREEN = new Scalar(30, 120, 30);
-    private static final Scalar UPPER_GREEN = new Scalar(90, 255, 90);
-    private static final Scalar LOWER_BLUE = new Scalar(90, 100, 100);
-    private static final Scalar UPPER_BLUE = new Scalar(130, 255, 255);
+    private static Scalar lowerGreen;
+    private static Scalar upperGreen;
+
 
     private static final int ROI_SCALE_FACTOR = 2;
     private static VideoCapture camera;
@@ -39,7 +38,17 @@ public class OpenCVProcessor {
         }
     }
 
+    public static void setThreshold(int greenThreshold) {
+
+        // עדכון גבולות הירוק והכחול בהתאם לערכים שנבחרו בסליידר
+        lowerGreen = new Scalar(35, greenThreshold, greenThreshold);
+        upperGreen = new Scalar(85, 255, 255);
+
+    }
+
     public static int getMarkerPosition(String color, boolean isRight) {
+
+
         if (camera == null || !camera.isOpened()) {
             initializeCamera();
         }
@@ -65,9 +74,7 @@ public class OpenCVProcessor {
                 resizeFrame(croppedFrame);
 
                 if (color.equalsIgnoreCase("green")) {
-                    createMask(croppedFrame, mask, LOWER_GREEN, UPPER_GREEN);
-                } else if (color.equalsIgnoreCase("blue")) {
-                    createMask(croppedFrame, mask, LOWER_BLUE, UPPER_BLUE);
+                    createMask(croppedFrame, mask, lowerGreen, upperGreen);
                 } else {
                     return -1;
                 }
