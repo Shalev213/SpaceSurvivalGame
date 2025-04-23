@@ -1,8 +1,5 @@
 package org.example;
 
-
-import opencv.CameraPreview;
-
 import javax.swing.*;
 
 public class Main {

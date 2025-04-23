@@ -1,7 +1,6 @@
 package org.example;
 
 import db.JDBC;
-import opencv.CameraPreview;
 import opencv.OpenCVProcessor;
 
 import javax.swing.*;
@@ -20,7 +19,6 @@ public class Window extends JFrame {
     private LevelFive levelFive;
     private Sound lobbyBackground;
     private LevelInstructions levelInstructions;
-    private CameraPreview cameraPreview;
 
     private String teamNameExist;
 
@@ -38,9 +36,6 @@ public class Window extends JFrame {
 
         signInPanel = new SignInPanel(windowWidth, windowHeight);
         this.add(signInPanel);
-
-        this.cameraPreview = new CameraPreview();
-
 
         this.lobbyBackground = new Sound();
         this.lobbyBackground.playSound("src/main/java/resources/background_sound.wav");
@@ -78,6 +73,7 @@ public class Window extends JFrame {
 
                     this.lobbyPanel.updateLevel();
                     this.lobbyPanel.setVisible(true);
+
 
 
                     this.lobbyPanel.getInstructionsButton().addActionListener(e1 -> {
@@ -219,19 +215,10 @@ public class Window extends JFrame {
     }
 
     private void addLevelThreeListener() {
-
-        this.lobbyPanel.getLevelButton3().addActionListener(e -> {
-            this.add(cameraPreview);
-            this.lobbyPanel.setVisible(false);
-        });
-
-        this.cameraPreview.getStartButton().addActionListener(_ -> {
+        this.lobbyPanel.getLevelButton3().addActionListener(_ -> {
             this.lobbyBackground.stopPlay();
-//            this.lobbyPanel.setVisible(false);
-//            this.cameraPreview.setVisible(false);
-            this.cameraPreview.release();
-            OpenCVProcessor.setThreshold(this.cameraPreview.getThreshold());
-            this.remove(this.cameraPreview);
+            this.lobbyPanel.setVisible(false);
+
             this.levelThree = new LevelThree(windowWidth, windowHeight, teamNameExist);
             this.add(levelThree);
 
@@ -257,6 +244,8 @@ public class Window extends JFrame {
                         this.levelThree.getSceneSound().stopPlay();
                         this.remove(levelThree);
                         this.lobbyPanel.getLevelButton3().doClick();
+
+
                     }
                 }
             });
