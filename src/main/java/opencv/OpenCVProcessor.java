@@ -1,22 +1,15 @@
 package opencv;
 
 import org.opencv.core.*;
-import org.opencv.imgproc.CLAHE;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.Videoio;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Properties;
-
 public class OpenCVProcessor {
-    private static Scalar LOWER_GREEN;
-    private static Scalar UPPER_GREEN;
-    private static Scalar LOWER_BLUE;
-    private static Scalar UPPER_BLUE;
+    private static final Scalar LOWER_GREEN = new Scalar(40, 50, 50);
+    private static final Scalar UPPER_GREEN = new Scalar(80, 255, 255);
+
 
     private static final int ROI_SCALE_FACTOR = 2;
     private static VideoCapture camera;
@@ -24,36 +17,7 @@ public class OpenCVProcessor {
     private static int screenHeight;
 
     static {
-        loadHSVConfig();
         initializeCamera();
-    }
-
-    private static void loadHSVConfig() {
-        Properties props = new Properties();
-        try (FileInputStream fis = new FileInputStream("color_config.properties")) {
-            props.load(fis);
-
-            LOWER_GREEN = new Scalar(
-                    Double.parseDouble(props.getProperty("green.lower.h")),
-                    Double.parseDouble(props.getProperty("green.lower.s")),
-                    Double.parseDouble(props.getProperty("green.lower.v"))
-            );
-            UPPER_GREEN = new Scalar(
-                    Double.parseDouble(props.getProperty("green.upper.h")),
-                    Double.parseDouble(props.getProperty("green.upper.s")),
-                    Double.parseDouble(props.getProperty("green.upper.v"))
-            );
-
-            LOWER_BLUE = new Scalar(90, 100, 100);  // Keep defaults
-            UPPER_BLUE = new Scalar(130, 255, 255);
-
-        } catch (IOException e) {
-            System.err.println("Failed to load HSV config. Using default values.");
-            LOWER_GREEN = new Scalar(30, 120, 30);
-            UPPER_GREEN = new Scalar(90, 255, 90);
-            LOWER_BLUE = new Scalar(90, 100, 100);
-            UPPER_BLUE = new Scalar(130, 255, 255);
-        }
     }
 
     private static void initializeCamera() {
@@ -78,12 +42,10 @@ public class OpenCVProcessor {
         if (camera == null || !camera.isOpened()) {
             initializeCamera();
         }
-
         Mat frameMat = new Mat();
         Mat mask = new Mat();
         Mat croppedFrame = new Mat();
         Mat diffFrame = new Mat();
-        Mat hsv = new Mat();
 
         try {
             if (!camera.read(frameMat)) {
@@ -100,32 +62,21 @@ public class OpenCVProcessor {
                 Rect roi = calculateROI(frameMat, isRight);
                 croppedFrame = new Mat(frameMat, roi);
                 resizeFrame(croppedFrame);
-                Imgproc.cvtColor(croppedFrame, hsv, Imgproc.COLOR_BGR2HSV);
-
-                // Use CLAHE to improve contrast
-                Mat claheImage = new Mat();
-                Imgproc.cvtColor(croppedFrame, claheImage, Imgproc.COLOR_BGR2GRAY);
-                CLAHE clahe = Imgproc.createCLAHE();
-                clahe.setClipLimit(3);
-                clahe.apply(claheImage, claheImage);
 
                 if (color.equalsIgnoreCase("green")) {
-                    createMask(hsv, mask, LOWER_GREEN, UPPER_GREEN);
-                } else if (color.equalsIgnoreCase("blue")) {
-                    createMask(hsv, mask, LOWER_BLUE, UPPER_BLUE);
+                    Imgproc.cvtColor(croppedFrame, croppedFrame, Imgproc.COLOR_BGR2HSV);
+                    createMask(croppedFrame, mask, LOWER_GREEN, UPPER_GREEN);
                 } else {
                     return -1;
                 }
 
-                Imgproc.erode(mask, mask, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
-                Imgproc.dilate(mask, mask, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5)));
 
                 previousFrameMat = frameMat.clone();
 
                 return calculateMarkerPosition(mask, croppedFrame.height());
             }
         } finally {
-            releaseResources(frameMat, mask, croppedFrame, diffFrame, hsv);
+            releaseResources(frameMat, mask, croppedFrame, diffFrame);
         }
         return -1;
     }
@@ -147,7 +98,7 @@ public class OpenCVProcessor {
     }
 
     private static int calculateMarkerPosition(Mat mask, int frameHeight) {
-        List<MatOfPoint> contours = new java.util.ArrayList<>();
+        java.util.List<MatOfPoint> contours = new java.util.ArrayList<>();
         Imgproc.findContours(mask, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
         if (!contours.isEmpty()) {
@@ -157,7 +108,7 @@ public class OpenCVProcessor {
         return -1;
     }
 
-    private static MatOfPoint findLargestContour(List<MatOfPoint> contours) {
+    private static MatOfPoint findLargestContour(java.util.List<MatOfPoint> contours) {
         MatOfPoint largestContour = contours.get(0);
         double maxArea = Imgproc.contourArea(largestContour);
 

@@ -42,7 +42,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     private Sound passedLevel;
     private Sound missionComplete;
     private ImageIcon finalMoonImage;
-    private int finalMoonX = windowWidth;
+    private float finalMoonX = windowWidth;
     private Object[] options;
     private int selectedOption;
     private boolean isSuccess = counterOfAlienHits >= 15;
@@ -176,10 +176,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
 
         if (downPressed && this.spaceship1.getY() <= (windowHeight - 1.5 * spaceship1.getHeight())) {
-            spaceship1.upDownMove(0.25);
+            spaceship1.upDownMove(0.15);
         }
         if (upPressed && this.spaceship1.getY() >= 0) {
-            spaceship1.upDownMove(-0.25);
+            spaceship1.upDownMove(-0.15);
         }
 //        if (rightPressed && this.spaceship1.getX() <= (this.windowWidth - 1.2 * spaceship1.getWidth())) {
 //            spaceship1.leftRightMove(1);
@@ -190,10 +190,10 @@ public class LevelThree extends AbstractLevel implements KeyListener {
 
         // חללית 2 - תנועה אנכית ואופקית
         if (sPressed && this.spaceship2.getY() <= (windowHeight - 1.5 * spaceship2.getHeight())) {
-            spaceship2.upDownMove(0.25);
+            spaceship2.upDownMove(0.15);
         }
         if (wPressed && this.spaceship2.getY() >= 0) {
-            spaceship2.upDownMove(-0.25);
+            spaceship2.upDownMove(-0.15);
         }
 //        if (dPressed && this.spaceship2.getX() <= (this.windowWidth - 1.2 * spaceship2.getWidth())) {
 //            spaceship2.leftRightMove(1);
@@ -222,9 +222,9 @@ public class LevelThree extends AbstractLevel implements KeyListener {
         if (isSuccess) {
             while (finalMoonX > 0) {
                 repaint();
-                finalMoonX -= 2;
+                finalMoonX -= 0.2F;
                 try {
-                    Thread.sleep(6);
+                    Thread.sleep(1);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -298,7 +298,7 @@ public class LevelThree extends AbstractLevel implements KeyListener {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-        finalMoonImage.paintIcon(null, graphics, finalMoonX, windowHeight - finalMoonImage.getIconHeight());
+        finalMoonImage.paintIcon(null, graphics, (int) finalMoonX, windowHeight - finalMoonImage.getIconHeight());
         laser1.paintLaser(graphics);
         laser2.paintLaser(graphics);
         spaceship1.paintSpaceship(graphics);
