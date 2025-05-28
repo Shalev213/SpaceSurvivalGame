@@ -35,6 +35,7 @@ public class LevelFour extends AbstractLevel implements KeyListener {
     private String teamName;
     private FakePanel fakePanel;
     private Sound laughSound;
+    private JButton lobbyButton;
 
 
     public LevelFour(int width, int height, String teamName) {
@@ -149,6 +150,17 @@ public class LevelFour extends AbstractLevel implements KeyListener {
             this.circuitBreaker.requestFocusInWindow();
         });
         this.add(circuitButton);
+
+        this.lobbyButton = new JButton("Lobby");
+        this.lobbyButton.setBounds(windowWidth/2, 10, 200 , 150);
+        this.lobbyButton.setFont(new Font("Arial", Font.BOLD, 24));
+        this.lobbyButton.setBounds((width - lobbyButton.getWidth()) / 2, 5, 90, 55);
+        this.lobbyButton.setForeground(new Color(31, 191, 230));
+        this.lobbyButton.setFocusPainted(false);
+        this.lobbyButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.lobbyButton.setContentAreaFilled(false);
+        this.lobbyButton.setBorder(BorderFactory.createLineBorder(new Color(31, 191, 230), 10));  // גבול בעובי 2 פיקסלים
+        this.add(lobbyButton);
 
 
         this.setFocusable(true);
@@ -347,5 +359,9 @@ public class LevelFour extends AbstractLevel implements KeyListener {
 
     public void setCounterOfLevel(int counterOfLevel) {
         LevelFour.counterOfLevel = counterOfLevel;
+    }
+
+    public JButton getLobbyButton(){
+        return this.lobbyButton;
     }
 }

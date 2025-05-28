@@ -201,7 +201,7 @@ public class Window extends JFrame {
                 this.lobbyPanel.getLevelButton3().checkEnable();//**********
                 this.lobbyPanel.getLevelButton3().doClick();
             });
-            this.levelTwo.getLobbyButton().addActionListener(_ -> {
+            this.levelTwo.getLobbySuccessButton().addActionListener(_ -> {
                 this.levelTwo.getSceneSound().stopPlay();
                 this.remove(this.levelTwo);
                 this.lobbyPanel.setVisible(true);
@@ -210,6 +210,13 @@ public class Window extends JFrame {
 //                if (levelOne.isSuccess()){
                 this.lobbyPanel.getLevelButton3().setEnabled(true);
                 this.lobbyPanel.getLevelButton3().checkEnable();
+            });
+            this.levelTwo.getLobbyButton().addActionListener(e1 -> {
+                this.levelTwo.getSceneSound().stopPlay();
+                this.levelTwo.setVisible(false);
+                this.remove(levelTwo);
+                this.lobbyPanel.setVisible(true);
+                this.lobbyBackground.restartSound();
             });
         });
     }
@@ -298,10 +305,19 @@ public class Window extends JFrame {
                     }
                 }
             });
+
+
             levelFour.setVisible(true);
             levelFour.setFocusable(true);
             levelFour.requestFocus();
             levelFour.requestFocusInWindow();
+
+            this.levelFour.getLobbyButton().addActionListener(event -> {
+                this.levelFour.setVisible(false);
+                this.remove(levelFour);
+                this.lobbyPanel.setVisible(true);
+                this.lobbyBackground.restartSound();
+            });
         });
     }
 

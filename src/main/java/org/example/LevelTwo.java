@@ -27,6 +27,7 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
     private Sound sceneSound;
     private FakePanel fakePanel;
     private Sound laughSound;
+    private JButton lobbyButton;
 
 
     public LevelTwo(int width, int height, String teamName) {
@@ -129,6 +130,18 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
             }
         });
 
+        this.lobbyButton = new JButton("Lobby");
+        this.lobbyButton.setBounds((width - lobbyButton.getWidth()) / 2, 10, 200 , 150);
+        this.lobbyButton.setFont(new Font("Arial", Font.BOLD, 24));
+        this.lobbyButton.setBounds((width / 2), 5, 90, 55);
+        this.lobbyButton.setForeground(new Color(31, 191, 230));
+        this.lobbyButton.setFocusPainted(false);
+        this.lobbyButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.lobbyButton.setContentAreaFilled(false);
+        this.lobbyButton.setBorder(BorderFactory.createLineBorder(new Color(31, 191, 230), 10));  // גבול בעובי 2 פיקסלים
+        this.add(lobbyButton);
+
+
 
         this.setFocusable(true);
         this.addKeyListener(this);
@@ -215,11 +228,15 @@ public class LevelTwo extends AbstractLevel implements KeyListener {
         return this.mainRiddlePanel.getButtonsPanel().getNextLevelButton();
     }
 
-    public JButton getLobbyButton() {
+    public JButton getLobbySuccessButton() {
         return this.mainRiddlePanel.getButtonsPanel().getLobbyButton();
     }
 
     public Sound getSceneSound() {
         return sceneSound;
+    }
+
+    public JButton getLobbyButton(){
+        return this.lobbyButton;
     }
 }
