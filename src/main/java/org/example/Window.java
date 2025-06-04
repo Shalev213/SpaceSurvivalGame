@@ -85,10 +85,15 @@ public class Window extends JFrame {
 
                         this.lobbyPanel.setVisible(false);
                         this.levelInstructions.setVisible(true);
+                        this.lobbyBackground.stopPlay();
 
                         this.levelInstructions.getLobbyButton().addActionListener(e2 -> {
-                            this.levelInstructions.setVisible(false);
+//                            this.levelInstructions.setVisible(false);
+//                            this.levelInstructions.getSpokenSound().stopPlay();
+                            this.remove(levelInstructions);
                             this.lobbyPanel.setVisible(true);
+                            this.lobbyBackground.restartSound();
+
                         });
 
 

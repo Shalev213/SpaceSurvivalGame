@@ -26,6 +26,12 @@ public class LevelInstructions extends JPanel {
     private int space = 50;
     private JButton lobbyButton;
 
+    private String wavPath = " ";
+    private JButton spokenButton;
+    private Sound spokenSound;
+    private JButton pauseButton;
+    private boolean isPause = false;
+
 
 //    private InstructionsButton instructionsButton;
 
@@ -40,6 +46,20 @@ public class LevelInstructions extends JPanel {
         this.setBackground(new Color(0x1010CA));
 
 
+        this.spokenButton = new JButton("Spoken Instruction");
+        this.spokenButton.setBounds(windowWidth - 200, windowHeight - 120, 250, 60);
+        this.spokenButton.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(this.spokenButton);
+
+        this.pauseButton = new JButton("Pause");
+        this.pauseButton.setBounds(windowWidth - 450, windowHeight - 120, 150, 60);
+        this.pauseButton.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(this.pauseButton);
+        pauseButton.setVisible(false);
+
+        this.spokenSound = new Sound();
+
+
         this.xTitle = (windowWidth - titleWidth) / 2;
 
         this.title = new JLabel("Level " + this.currentLevel + " - Instructions");
@@ -47,7 +67,7 @@ public class LevelInstructions extends JPanel {
         this.title.setFont(new Font("Arial", Font.BOLD, 45));
         this.title.setBounds(this.xTitle, this.yTitle, this.titleWidth, this.titleHeight);
         this.add(this.title);
-
+        setPanelByLevel();
         this.xBody = (windowWidth - this.bodyWidth) / 2;
 
         this.bodyLabel = new JLabel();
@@ -55,9 +75,9 @@ public class LevelInstructions extends JPanel {
         this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
         this.bodyLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         this.bodyLabel.setBounds(this.xBody, this.yTitle + this.space, this.bodyWidth, 235);
-        setPanelByLevel();
         this.bodyLabel.setText(strBody);
         this.add(this.bodyLabel);
+
 
         this.screenshot = new ImageIcon(path);
         this.imageX = (windowWidth - imageWidth) / 2;
@@ -69,7 +89,17 @@ public class LevelInstructions extends JPanel {
 //        this.lobbyButton.setFocusPainted(false);
 //        this.lobbyButton.setBackground(new Color(43, 45, 48));
 //        this.lobbyButton.setForeground(Color.white);
+        this.lobbyButton.addActionListener(e -> {
+            this.spokenSound.stopPlay();
+        });
         this.add(this.lobbyButton);
+
+
+
+
+
+
+
 
 //        this.startGameButton = new JButton("Start");
 //        this.startGameButton.setFont(new Font("Arial", Font.BOLD, 25));
@@ -104,6 +134,7 @@ public class LevelInstructions extends JPanel {
 
     public void setPanelByLevel() {
 
+
         switch (currentLevel) {
             case 1 -> {
                 path = "src/main/java/resources/level1instructions.png";
@@ -113,6 +144,7 @@ public class LevelInstructions extends JPanel {
                         "A - Left, S - Down, D - Right). The team has a total of three lives—hitting  " +
                         "meteors three times results in failure. To complete the level, players must successfully " +
                         "collect all five fuel tanks while coordinating their movements to avoid collisions. Good luck! </html>";
+                wavPath = "src/main/java/resources/Level1Instructions.wav";
             }
             case 2 -> {
                 path = "src/main/java/resources/level2instructions.png";
@@ -122,6 +154,7 @@ public class LevelInstructions extends JPanel {
                         "Keys to navigate inside the spaceship. Once the malfunction is found, <br>" +
                         "the players must solve a riddle to progress to the next level. <br>" +
                         "Stay sharp and work together to uncover the issue! </html>";
+                wavPath = "src/main/java/resources/Level2Instructions.wav";
             }
             case 3 -> {
                 this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 20));
@@ -136,7 +169,7 @@ public class LevelInstructions extends JPanel {
                         "1 shoots with ENTER, and Player 2 shoots with SPACEBAR. The team has three lives," +
                         "which are lost if a player crashes into an alien spaceship or if an alien spaceship gets past them." +
                         "Stay focused and take down the enemies!</html>";
-
+                wavPath = "src/main/java/resources/Level3Instructions.wav";
             }
             case 4 -> {
                 this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 22));
@@ -148,6 +181,7 @@ public class LevelInstructions extends JPanel {
                         "power by correctly reconnecting disrupted circuits in the spaceship’s electrical system." +
                         "Only after successfully overcoming all three challenges will they be able to advance to the next level." +
                         "<br>Stay sharp and work as a team! ";
+                wavPath = "src/main/java/resources/Level4Instructions.wav";
             }
             case 5 -> {
                 this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 21));
@@ -160,8 +194,32 @@ public class LevelInstructions extends JPanel {
                         "A failure occurs if an astronaut is hit by an alien or by a laser from the alien spaceship." +
                         "Each player has exactly 15 laser shots, meaning they must work together strategically to succeed." +
                         "<br>Coordination and precision are key to victory! ";
+                wavPath = "src/main/java/resources/Level5Instructions.wav";
             }
+
         }
+        spokenSound.playSound(wavPath);
+
+        spokenButton.addActionListener(e -> {
+            spokenSound.startPlay();
+            pauseButton.setVisible(true);
+            if (isPause){
+                isPause = false;
+                pauseButton.setText("Pause");
+            }
+        });
+
+        pauseButton.addActionListener(e -> {
+            if (!isPause){
+                spokenSound.pause();
+                isPause = true;
+                pauseButton.setText("Play");
+            } else {
+                spokenSound.play();
+                isPause = false;
+                pauseButton.setText("Pause");
+            }
+        });
     }
 
     public boolean isClicked() {
@@ -176,4 +234,8 @@ public class LevelInstructions extends JPanel {
         return lobbyButton;
     }
 
+
+    public Sound getSpokenSound() {
+        return spokenSound;
+    }
 }

@@ -55,6 +55,15 @@ public class Sound {
 
     }
 
+    public void pause(){
+        this.clip.stop();
+    }
+
+    public void play(){
+        this.clip.start();
+    }
+
+
 
     public void restartSound() {
         if (!clip.isOpen()) {
