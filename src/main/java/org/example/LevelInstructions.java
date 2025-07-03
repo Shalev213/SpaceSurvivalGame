@@ -67,10 +67,11 @@ public class LevelInstructions extends JPanel {
         this.title.setFont(new Font("Arial", Font.BOLD, 45));
         this.title.setBounds(this.xTitle, this.yTitle, this.titleWidth, this.titleHeight);
         this.add(this.title);
-        setPanelByLevel();
         this.xBody = (windowWidth - this.bodyWidth) / 2;
 
         this.bodyLabel = new JLabel();
+        setPanelByLevel();
+
         this.bodyLabel.setForeground(new Color(255, 255, 255));
         this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
         this.bodyLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
