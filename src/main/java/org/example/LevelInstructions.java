@@ -70,13 +70,11 @@ public class LevelInstructions extends JPanel {
         this.xBody = (windowWidth - this.bodyWidth) / 2;
 
         this.bodyLabel = new JLabel();
-        setPanelByLevel();
-
         this.bodyLabel.setForeground(new Color(255, 255, 255));
         this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
         this.bodyLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         this.bodyLabel.setBounds(this.xBody, this.yTitle + this.space, this.bodyWidth, 235);
-        this.bodyLabel.setText(strBody);
+        setPanelByLevel();
         this.add(this.bodyLabel);
 
 
@@ -142,12 +140,13 @@ public class LevelInstructions extends JPanel {
                 strBody = "<html>In this level, two players must work together to collect five fuel " +
                         "tanks while avoiding incoming meteors. Player 1 controls his spaceship using " +
                         "the Arrow Keys (Left, Right, Up, Down), while Player 2 moves using WASD (W - Up," +
-                        "A - Left, S - Down, D - Right). The team has a total of three lives—hitting  " +
+                        "A - Left, S - Down, D - Right). The team has a total of three lives-hitting  " +
                         "meteors three times results in failure. To complete the level, players must successfully " +
                         "collect all five fuel tanks while coordinating their movements to avoid collisions. Good luck! </html>";
                 wavPath = "src/main/java/resources/Level1Instructions.wav";
             }
             case 2 -> {
+                this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 26));
                 path = "src/main/java/resources/level2instructions.png";
                 strBody = "<html>In this level, players must find a hidden malfunction within the <br>" +
                         "spaceship’s system by clicking on the correct component. <br>" +
@@ -164,22 +163,22 @@ public class LevelInstructions extends JPanel {
                         "but they can only move up and down. Player 1 pilots the red spaceship using " +
                         "the Arrow Keys, while Player 2 pilots the yellow spaceship using W and S. " +
                         "Additionally, movement can be controlled by holding a green object in front " +
-                        "of the camera—Player 1 moves up or down if the object is detected on the right" +
+                        "of the camera-Player 1 moves up or down if the object is detected on the right" +
                         "side of the screen, while Player 2 moves up or down if it's detected on the left" +
-                        "side. Players must shoot and destroy 15 alien spaceships before they get past—Player" +
+                        "side. Players must shoot and destroy 15 alien spaceships before they get past-Player" +
                         "1 shoots with ENTER, and Player 2 shoots with SPACEBAR. The team has three lives," +
                         "which are lost if a player crashes into an alien spaceship or if an alien spaceship gets past them." +
                         "Stay focused and take down the enemies!</html>";
                 wavPath = "src/main/java/resources/Level3Instructions.wav";
             }
             case 4 -> {
-                this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 22));
+                this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 21));
                 path = "src/main/java/resources/level2instructions.png";
                 strBody = "<html>In this level, just like in Level 2, only Player 1 can move the astronaut" +
                         "left and right inside the spaceship using the Arrow Keys to find the hidden malfunction " +
                         "in the system. Once the players identify the issue, they must work together to complete three" +
-                        "progressively difficult Circuit Breaker challenges—puzzle-based tasks where they need to restore" +
-                        "power by correctly reconnecting disrupted circuits in the spaceship’s electrical system." +
+                        "progressively difficult Circuit Breaker challenges-puzzle-based tasks where they need to restore" +
+                        "power by correctly reconnecting disrupted circuits in the spaceship's electrical system." +
                         "Only after successfully overcoming all three challenges will they be able to advance to the next level." +
                         "<br>Stay sharp and work as a team! ";
                 wavPath = "src/main/java/resources/Level4Instructions.wav";
@@ -188,7 +187,7 @@ public class LevelInstructions extends JPanel {
                 this.bodyLabel.setFont(new Font("SansSerif", Font.PLAIN, 21));
                 path = "src/main/java/resources/level5instructions.png";
                 strBody = "<html>In this level, the two astronauts have landed on the planet they aim to conquer." +
-                        "They can move left and right—each player using their respective keys—and shoot lasers " +
+                        "They can move left and right-each player using their respective keys-and shoot lasers " +
                         "(just like in Level 3) to eliminate the aliens. Additionally, an alien spaceship hovers " +
                         "in the sky, randomly firing lasers at the players." +
                         "To complete the level, the players must eliminate 30 aliens without getting hit even once." +
@@ -199,6 +198,7 @@ public class LevelInstructions extends JPanel {
             }
 
         }
+        this.bodyLabel.setText(strBody);
         spokenSound.playSound(wavPath);
 
         spokenButton.addActionListener(e -> {
