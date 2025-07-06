@@ -1,6 +1,7 @@
 package org.example;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class LevelInstructions extends JPanel {
@@ -27,10 +28,12 @@ public class LevelInstructions extends JPanel {
     private JButton lobbyButton;
 
     private String wavPath = " ";
-    private JButton spokenButton;
     private Sound spokenSound;
+    private JButton spokenButton;
     private JButton pauseButton;
     private boolean isPause = false;
+    private int spokenButtonWidth = 200;
+    private int pauseButtonWidth = 130;
 
 
 //    private InstructionsButton instructionsButton;
@@ -46,13 +49,13 @@ public class LevelInstructions extends JPanel {
         this.setBackground(new Color(0x1010CA));
 
 
-        this.spokenButton = new JButton("Spoken Instruction");
-        this.spokenButton.setBounds(windowWidth - 200, windowHeight - 120, 250, 60);
+        this.spokenButton = new JButton("Play Instruction");
+        this.spokenButton.setBounds(windowWidth - 250, windowHeight - 120, this.spokenButtonWidth, 60);
         this.spokenButton.setFont(new Font("Arial", Font.BOLD, 20));
         this.add(this.spokenButton);
 
         this.pauseButton = new JButton("Pause");
-        this.pauseButton.setBounds(windowWidth - 450, windowHeight - 120, 150, 60);
+        this.pauseButton.setBounds(this.spokenButton.getX() + (this.spokenButtonWidth - this.pauseButtonWidth) / 2, windowHeight - 210, this.pauseButtonWidth, 60);
         this.pauseButton.setFont(new Font("Arial", Font.BOLD, 20));
         this.add(this.pauseButton);
         pauseButton.setVisible(false);
@@ -82,9 +85,16 @@ public class LevelInstructions extends JPanel {
         this.imageX = (windowWidth - imageWidth) / 2;
         this.imageY = 320;
 
-        this.lobbyButton = new JButton("Back to lobby");
-        this.lobbyButton.setBounds(25, windowHeight - 120, 200, 60);
-        this.lobbyButton.setFont(new Font("Arial", Font.BOLD, 20));
+        this.lobbyButton = new JButton("Lobby");
+        this.lobbyButton.setBounds(25, windowHeight - 120, 130, 60);
+        this.lobbyButton.setFont(new Font("Arial", Font.BOLD, 25));
+
+        this.lobbyButton.setForeground(new Color(31, 191, 230));
+        this.lobbyButton.setFocusPainted(false);
+        this.lobbyButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.lobbyButton.setContentAreaFilled(false);
+        this.lobbyButton.setBorder(BorderFactory.createLineBorder(new Color(31, 191, 230), 10));  // גבול בעובי 2 פיקסלים
+
 //        this.lobbyButton.setFocusPainted(false);
 //        this.lobbyButton.setBackground(new Color(43, 45, 48));
 //        this.lobbyButton.setForeground(Color.white);
@@ -94,23 +104,6 @@ public class LevelInstructions extends JPanel {
         this.add(this.lobbyButton);
 
 
-
-
-
-
-
-
-//        this.startGameButton = new JButton("Start");
-//        this.startGameButton.setFont(new Font("Arial", Font.BOLD, 25));
-//        this.startGameButton.setBounds(imageX + 200, imageY + 100, imageX / 2, 50);
-//
-//        this.startGameButton.addActionListener(e -> {
-//            isClicked = true;
-//            System.out.println("button clicked");
-////            remove(this);
-//            setVisible(false);
-//        });
-//        this.add(this.startGameButton);
     }
 
 
@@ -204,14 +197,14 @@ public class LevelInstructions extends JPanel {
         spokenButton.addActionListener(e -> {
             spokenSound.startPlay();
             pauseButton.setVisible(true);
-            if (isPause){
+            if (isPause) {
                 isPause = false;
                 pauseButton.setText("Pause");
             }
         });
 
         pauseButton.addActionListener(e -> {
-            if (!isPause){
+            if (!isPause) {
                 spokenSound.pause();
                 isPause = true;
                 pauseButton.setText("Play");
